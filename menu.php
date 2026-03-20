@@ -93,8 +93,8 @@ $c_data = date('Y-m-d');
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow
                     rounded-md w-48 z-50">
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/usuarios/usuarios_lista.php">Usuários do Sistema</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/usuarios/usuarios_perfil_lista.php">Perfis de Acesso</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/usuarios/usuarios_lista.php">Usuários do Sistema</a>
+                        
                        
                     </div>
                 </div>';
@@ -106,8 +106,8 @@ $c_data = date('Y-m-d');
                         <i class="fas fa-user-circle text-2xl"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50 right-0">
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/alterasenha.php">Alterar Senha</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/index.php">Sair</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/cazaazul/alterasenha.php">Alterar Senha</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/index.php">Sair</a>
 
                     </div>
                     <div class="md:hidden">
