@@ -58,7 +58,7 @@ $c_data = date('Y-m-d');
                         Cadastros <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/recursos/recursos_lista.php">Pessoas Físicas</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/pessoas/pessoas_lista.php">Pessoas Físicas</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/espacos/espacos_lista.php">Agenda de Atividades</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/grupos_fornecedor/grupos_fornecedor_lista.php">Agenda de Ações</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/fornecedores/fornecedores_lista.php">Cadastro de Cursos</a>
