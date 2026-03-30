@@ -69,8 +69,8 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
             </div>
         </div>
         <br>
-        <a class="btn btn-success btn-sm" href="/gop/cadastros/materiais/materiais_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
-        <a class="btn btn-secondary btn-sm" href="/gop/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
+        <a class="btn btn-success btn-sm" href="/casaazul/pessoas/pessoas_novo.php"><span class="glyphicon glyphicon-plus"></span> Incluir</a>
+        <a class="btn btn-secondary btn-sm" href="/casaazul/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
         <div class="table-responsive">
             <table class="table table-bordered table-striped tabpessoas">
@@ -96,6 +96,11 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
 
                     // insiro os registro do banco de dados na tabela 
                     while ($c_linha = $result->fetch_assoc()) {
+                        if ($c_linha['sexo']=='M')
+                            $c_sexo = 'Masculino';
+                        else
+                            $c_sexo = 'Feminino';
+                 
                         echo "
                     <tr>
                         <td>$c_linha[nome]</td>
@@ -104,7 +109,7 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
                         <td>$c_linha[cep]</td>
                         <td>$c_linha[fone1]</td>
                         <td>$c_linha[fone2]</td>
-                        <td>$c_linha[fone2]</td>
+                        <td>$c_sexo</td>
                         <td>
                     <a class='btn btn-secondary btn-sm' href='/gop/cadastros/fabricantes/fabricantes_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>

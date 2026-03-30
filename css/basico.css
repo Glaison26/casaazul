@@ -1,0 +1,11 @@
+/* Estilo para o conteúdo de teste */
+    .content-box {
+        background-color: rgba(255, 255, 255, 0.9);
+        /* Fundo branco semi-transparente para destacar o conteúdo */
+        padding: 10px;
+        margin: 10px auto;
+        width: 90%;
+        max-width: 1400px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
