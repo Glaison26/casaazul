@@ -1,49 +1,97 @@
 <?php
 session_start();
-include("../conexao.php");
-include("../links.php");
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conexao = new mysqli('localhost', 'root', '', 'casaazul');
+require_once '../config/conexao.php';
 
+$erro = null;
+$pessoa = null;
+$id = $_GET['id'] ?? null;
 
-    $nome = $_POST['nome'];
-    $datanasc =  new DateTime($_POST['datanasc']);
-    $datanasc = $datanasc->format('Y-m-d');
-
-    $identidade = $_POST['identidade'];
-    $cpf = $_POST['cpf'];
-    $cep = $_POST['cep'];
-    $endereco = $_POST['endereco'];
-    $bairro = $_POST['bairro'];
-    $cidade = $_POST['cidade'];
-    $nomepai = $_POST['nomepai'];
-    $nomemae = $_POST['nomemae'];
-    $fone1 = $_POST['fone1'];
-    $fone2 = $_POST['fone2'];
-    $fone3 = $_POST['fone3'];
-    $niss = $_POST['niss'];
-    $email = $_POST['email'];
-    $sexo = $_POST['sexo'];
-    $data_cadastro =  new DateTime($_POST['data_cadastro']);
-    $data_cadastro = $data_cadastro->format('Y-m-d');
-    $numerofilhos = $_POST['numerofilhos'];
-    $observacao = $_POST['observacao'];
-
-    $c_sql = "INSERT INTO cadastro (nome, datanasc, identidade, cpf, cep, endereco, bairro, cidade, nomepai, nomemae, fone1, fone2, fone3,
-     niss, email, sexo, data_cadastro, numerofilhos, observacao) VALUES ('$nome', '$datanasc', '$identidade', '$cpf', '$cep', '$endereco', 
-     '$bairro', '$cidade', '$nomepai', '$nomemae', '$fone1', '$fone2', '$fone3', '$niss', '$email', '$sexo', '$data_cadastro',
-     '$numerofilhos', '$observacao')";
-
-    $result = $conection->query($c_sql);
-    // verifico se a query foi correto
-    if (!$result) {
-        echo "<script>alert('Erro ao cadastrar: " . $conexao->error . "');</script>";
-    } else {
-        echo "<script>alert('Pessoa cadastrada com sucesso!'); window.location='pessoas_novo.php';</script>";
+if ($id) {
+    $sql = "SELECT * FROM pessoas WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $pessoa = $resultado->fetch_assoc();
+    
+    if (!$pessoa) {
+        $erro = "Pessoa não encontrada.";
     }
-    header('location: /casaazul/pessoas/pessoas_lista.php');
+
+    
+   // Converto as datas para o formato 'Y-m-d' para exibição no formulário
+    if ($pessoa['datanasc']) {
+        $pessoa['datanasc'] = date('Y-m-d', strtotime($pessoa['datanasc']));
+    }
+    if ($pessoa['data_cadastro']) {
+        $pessoa['data_cadastro'] = date('Y-m-d', strtotime($pessoa['data_cadastro']));
+    }
+    // variaveis para preencher os campos do formulário
+    $nome = $pessoa['nome'] ?? '';
+    $identidade = $pessoa['identidade'] ?? '';
+    $cpf = $pessoa['cpf'] ?? '';
+    $datanasc = $pessoa['datanasc'] ?? '';
+    $cep = $pessoa['cep'] ?? '';
+    $endereco = $pessoa['endereco'] ?? '';
+    $bairro = $pessoa['bairro'] ?? '';
+    $cidade = $pessoa['cidade'] ?? '';
+    $nomepai = $pessoa['nomepai'] ?? '';
+    $nomemae = $pessoa['nomemae'] ?? '';
+    
+
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nome = $_POST['nome'] ?? '';
+    $identidade = $_POST['identidade'] ?? '';
+    $cpf = $_POST['cpf'] ?? '';
+    $datanasc = $_POST['datanasc'] ?? '';
+    $cep = $_POST['cep'] ?? '';
+    $endereco = $_POST['endereco'] ?? '';
+    $bairro = $_POST['bairro'] ?? '';
+    $cidade = $_POST['cidade'] ?? '';
+    $nomepai = $_POST['nomepai'] ?? '';
+    $nomemae = $_POST['nomemae'] ?? '';
+    $fone1 = $_POST['fone1'] ?? '';
+    $fone2 = $_POST['fone2'] ?? '';
+    $fone3 = $_POST['fone3'] ?? '';
+    $niss = $_POST['niss'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $sexo = $_POST['sexo'] ?? '';
+    $data_cadastro = $_POST['data_cadastro'] ?? '';
+    $numerofilhos = $_POST['numerofilhos'] ?? 0;
+    $observacao = $_POST['observacao'] ?? '';
+    $id = $_GET['id'] ?? null;
+
+    if ($id) {
+        $sql = "UPDATE pessoas SET nome = ?, identidade = ?, cpf = ?, datanasc = ?, cep = ?, endereco = ?, bairro = ?, cidade = ?, nomepai = ?, nomemae = ?, fone1 = ?, fone2 = ?, fone3 = ?, niss = ?, email = ?, sexo = ?, data_cadastro = ?, numerofilhos = ?, observacao = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('sssssssssssssssssi', $nome, $identidade, $cpf, $datanasc, $cep, $endereco, $bairro, $cidade, $nomepai, $nomemae, $fone1, $fone2, $fone3, $niss, $email, $sexo, $data_cadastro, $numerofilhos, $observacao, $id);
+    } else {
+        $sql = "INSERT INTO pessoas (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, nomepai, nomemae, fone1, fone2, fone3, niss, email, sexo, data_cadastro, numerofilhos, observacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ssssssssssssssssi', $nome, $identidade, $cpf, $datanasc, $cep, $endereco, $bairro, $cidade, $nomepai, $nomemae, $fone1, $fone2, $fone3, $niss, $email, $sexo, $data_cadastro, $numerofilhos, $observacao);
+    }
+
+    if ($stmt->execute()) {
+        header('Location: pessoas_lista.php?sucesso=1');
+        exit;
+    } else {
+        $erro = "Erro ao salvar dados: " . $stmt->error;
+    }
+}
+
+$id = $_GET['id'] ?? null;
+if ($id) {
+    $sql = "SELECT * FROM pessoas WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $pessoa = $resultado->fetch_assoc();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -51,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/casaazul/css/basico.css">
-    <title>Cadastro de Pessoas</title>
+    <title>Cadastro de Pessoas físicas</title>
 
     <script>
         const handlePhone = (event) => {
@@ -75,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>Gestão - Caso Azul</h4>
-                    <h5>Novo Cadastro de Pessoa física<h5>
+                    <h5>Editar Cadastro de Pessoa física<h5>
                 </div>
             </div>
         </div>
