@@ -2,8 +2,11 @@
 session_start();
 include("../conexao.php");
 include("../links.php");
+// configuro fuso horário
+date_default_timezone_set('America/Sao_Paulo');
+// post das informações
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conexao = new mysqli('localhost', 'root', '', 'casaazul');
+    //$conexao = new mysqli('localhost', 'root', '', 'casaazul');
 
 
     $nome = $_POST['nome'];
@@ -67,6 +70,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return value
         }
     </script>
+    <!-- script para capturar cep -->
+    <script>
+        // script para capturar endereço pelo cep
+        document.addEventListener('DOMContentLoaded', () => {
+            const cepInput = document.getElementById('cep');
+            // Adiciona um ouvinte de evento para quando o campo de CEP perder o foco
+            cepInput.addEventListener('blur', () => {
+                let cep = cepInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                // Verifica se o campo CEP possui valor informado
+                if (cep) {
+                    // Faz a requisição usando a Fetch API
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.erro) {
+                                alert('CEP não encontrado.');
+                                return;
+                            }
+                            document.getElementById('endereco').value = data.logradouro;
+                            document.getElementById('bairro').value = data.bairro;
+                            document.getElementById('cidade').value = data.localidade;
+                            //document.getElementById('uf').textContent = data.uf;
+                        })
+                        .catch(error => {
+                            alert('Erro ao buscar o CEP.');
+                            alert(error);
+                            console.error('Erro:', error);
+                        });
+                }
+            });
+
+            // Função para limpar os campos do formulário
+            function limpaFormulario() {
+                document.getElementById('endereco').value = '';
+                document.getElementById('bairro').value = '';
+                document.getElementById('cidade').value = '';
+                //document.getElementById('uf').value = '';
+            }
+        });
+    </script>
+    <!-- Fim do script de CEP -->
 </head>
 
 <body>
@@ -83,12 +127,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <form method="POST" action="">
                 <div class="row mb-3">
-
                     <label class="col-sm-1 col-form-label">Nome:</label>
                     <div class="col-sm-8">
-                        <input type="text" name="nome" class="form-control" maxlength="200" required>
+                        <input type="text" name="nome" placeholder="Nome completo" class="form-control" maxlength="200" required>
                     </div>
-
                 </div>
 
                 <div class="row mb-3">
@@ -98,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <label class="col-sm-1">CPF:</label>
                     <div class="col-sm-2">
-                        <input type="text" name="cpf" class="form-control" maxlength="11" required>
+                        <input type="text" placeholder="Apenas números" name="cpf" class="form-control" maxlength="11" required>
                     </div>
                     <label class="col-sm-1 col-form-label">Data de Nascimento:</label>
                     <div class="col-sm-2">
@@ -111,11 +153,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <label class="col-sm-1 col-form-label">CEP:</label>
                     <div class="col-sm-2">
-                        <input type="text" name="cep" maxlength="12" class="form-control" required>
+                        <input type="text" name="cep" id="cep" maxlength="12" class="form-control" required>
                     </div>
                     <label class="col-sm-1">Endereço:</label>
                     <div class="col-sm-5">
-                        <input type="text" name="endereco" class="form-control" maxlength="150" required>
+                        <input type="text" name="endereco" id="endereco" class="form-control" maxlength="150" required>
                     </div>
 
                 </div>
@@ -124,11 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <label class="col-sm-1 col-form-label">Bairro:</label>
                     <div class="col-sm-3">
-                        <input type="text" name="bairro" class="form-control" maxlength="120" required>
+                        <input type="text" name="bairro" id="bairro" class="form-control" maxlength="120" required>
                     </div>
                     <label class="col-sm-1 col-form-label">Cidade:</label>
                     <div class="col-sm-4">
-                        <input type="text" name="cidade" class="form-control" maxlength="120" value='Sabará'>
+                        <input type="text" name="cidade" id="cidade" class="form-control" maxlength="120" value='Sabará'>
                     </div>
                 </div>
                 <hr>
@@ -205,10 +247,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="offset-sm-0 col-sm-3">
                         <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                         <a class='btn btn-danger' href='/casaazul/pessoas/pessoas_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                       
+
                     </div>
                 </div>
-            
+
             </form>
         </div>
     </div>

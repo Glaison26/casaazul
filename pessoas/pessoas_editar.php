@@ -1,23 +1,22 @@
 <?php
 session_start();
-require_once '../config/conexao.php';
+include("../conexao.php");
+include("../links.php");
 
 $erro = null;
 $pessoa = null;
 $id = $_GET['id'] ?? null;
 
 if ($id) {
-    $sql = "SELECT * FROM pessoas WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $id);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-    $pessoa = $resultado->fetch_assoc();
-    
-    if (!$pessoa) {
-        $erro = "Pessoa não encontrada.";
-    }
+   // leitura do paciente através de sql usando id passada
+    $c_sql = "select * from cadastro where id=$id";
+    $result = $conection->query($c_sql);
+    $pessoa = $result->fetch_assoc();
 
+    if (!$pessoa) {
+        header('location: /casaazul/pessoas/pessoas_lista.php');
+        exit;
+    }
     
    // Converto as datas para o formato 'Y-m-d' para exibição no formulário
     if ($pessoa['datanasc']) {
@@ -62,33 +61,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $numerofilhos = $_POST['numerofilhos'] ?? 0;
     $observacao = $_POST['observacao'] ?? '';
     $id = $_GET['id'] ?? null;
+    
 
     if ($id) {
-        $sql = "UPDATE pessoas SET nome = ?, identidade = ?, cpf = ?, datanasc = ?, cep = ?, endereco = ?, bairro = ?, cidade = ?, nomepai = ?, nomemae = ?, fone1 = ?, fone2 = ?, fone3 = ?, niss = ?, email = ?, sexo = ?, data_cadastro = ?, numerofilhos = ?, observacao = ? WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('sssssssssssssssssi', $nome, $identidade, $cpf, $datanasc, $cep, $endereco, $bairro, $cidade, $nomepai, $nomemae, $fone1, $fone2, $fone3, $niss, $email, $sexo, $data_cadastro, $numerofilhos, $observacao, $id);
+        $c_sql = "UPDATE cadastro SET nome='$nome', identidade='$identidade', cpf='$cpf', datanasc='$datanasc', cep='$cep', endereco='$endereco', bairro='$bairro', cidade='$cidade', nomepai='$nomepai', nomemae='$nomemae', fone1='$fone1', fone2='$fone2', fone3='$fone3', niss='$niss', email='$email', sexo='$sexo', data_cadastro='$data_cadastro', numerofilhos=$numerofilhos, observacao='$observacao' WHERE id=$id";
     } else {
-        $sql = "INSERT INTO pessoas (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, nomepai, nomemae, fone1, fone2, fone3, niss, email, sexo, data_cadastro, numerofilhos, observacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssssssssssssssssi', $nome, $identidade, $cpf, $datanasc, $cep, $endereco, $bairro, $cidade, $nomepai, $nomemae, $fone1, $fone2, $fone3, $niss, $email, $sexo, $data_cadastro, $numerofilhos, $observacao);
+        $c_sql = "INSERT INTO cadastro (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, nomepai, nomemae, fone1, fone2, fone3, niss, email, sexo, data_cadastro, numerofilhos, observacao) VALUES ('$nome', '$identidade', '$cpf', '$datanasc', '$cep', '$endereco', '$bairro', '$cidade', '$nomepai', '$nomemae', '$fone1', '$fone2', '$fone3', '$niss', '$email', '$sexo', '$data_cadastro', $numerofilhos, '$observacao')";
     }
-
-    if ($stmt->execute()) {
-        header('Location: pessoas_lista.php?sucesso=1');
+    // fecha o banco de dados e volta para a lista de pessoas
+    if ($conection->query($c_sql) === TRUE) {
+        header('location: /casaazul/pessoas/pessoas_lista.php');
         exit;
     } else {
-        $erro = "Erro ao salvar dados: " . $stmt->error;
+        $erro = "Erro ao salvar os dados: " . $conection->error;
     }
 }
 
 $id = $_GET['id'] ?? null;
 if ($id) {
-    $sql = "SELECT * FROM pessoas WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $id);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-    $pessoa = $resultado->fetch_assoc();
+    $c_sql = "select * from cadastro where id=$id";
+    $result = $conection->query($c_sql);
+    $pessoa = $result->fetch_assoc();
 }
 ?>
 
@@ -134,7 +127,7 @@ if ($id) {
 
                     <label class="col-sm-1 col-form-label">Nome:</label>
                     <div class="col-sm-8">
-                        <input type="text" name="nome" class="form-control" maxlength="200" required>
+                        <input type="text" name="nome" class="form-control" maxlength="200" value="<?php echo isset($pessoa['nome']) ? $pessoa['nome'] : ''; ?>" required>
                     </div>
 
                 </div>
@@ -142,15 +135,15 @@ if ($id) {
                 <div class="row mb-3">
                     <label class="col-sm-1 col-form-label">Identidade:</label>
                     <div class="col-sm-2">
-                        <input type="text" name="identidade" class="form-control" maxlength="9" required>
+                        <input type="text" name="identidade" class="form-control" maxlength="9" value="<?php echo isset($pessoa['identidade']) ? $pessoa['identidade'] : ''; ?>" required>
                     </div>
                     <label class="col-sm-1">CPF:</label>
                     <div class="col-sm-2">
-                        <input type="text" name="cpf" class="form-control" maxlength="11" required>
+                        <input type="text" name="cpf" class="form-control" maxlength="11" value="<?php echo isset($pessoa['cpf']) ? $pessoa['cpf'] : ''; ?>" required>
                     </div>
                     <label class="col-sm-1 col-form-label">Data de Nascimento:</label>
                     <div class="col-sm-2">
-                        <input type="date" name="datanasc" class="form-control" required>
+                        <input type="date" name="datanasc" class="form-control" value="<?php echo isset($pessoa['datanasc']) ? $pessoa['datanasc'] : ''; ?>" required>
                     </div>
                 </div>
 
@@ -159,11 +152,11 @@ if ($id) {
 
                     <label class="col-sm-1 col-form-label">CEP:</label>
                     <div class="col-sm-2">
-                        <input type="text" name="cep" maxlength="12" class="form-control" required>
+                        <input type="text" name="cep" maxlength="12" class="form-control" value="<?php echo isset($pessoa['cep']) ? $pessoa['cep'] : ''; ?>" required>
                     </div>
                     <label class="col-sm-1">Endereço:</label>
                     <div class="col-sm-5">
-                        <input type="text" name="endereco" class="form-control" maxlength="150" required>
+                        <input type="text" name="endereco" class="form-control" maxlength="150" value="<?php echo isset($pessoa['endereco']) ? $pessoa['endereco'] : ''; ?>" required>
                     </div>
 
                 </div>
@@ -172,11 +165,11 @@ if ($id) {
 
                     <label class="col-sm-1 col-form-label">Bairro:</label>
                     <div class="col-sm-3">
-                        <input type="text" name="bairro" class="form-control" maxlength="120" required>
+                        <input type="text" name="bairro" class="form-control" maxlength="120" value="<?php echo isset($pessoa['bairro']) ? $pessoa['bairro'] : ''; ?>" required>
                     </div>
                     <label class="col-sm-1 col-form-label">Cidade:</label>
                     <div class="col-sm-4">
-                        <input type="text" name="cidade" class="form-control" maxlength="120" value='Sabará'>
+                        <input type="text" name="cidade" class="form-control" maxlength="120" value="<?php echo isset($pessoa['cidade']) ? $pessoa['cidade'] : ''; ?>">
                     </div>
                 </div>
                 <hr>
@@ -185,22 +178,22 @@ if ($id) {
 
                     <label class="col-sm-1 col-form-label">Nome do Pai:</label>
                     <div class="col-sm-3">
-                        <input type="text" name="nomepai" class="form-control" maxlength="200">
+                        <input type="text" name="nomepai" class="form-control" maxlength="200" value="<?php echo isset($pessoa['nomepai']) ? $pessoa['nomepai'] : ''; ?>">
                     </div>
                     <label class="col-sm-1">Nome da Mãe:</label>
                     <div class="col-sm-4">
-                        <input type="text" name="nomemae" class="form-control" maxlength="200">
+                        <input type="text" name="nomemae" class="form-control" maxlength="200" value="<?php echo isset($pessoa['nomemae']) ? $pessoa['nomemae'] : ''; ?>">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-1 col-form-label">Telefone 1:</label>
                     <div class="col-sm-3">
-                        <input type="tel" name="fone1" class="form-control" maxlength="20" onkeyup="handlePhone(event)" required>
+                        <input type="tel" name="fone1" class="form-control" maxlength="20" onkeyup="handlePhone(event)" value="<?php echo isset($pessoa['fone1']) ? $pessoa['fone1'] : ''; ?>" required>
                     </div>
                     <label class="col-sm-1">Telefone 2:</label>
                     <div class="col-sm-4">
 
-                        <input type="tel" name="fone2" class="form-control" maxlength="20" onkeyup="handlePhone(event)">
+                        <input type="tel" name="fone2" class="form-control" maxlength="20" onkeyup="handlePhone(event)" value="<?php echo isset($pessoa['fone2']) ? $pessoa['fone2'] : ''; ?>">
                     </div>
                 </div>
 
@@ -208,11 +201,11 @@ if ($id) {
 
                     <label class="col-sm-1 col-form-label">Telefone 3:</label>
                     <div class="col-sm-3">
-                        <input type="tel" name="fone3" class="form-control" maxlength="20" onkeyup="handlePhone(event)">
+                        <input type="tel" name="fone3" class="form-control" maxlength="20" onkeyup="handlePhone(event)" value="<?php echo isset($pessoa['fone3']) ? $pessoa['fone3'] : ''; ?>">
                     </div>
                     <label class="col-sm-1">NISS:</label>
                     <div class="col-sm-4">
-                        <input type="text" name="niss" class="form-control" maxlength="11">
+                        <input type="text" name="niss" class="form-control" maxlength="11" value="<?php echo isset($pessoa['niss']) ? $pessoa['niss'] : ''; ?>">
                     </div>
                 </div>
 
@@ -220,14 +213,14 @@ if ($id) {
                     <label class="col-sm-1 col-form-label">Email:</label>
                     <div class="col-sm-3">
 
-                        <input type="email" class="form-control" name="email" maxlength="150">
+                        <input type="email" class="form-control" name="email" maxlength="150" value="<?php echo isset($pessoa['email']) ? $pessoa['email'] : ''; ?>">
                     </div>
                     <label class="col-sm-1">Sexo:</label>
                     <div class="col-sm-4">
                         <select name="sexo" class="form-control form-control-lg" class="form-control" required>
                             <option value=""></option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Feminino</option>
+                            <option value="M" <?php echo (isset($pessoa['sexo']) && $pessoa['sexo'] === 'M') ? 'selected' : ''; ?>>Masculino</option>
+                            <option value="F" <?php echo (isset($pessoa['sexo']) && $pessoa['sexo'] === 'F') ? 'selected' : ''; ?>>Feminino</option>
                         </select>
                     </div>
                 </div>

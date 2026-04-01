@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     //    $_SESSION['c_usuario'] = $c_login;
     //    $_SESSION['tipo'] = 'Administrador';
     //    header('location: /casaazul/menu.php');
-    //}
+   // }
     if ($c_linha['achou'] == 0) {
         $l_erro = ' Nome ou senha inválido. Tente novamente!';
     } else {

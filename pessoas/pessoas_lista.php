@@ -111,7 +111,7 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
                         <td>$c_linha[fone2]</td>
                         <td>$c_sexo</td>
                         <td>
-                    <a class='btn btn-secondary btn-sm' href='/gop/cadastros/fabricantes/fabricantes_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-secondary btn-sm' href='/casaazul/pessoas/pessoas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 

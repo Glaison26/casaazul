@@ -59,11 +59,11 @@ $c_data = date('Y-m-d');
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/pessoas/pessoas_lista.php">Pessoas Físicas</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/espacos/espacos_lista.php">Agenda de Atividades</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/grupos_fornecedor/grupos_fornecedor_lista.php">Agenda de Ações</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/fornecedores/fornecedores_lista.php">Cadastro de Cursos</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/fabricantes/fabricantes_lista.php">Cadastro de Instrutores</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/cadastros/executores/executores_lista.php">Tipo de Ações</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Agenda de Atividades</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Agenda de Ações</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Cadastro de Cursos</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Cadastro de Instrutores</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Tipo de Ações</a>
 
                     </div>
                 </div>
@@ -77,7 +77,7 @@ $c_data = date('Y-m-d');
                         Relatórios <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/gop/custos/centrodecusto_custo_geral_query.php">Atividades</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Atividades</a>
 
 
                     </div>
@@ -106,7 +106,7 @@ $c_data = date('Y-m-d');
                         <i class="fas fa-user-circle text-2xl"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50 right-0">
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/cazaazul/alterasenha.php">Alterar Senha</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/alterasenha.php">Alterar Senha</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/index.php">Sair</a>
 
                     </div>
@@ -123,13 +123,13 @@ $c_data = date('Y-m-d');
     <!-- subnav barra de navegação secundária com atalhos de solicitações e ordens -->
     <nav class="bg-blue-600 p-3 shadow-md">
         <div class="container mx-auto flex items-center space-x-6">
-            <a href="/gop/cadastros/recursos/recursos_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
+            <a href="/casaazul/pessoas/pessoas_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-user-plus mr-2"></i>Pessoa Física
             </a>
-            <a href="/gop/cadastros/espacos/espacos_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
+            <a href="#" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-calendar-alt mr-2"></i>Atividades
             </a>
-            <a href="/gop/cadastros/grupos_fornecedor/grupos_fornecedor_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
+            <a href="#" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-tasks mr-2"></i>Ações
             </a>
         </div>
