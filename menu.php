@@ -21,7 +21,7 @@ $c_data = date('Y-m-d');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão de Manutenção</title>
+    <title>Sistema de Gestão Casa Azul</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="shortcut icon" type="imagex/png" href="./imagens/img_gop.ico">
@@ -62,7 +62,7 @@ $c_data = date('Y-m-d');
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Agenda de Atividades</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Agenda de Ações</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Cadastro de Cursos</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Cadastro de Instrutores</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/instrutores/instrutores_lista.php">Cadastro de Instrutores</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Tipo de Ações</a>
 
                     </div>
