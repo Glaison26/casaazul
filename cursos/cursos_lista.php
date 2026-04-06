@@ -131,8 +131,6 @@ include("../links.php");
                 $('#up_descricaoField').val(data[1]);
                 $('#up_observacaoField').val(data[2]);
 
-
-
             });
         });
     </script>
@@ -299,7 +297,6 @@ include("../links.php");
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
