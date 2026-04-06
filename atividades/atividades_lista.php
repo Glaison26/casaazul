@@ -272,7 +272,7 @@ include("../links.php");
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar dados do curso</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar dados da atividade</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
