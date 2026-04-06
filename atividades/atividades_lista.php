@@ -30,7 +30,7 @@ include("../links.php");
 
     <script>
         $(document).ready(function() {
-            $('.tabcursos').DataTable({
+            $('.tabatividades').DataTable({
                 // 
                 "iDisplayLength": -1,
                 "order": [1, 'asc'],
@@ -84,7 +84,7 @@ include("../links.php");
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "cursos_novo.php",
+                    url: "atividades_novo.php",
                     type: "post",
                     data: {
                         c_descricao: c_descricao,
@@ -149,7 +149,7 @@ include("../links.php");
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "cursos_editar.php",
+                    url: "atividades_editar.php",
                     type: "post",
                     data: {
                         c_id: c_id,
@@ -177,18 +177,18 @@ include("../links.php");
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>Casa Azul - Sistema de Gestão</h4>
-            <h4>Lista de Cursos Ministrados</h4>
+            <h4>Lista de Atividades Realizadas</h4>
         </div>
     </div>
 
     <div class="container-fluid">
 
-        <button type="button" title="Inclusão de Novo Curso" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+        <button type="button" title="Inclusão de Nova atividade" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
         <a class="btn btn-secondary btn-sm" href="/casaazul/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
-        <table class="table table-bordered table-striped tabcursos">
+        <table class="table table-bordered table-striped tabatividades">
             <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
@@ -201,7 +201,7 @@ include("../links.php");
                 <?php
 
                 // faço a Leitura da tabela com sql
-                $c_sql = "SELECT cursos.id, cursos.descricao, cursos.observacao FROM cursos ORDER BY cursos.descricao";
+                $c_sql = "SELECT atividades.id, atividades.descricao, atividades.observacao FROM atividades ORDER BY atividades.descricao";
                 $result = $conection->query($c_sql);
                 // verifico se a query foi correto
                 if (!$result) {
@@ -234,7 +234,7 @@ include("../links.php");
         <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de novo curso</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de nova atividade</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
