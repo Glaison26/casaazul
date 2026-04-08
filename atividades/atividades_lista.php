@@ -206,16 +206,9 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                                     <td $c_cor_atendido style='text-align: center;' class='h4'>$c_linha2[paciente_atendido]</td>
                                     <td>
                                    
-                                   <button type='button'  class='btn btn-light btn-sm editbtn' data-toggle='modal' data-target='#editmodal'  title='Marcação de consulta' onclick='marcacao($c_linha2[id])'><img src='\smedweb\images\calendario.png' alt='' width='15' height='15'> Marcação</button>
-                                   <button type='button' name='btnincluir' onclick='incluir($c_linha2[id],\"$c_linha2[nome]\",\"$c_linha2[paciente_novo]\")' id='btnincluir' class='btn btn-light'><span class='glyphicon glyphicon-save-file'></span> Incluir</button>
-                                   <button type='button' name='btncorta' onclick='cortar($c_linha2[id],\"$c_linha2[nome]\")' id='btncorta' class='btn btn-light'><img src='\smedweb\images\corta.png' alt='' width='15' height='15'> Cortar</button>
-                                   <button type='button' name='btncola' onclick='colar($c_linha2[id],\"$c_linha2[nome]\", \"$c_linha2[status]\")' id='btncola' class='btn btn-light'><img src='\smedweb\images\copiar.png' alt='' width='15' height='15'> Colar</button>
-                                   <button type='button' name='btnemail' onclick='email($c_linha2[id],\"$c_linha2[nome]\")' id='btnemail' class='btn btn-light'><img src='\smedweb\images\o-email.png' alt='' width='15' height='15'> e-mail</button>
-                                   <a class='btn btn-light btn-sm' title='Desativar / Ativar Horário' href='javascript:func()'onclick='status($c_linha2[id],\"$c_linha2[nome]\")'>
-                                   <img src='\smedweb\images\certo.png' alt='' width='15' height='15'> Ativar/Desativar</a><a class='btn btn-light btn-sm' title='Desmarcar consulta' href='javascript:func()'onclick='desmarca($c_linha2[id], \"$c_linha2[nome]\")'>
-                                   <img src='\smedweb\images\borracha.png' alt='' width='15' height='15'> Desmarcar</a>
-                                   <a class='btn btn-light btn-sm' name='btnlog' class='btn btn-light btn-sm' title='Log da Agenda'
-                                   href='/smedweb/agenda/log_agenda.php?id=$c_linha2[id]'><img src='\smedweb\images\log.png'alt='' width='15' height='15'> Log</button>
+                                   <button type='button'  class='btn btn-light btn-sm editbtn' data-toggle='modal' data-target='#editmodal'  title='Editar'><img src='\smedweb\images\calendario.png' alt='' width='15' height='15'> Marcação</button>
+                                   <button type='button' name='btnparticipantes' onclick='incluir($c_linha2[id],\"$c_linha2[nome]\",\"$c_linha2[paciente_novo]\")' id='btnincluir' class='btn btn-light'><span class='glyphicon glyphicon-save-file'></span> Incluir</button>
+                                   
                                    </td>
                                    
                                     </tr>
