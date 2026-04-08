@@ -59,11 +59,11 @@ $c_data = date('Y-m-d');
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/pessoas/pessoas_lista.php">Pessoas Físicas</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Agenda de Atividades</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/atividades/atividades_lista.php">Agenda de Atividades</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Agenda de Ações</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/cursos/cursos_lista.php">Cadastro de Cursos</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/instrutores/instrutores_lista.php">Cadastro de Instrutores</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/atividades/atividades_lista.php">Tipo de Atividades</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/tipo_atividades/atividades_lista.php">Tipo de Atividades</a>
 
                     </div>
                 </div>
