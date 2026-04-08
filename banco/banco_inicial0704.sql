@@ -29,8 +29,27 @@ CREATE TABLE IF NOT EXISTS `atividades` (
 
 -- Copiando dados para a tabela casaazul.atividades: ~2 rows (aproximadamente)
 INSERT INTO `atividades` (`id`, `descricao`, `observacao`) VALUES
-	(1, 'Entraga de Cestas Básicas', _binary 0x4365737461206d656e73616c20652073656d616e616c),
+	(1, 'Entrega de Cestas Básicas', _binary 0x4365737461206d656e73616c20652073656d616e616c),
 	(2, 'Passeio Cultural', _binary 0x436f6d204f6e6962757320696e636c7569646f);
+
+-- Copiando estrutura para tabela casaazul.atividades_realizadas
+CREATE TABLE IF NOT EXISTS `atividades_realizadas` (
+  `id` int NOT NULL,
+  `id_curso` int DEFAULT NULL,
+  `data_inicio` date DEFAULT NULL,
+  `data_final` date DEFAULT NULL,
+  `id_instrutor` int DEFAULT NULL,
+  `num_vagas` int DEFAULT NULL,
+  `carga_horaria` varchar(5) DEFAULT NULL,
+  `observacao` blob,
+  PRIMARY KEY (`id`),
+  KEY `FK_atividades_realizadas_cursos` (`id_curso`),
+  KEY `FK_atividades_realizadas_instrutores` (`id_instrutor`),
+  CONSTRAINT `FK_atividades_realizadas_cursos` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`ID`),
+  CONSTRAINT `FK_atividades_realizadas_instrutores` FOREIGN KEY (`id_instrutor`) REFERENCES `instrutores` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela casaazul.atividades_realizadas: ~0 rows (aproximadamente)
 
 -- Copiando estrutura para tabela casaazul.cadastro
 CREATE TABLE IF NOT EXISTS `cadastro` (
