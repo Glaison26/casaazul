@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $nome_banco = $registro['BANCO'];
     $numero_agencia = $registro['AGENCIA'];
     $numero_conta = $registro['CONTA'];
-    $tipo_conta = $registro['TIPO_CONTA'];
+    $tipo_conta = $registro['tipo_conta'];
     $titular_conta = $registro['TITULAR'];
     $observacao = $registro['OBSERVACAO'];
 }
@@ -280,8 +280,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-sm-4">
                                     <select name="tipo_conta" class="form-control form-control-lg">
                                         <option value=""></option>
-                                        <option value="Corrente" <?php echo (isset($registro['TIPO_CONTA']) && $registro['TIPO_CONTA'] === 'Corrente') ? 'selected' : ''; ?>>Corrente</option>
-                                        <option value="Poupança" <?php echo (isset($registro['TIPO_CONTA']) && $registro['TIPO_CONTA'] === 'Poupança') ? 'selected' : ''; ?>>Poupança</option>
+                                        <option value="Corrente" <?php echo (isset($registro['tipo_conta']) && $registro['tipo_conta'] === 'Corrente') ? 'selected' : ''; ?>>Corrente</option>
+                                        <option value="Poupança" <?php echo (isset($registro['tipo_conta']) && $registro['tipo_conta'] === 'Poupança') ? 'selected' : ''; ?>>Poupança</option>
                                     </select>
                                 </div>
                             </div>

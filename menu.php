@@ -9,6 +9,7 @@ include('conexao.php');
 date_default_timezone_set('America/Sao_Paulo');
 $agora = date('d/m/Y H:i');
 $c_data = date('Y-m-d');
+$_SESSION['meu_sql'] = "nada";
 
 ?>
 

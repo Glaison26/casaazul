@@ -225,8 +225,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div> <!-- fim da aba apresentação -->
 
-
-
                     <div role="tabpanel" class="tab-pane" id="bancos">
                         <div style="padding-top:15px;padding-left:20px;">
                             <!-- dados bancários nome do banco, número da agência, número da conta tipo da conta e titular da conta -->

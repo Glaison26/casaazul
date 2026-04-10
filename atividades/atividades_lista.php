@@ -11,6 +11,7 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 include("../links.php");
 include_once "../lib_gop.php";
+
 date_default_timezone_set('America/Sao_Paulo');
 // funcão para retornar o dia da semana por extenso
 function diaSemana($data)
@@ -66,13 +67,52 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/smedweb/css/basico.css">
-    <title>Casa Azul - Sistema de Gestão</title>
+    <title>Casa Azul - Sistema de Gestão </title>
 
 </head>
 
 <body>
-    <!-- função para chamar marcação -->
+    <!-- script para chamar janela modal de inclusão -->
+    <script type="text/javascript">
+        // Função javascript e ajax para inclusão dos dados da janela modal de inclusão da agenda de atividades
+        $(document).ready(function() {
+            $('#frmadd').on('submit', function(e) {
+                e.preventDefault();
+                
+                var atividade = $('#up_atividadeField').val();
+                var data_inicio = $('#up_data_inicioField').val();
+                var data_final = $('#up_data_finalField').val();
+                var num_vagas = $('#up_num_vagasField').val();
+                var carga_horaria = $('#up_carga_horariaField').val();
+                var instrutor = $('#up_instrutorField').val();
+                var observacao = $('#up_observacaoField').val();
 
+                $.ajax({
+                    type: 'POST',
+                    url: 'atividades_incluir.php',
+                    data: {
+                        id: id,
+                        atividade: atividade,
+                        data_inicio: data_inicio,
+                        data_final: data_final,
+                        num_vagas: num_vagas,
+                        carga_horaria: carga_horaria,
+                        instrutor: instrutor,
+                        observacao: observacao
+                    },
+                    success: function(response) {
+                        // Aqui você pode tratar a resposta do servidor, se necessário
+                        alert('Atividade incluída com sucesso!');
+                        location.reload(); // Recarrega a página para mostrar a nova atividade na lista
+                    },
+                    error: function(xhr, status, error) {
+                        // Aqui você pode tratar erros de requisição, se necessário
+                        alert('Erro ao incluir atividade: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
     <!-- script jquery para tabela da agenda -->
     <script>
         $(document).ready(function() {
@@ -132,7 +172,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>Casa Azul - Sistema de Gestão</h4>
-                <h5>Lista de Atividade agendadas<h5>
+                <h5>Lista de Atividade agendadas <?php echo $_SESSION['meu_sql']; ?><h5>
             </div>
         </div>
         <!-- Formulário com as datas -->
@@ -142,6 +182,8 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                 <div class="col-sm-2">
                     <input type="Date" required maxlength="10" class="form-control" name="data1" id="data1" value=<?php echo $c_mostradata; ?> onkeypress="mascaraData(this)">
                 </div>
+                <!-- botão para abrir modal de inclusão de atividades -->
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editmodal"><span class="glyphicon glyphicon-plus"></span> Nova Atividade</button>&nbsp;
                 <button type="submit" return false name='btnagenda' id='btnagenda' class="btn btn-primary"><img src="\casaazul\images\buscar.png" alt="" width="20" height="20"></span> Consultar</button>&nbsp;
                 <a class='btn btn-info' title="Voltar ao menu" href='/casaazaul/menu.php'> <img src="\casaazul\images\voltar.png" alt="" width="20" height="20"> Voltar</a>
             </div>
@@ -221,126 +263,81 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
 
     </div>
 
-
-
-
-    <!-- janela Modal para marcação de consulta -->
+    <!-- janela Modal para nova Atividade -->
 
     <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Agênda Médica - Marcação</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Agenda de Atividades - Inclusão</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
                         <h5>Campos com (*) são obrigatórios</h5>
                     </div>
                     <form id="frmadd" method="POST" action="">
-                        <input type="hidden" id="up_idField" name="up_idField">
-                        <input type="hidden" id="up_novo" name="up_novo">
-                        <input type="hidden" id="up_atendido" name="up_atendido">
-                        <input type="hidden" id="up_compareceu" name="up_compareceu">
-                        <input type="hidden" id="up_vazio" name="up_vazio">
-                        <div class="mb-3 row">
-                            <label for="up_horarioField" class="col-md-3 form-label">Horário</label>
-                            <div class="col-md-4">
-                                <input type="time" readonly class="form-control" id="up_horarioField" name="up_horarioField">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="up_nomeField" class="col-md-3 form-label">Nome (*) </label>
-                            <div class="col-md-9">
-                                <input type="text" required class="form-control" id="up_nomeField" name="up_nomeField">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="up_matriculaField" class="col-md-3 form-label">Matricula</label>
-                            <div class="col-md-5">
-                                <input type="text" class="form-control" id="up_matriculaField" name="up_matriculaField">
-                            </div>
-                        </div>
+                        
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Convênio </label>
-                            <div class="col-sm-6">
-                                <select required class="form-control form-control-lg" id="up_convenioField" name="up_convenioField">
+                            <label class="col-sm-4 col-form-label">Atividade (*)</label>
+                            <div class="col-sm-8">
+                                <select class="form-control form-control-lg" name="up_atividadeField" id="up_atividadeField" required>
+                                    <option value="">Selecione a Atividade</option>
                                     <?php
-                                    $c_sql3 = "SELECT convenios.id, convenios.nome FROM convenios where id <>3 ORDER BY convenios.nome";
-                                    $result3 = $conection->query($c_sql3);
-                                    // insiro os registro do banco de dados na tabela 
-                                    while ($c_linha3 = $result3->fetch_assoc()) {
-
-                                        echo "
-                                        <option $c_op>$c_linha3[nome]</option>";
+                                    $c_sql_atividade = "SELECT ID, DESCRICAO FROM cursos ORDER BY DESCRICAO";
+                                    $result_atividade = $conection->query($c_sql_atividade);
+                                    while ($c_linha_atividade = $result_atividade->fetch_assoc()) {
+                                        echo "<option value='$c_linha_atividade[ID]'>$c_linha_atividade[DESCRICAO]</option>";
                                     }
                                     ?>
                                 </select>
-
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Telefone </label>
-                            <div class="col-sm-4">
-                                <input type="tel" required maxlength="25" onkeyup="handlePhone(event)" class=" form-control" id="up_telefoneField" name="up_telefoneField">
+                            <label class="col-sm-4 col-form-label">Data Início (*)</label>
+                            <div class="col-sm-5">
+                                <input type="date" class="form-control" name="up_data_inicioField" id="up_data_inicioField" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">E-mail</label>
-                            <div class="col-sm-9">
-                                <input type="text" required maxlength="225" class="form-control" id="up_emailField" name="up_emailField">
+                            <label class="col-sm-4 col-form-label">Data Final (*)</label>
+                            <div class="col-sm-5">
+                                <input type="date" class="form-control" name="up_data_finalField" id="up_data_finalField" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Observações</label>
-                            <div class="col-sm-9">
-                                <input type="text" maxlength="100" class="form-control" id="up_obsField" name="up_obsField">
+                            <label class="col-sm-4 col-form-label">Número de Vagas (*)</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control" name="up_num_vagasField" id="up_num_vagasField" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Situação</label>
-
-                        </div>
-                        <div class="row mb-3">
-
-                            <!-- checkbox para situação de paciente novo -->
-                            <div class="col-sm-6">
-                                <div class="form-check">
-                                    <div class="col-sm-2">
-                                        <input class="form-check-input" type="checkbox" id="chk_novopaciente">
-                                    </div>
-                                    <label class="form-check-label" for="chk_novopaciente">
-                                        Paciente Novo
-                                    </label>
-                                </div>
-                            </div>
-                            <br>
-                        </div>
-                        <div class="row mb-3">
-                            <!-- checkbox para situação de paciente comparecimento -->
-                            <div class="col-sm-6">
-                                <div class="form-check">
-                                    <div class="col-sm-2">
-                                        <input class="form-check-input" type="checkbox" name="chk_compareceu" id="chk_compareceu">
-                                    </div>
-                                    <label class="form-check-label" for="chk_compareceu">
-                                        Paciente Compareceu
-                                    </label>
-                                </div>
+                            <label class="col-sm-4 col-form-label">Carga Horária (*)</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="up_carga_horariaField" id="up_carga_horariaField" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <!-- checkbox para situação de paciente foi atendido -->
-                            <div class="col-sm-6">
-                                <div class="form-check">
-                                    <div class="col-sm-2">
-                                        <input class="form-check-input" type="checkbox" id="chk_atendido">
-                                    </div>
-                                    <label class="form-check-label" for="chk_atendido">
-                                        Paciente foi atendido
-                                    </label>
-                                </div>
+                            <label class="col-sm-4 col-form-label">Instrutor (*)</label>
+                            <div class="col-sm-8">
+                                <select  class="form-control form-control-lg" name="up_instrutorField" id="up_instrutorField" required>
+                                    <option value="">Selecione o Instrutor</option>
+                                    <?php
+                                    $c_sql_instrutor = "SELECT ID, NOME FROM instrutores ORDER BY NOME";
+                                    $result_instrutor = $conection->query($c_sql_instrutor);
+                                    while ($c_linha_instrutor = $result_instrutor->fetch_assoc()) {
+                                        echo "<option value='$c_linha_instrutor[ID]'>$c_linha_instrutor[NOME]</option>";
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Observação</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" name="up_observacaoField" id="up_observacaoField" rows="6"></textarea>
+                            </div>
+                        </div>
+                        
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Confirmar</button>
                         </div>
