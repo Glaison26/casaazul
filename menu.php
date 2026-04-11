@@ -127,8 +127,8 @@ $_SESSION['meu_sql'] = "nada";
             <a href="/casaazul/pessoas/pessoas_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-user-plus mr-2"></i>Pessoa Física
             </a>
-            <a href="#" class="text-white hover:text-blue-200 transition flex items-center">
-                <i class="fas fa-calendar-alt mr-2"></i>Atividades
+            <a href="/casaazul/atividades/atividades_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
+                <i class="fas fa-calendar-alt mr-2"></i>agenda de Atividades
             </a>
             <a href="#" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-tasks mr-2"></i>Ações

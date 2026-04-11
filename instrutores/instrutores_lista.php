@@ -96,23 +96,23 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
 
                     // insiro os registro do banco de dados na tabela 
                     while ($c_linha = $result->fetch_assoc()) {
-                        if ($c_linha['SEXO']=='M')
+                        if ($c_linha['sexo']=='M')
                             $c_sexo = 'Masculino';
                         else
                             $c_sexo = 'Feminino';
                  
                         echo "
                     <tr>
-                        <td>$c_linha[NOME]</td>
-                        <td>$c_linha[ENDERECO]</td>
-                        <td>$c_linha[BAIRRO]</td>
-                        <td>$c_linha[CEP]</td>
-                        <td>$c_linha[FONE1]</td>
-                        <td>$c_linha[FONE2]</td>
+                        <td>$c_linha[nome]</td>
+                        <td>$c_linha[endereco]</td>
+                        <td>$c_linha[bairro]</td>
+                        <td>$c_linha[cep]</td>
+                        <td>$c_linha[fone1]</td>
+                        <td>$c_linha[fone2]</td>
                         <td>$c_sexo</td>
                         <td>
-                    <a class='btn btn-secondary btn-sm' href='/casaazul/instrutores/instrutores_editar.php?id=$c_linha[ID]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[ID])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                    <a class='btn btn-secondary btn-sm' href='/casaazul/instrutores/instrutores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>";

@@ -46,13 +46,16 @@ $c_mostradata = date("Y-m-d");
 if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para executar sql de pesquisa na agenda
     // rotina para pesquisa na tabela de atividades com base na data selecionada
     $d_data = $_POST["data1"];
+    $d_data2 = $_POST["data2"];
     $c_dia_semana = diaSemana($d_data);
-    $c_sql2 = "select  data_inicio, data_final,num_vagas, carga_horaria, instrutores.NOME AS instrutor, cursos.DESCRICAO AS atividade,
-    observacao 
+    $c_dia_semana2 = diaSemana($d_data2);
+    $c_sql2 = "select atividades_realizadas.id,  data_inicio, data_final,num_vagas, carga_horaria, instrutores.NOME AS instrutor,
+     cursos.DESCRICAO AS atividade,
+    atividades_realizadas.observacao 
     from atividades_realizadas 
     JOIN cursos ON atividades_realizadas.id_curso=cursos.ID
     JOIN instrutores ON atividades_realizadas.id_instrutor=instrutores.ID
-    where data_inicio = '$d_data' order by data_inicio desc";
+    where data_inicio >= '$d_data' and data_final <= '$d_data2' or data_inicio <= '$d_data2' and data_final >= '$d_data' order by data_inicio desc";
     //echo $c_sql2;
     $result2 = $conection->query($c_sql2);
 }
@@ -72,47 +75,8 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
 </head>
 
 <body>
-    <!-- script para chamar janela modal de inclusão -->
-    <script type="text/javascript">
-        // Função javascript e ajax para inclusão dos dados da janela modal de inclusão da agenda de atividades
-        $(document).ready(function() {
-            $('#frmadd').on('submit', function(e) {
-                e.preventDefault();
-                
-                var atividade = $('#up_atividadeField').val();
-                var data_inicio = $('#up_data_inicioField').val();
-                var data_final = $('#up_data_finalField').val();
-                var num_vagas = $('#up_num_vagasField').val();
-                var carga_horaria = $('#up_carga_horariaField').val();
-                var instrutor = $('#up_instrutorField').val();
-                var observacao = $('#up_observacaoField').val();
 
-                $.ajax({
-                    type: 'POST',
-                    url: 'atividades_incluir.php',
-                    data: {
-                        id: id,
-                        atividade: atividade,
-                        data_inicio: data_inicio,
-                        data_final: data_final,
-                        num_vagas: num_vagas,
-                        carga_horaria: carga_horaria,
-                        instrutor: instrutor,
-                        observacao: observacao
-                    },
-                    success: function(response) {
-                        // Aqui você pode tratar a resposta do servidor, se necessário
-                        alert('Atividade incluída com sucesso!');
-                        location.reload(); // Recarrega a página para mostrar a nova atividade na lista
-                    },
-                    error: function(xhr, status, error) {
-                        // Aqui você pode tratar erros de requisição, se necessário
-                        alert('Erro ao incluir atividade: ' + error);
-                    }
-                });
-            });
-        });
-    </script>
+
     <!-- script jquery para tabela da agenda -->
     <script>
         $(document).ready(function() {
@@ -122,7 +86,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                    'aTargets': [5]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -165,6 +129,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
     <?php
     if (isset($d_data)) {
         $c_mostradata = date("d-m-Y", strtotime(str_replace('/', '-', $d_data)));
+        $c_mostradata2 = date("d-m-Y", strtotime(str_replace('/', '-', $d_data2)));
     }
     ?>
 
@@ -172,35 +137,37 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>Casa Azul - Sistema de Gestão</h4>
-                <h5>Lista de Atividade agendadas <?php echo $_SESSION['meu_sql']; ?><h5>
+                <h5>Lista de Atividades agendadas <h5>
             </div>
         </div>
         <!-- Formulário com as datas -->
         <form method="post">
-            <div class="row mb-3">
-                <label class="col-md-1 form-label">Pesquisa Data</label>
+            <div class="row mb-2">
+                <label class="col-md-2 form-label">Pesquisa Data</label>
                 <div class="col-sm-2">
-                    <input type="Date" required maxlength="10" class="form-control" name="data1" id="data1" value=<?php echo $c_mostradata; ?> onkeypress="mascaraData(this)">
+                    <input type="Date" required maxlength="10" class="form-control" name="data1" id="data1" value=<?php echo $c_mostradata; ?>>
+                </div>
+                <p class="col-md-0 form-label">a</p>
+                <div class="col-sm-2">
+                    <input type="date" required maxlength="10" class="form-control" name="data2" id="data2" value=<?php echo $c_mostradata; ?>>
                 </div>
                 <!-- botão para abrir modal de inclusão de atividades -->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editmodal"><span class="glyphicon glyphicon-plus"></span> Nova Atividade</button>&nbsp;
-                <button type="submit" return false name='btnagenda' id='btnagenda' class="btn btn-primary"><img src="\casaazul\images\buscar.png" alt="" width="20" height="20"></span> Consultar</button>&nbsp;
-                <a class='btn btn-info' title="Voltar ao menu" href='/casaazaul/menu.php'> <img src="\casaazul\images\voltar.png" alt="" width="20" height="20"> Voltar</a>
+                <a class="btn btn-success btn-sm" href="/casaazul/atividades/atividades_incluir.php"><span class="glyphicon glyphicon-plus"></span> Nova Atividade</a>&nbsp;&nbsp;
+                <button type="submit" return false name='btnagenda' id='btnagenda' class="btn btn-primary "><img src="\casaazul\images\buscar.png" alt="" width="20" height="20"></span> Consultar</button>&nbsp;&nbsp;
+                <a class='btn btn-info' title="Voltar ao menu" href='/casaazul/menu.php'> <img src="\casaazul\images\voltar.png" alt="" width="20" height="20"> Voltar</a>
             </div>
         </form>
 
         <hr>
 
         <!-- aba da agenda-->
-
-
         <div class="panel panel-info">
             <div class="panel-heading text-left">
                 <?php
                 if (isset($d_data)) {
 
                     echo "
-                            <h4>Agenda de  $c_dia_semana  $c_mostradata <h4>
+                            <h4>Agenda de atividades do dia $c_mostradata $c_dia_semana ao dia $c_mostradata2 " . diaSemana($_POST['data2']) . "</h4>
                             ";
                 }
                 ?>
@@ -212,13 +179,14 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
         <table class="table display table-striped table-bordered tabagenda">
             <thead class="thead">
                 <tr class="info">
-                    <th scope="col" style="width: 3px;"></th>
+
+
+                    <th scope="col">Data Início</th>
                     <th scope="col">Atividade</th>
                     <th scope="col">Data Término</th>
                     <th scope="col">No. de Vagas</th>
                     <th scope="col">Carga Horária</th>
                     <th scope="col">Instrutor</th>
-                    <th scope="col">Observação</th>
                     <th scope="col">Opções</th>
 
                 </tr>
@@ -234,22 +202,21 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
 
                         echo "
                                     <tr>
-                                    <td  style='width: 3px;' class='some'>$c_linha2[id]</td>
-                                    <td>$c_linha2[horario]</td>
-                                    <td $c_cor_ativo style='text-align: center;' class='h4'>$c_linha2[status]</td>
-                                    <td>$c_linha2[nome]</td>
-                                    <td>$c_linha2[matricula]</td>
-                                    <td>$c_linha2[convenio]</td>
-                                    <td>$c_linha2[telefone]</td>
-                                    <td>$c_linha2[email]</td>
-                                    <td>$c_linha2[observacao]</td>
-                                    <td $c_cor_novo style='text-align: center;' class='h4'>$c_linha2[paciente_novo]</td>
-                                    <td $c_cor_compareceu style='text-align: center;' class='h4'>$c_linha2[paciente_compareceu]</td>
-                                    <td $c_cor_atendido style='text-align: center;' class='h4'>$c_linha2[paciente_atendido]</td>
-                                    <td>
+                                    
+                                    
+                                    <td>" . date("d-m-Y", strtotime($c_linha2['data_inicio'])) . "</td>
+                                    <td>$c_linha2[atividade]</td>
+                                    <td>" . date("d-m-Y", strtotime($c_linha2['data_final'])) . "</td>
+                                    <td>$c_linha2[num_vagas]</td>
+                                    <td>$c_linha2[carga_horaria]</td>
+                                    <td>$c_linha2[instrutor]</td>
                                    
-                                   <button type='button'  class='btn btn-light btn-sm editbtn' data-toggle='modal' data-target='#editmodal'  title='Editar'><img src='\smedweb\images\calendario.png' alt='' width='15' height='15'> Marcação</button>
-                                   <button type='button' name='btnparticipantes' onclick='incluir($c_linha2[id],\"$c_linha2[nome]\",\"$c_linha2[paciente_novo]\")' id='btnincluir' class='btn btn-light'><span class='glyphicon glyphicon-save-file'></span> Incluir</button>
+                                    
+                                    <td>
+                                    <a class='btn btn-info btn-sm' href='/casaazul/atividades/atividades_participantes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes</a>
+                                     <a class='btn btn-secondary btn-sm' href='/casaazul/atividades/atividades_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha2[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+
                                    
                                    </td>
                                    
@@ -276,7 +243,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                         <h5>Campos com (*) são obrigatórios</h5>
                     </div>
                     <form id="frmadd" method="POST" action="">
-                        
+
                         <div class="row mb-3">
                             <label class="col-sm-4 col-form-label">Atividade (*)</label>
                             <div class="col-sm-8">
@@ -319,7 +286,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                         <div class="row mb-3">
                             <label class="col-sm-4 col-form-label">Instrutor (*)</label>
                             <div class="col-sm-8">
-                                <select  class="form-control form-control-lg" name="up_instrutorField" id="up_instrutorField" required>
+                                <select class="form-control form-control-lg" name="up_instrutorField" id="up_instrutorField" required>
                                     <option value="">Selecione o Instrutor</option>
                                     <?php
                                     $c_sql_instrutor = "SELECT ID, NOME FROM instrutores ORDER BY NOME";
@@ -337,7 +304,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                                 <textarea class="form-control" name="up_observacaoField" id="up_observacaoField" rows="6"></textarea>
                             </div>
                         </div>
-                        
+
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Confirmar</button>
                         </div>
