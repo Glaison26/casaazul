@@ -226,8 +226,8 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                                     
                                     <td>
                                     <a class='btn btn-info btn-sm' href='/casaazul/atividades/atividades_participantes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes</a>
-                                     <a class='btn btn-secondary btn-sm' href='/casaazul/atividades/atividades_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha2[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                                    <a class='btn btn-secondary btn-sm' href='/casaazul/atividades/atividades_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha2[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
 
                                    
                                    </td>

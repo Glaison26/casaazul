@@ -64,7 +64,7 @@ $_SESSION['meu_sql'] = "nada";
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Agenda de Ações</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/cursos/cursos_lista.php">Cadastro de Cursos</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/instrutores/instrutores_lista.php">Cadastro de Instrutores</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/tipo_atividades/atividades_lista.php">Tipo de Atividades</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/tipo_acoes/tipo_acoes_lista.php">Tipos de Ação</a>
 
                     </div>
                 </div>

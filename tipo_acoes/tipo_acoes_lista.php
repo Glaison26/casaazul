@@ -84,7 +84,7 @@ include("../links.php");
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "atividades_novo.php",
+                    url: "tipo_acoes_novo.php",
                     type: "post",
                     data: {
                         c_descricao: c_descricao,
@@ -131,8 +131,6 @@ include("../links.php");
                 $('#up_descricaoField').val(data[1]);
                 $('#up_observacaoField').val(data[2]);
 
-
-
             });
         });
     </script>
@@ -149,7 +147,7 @@ include("../links.php");
             if (c_descricao != '') {
 
                 $.ajax({
-                    url: "atividades_editar.php",
+                    url: "tipo_acoes_editar.php",
                     type: "post",
                     data: {
                         c_id: c_id,
@@ -177,7 +175,7 @@ include("../links.php");
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>Casa Azul - Sistema de Gestão</h4>
-            <h4>Lista de Atividades Realizadas</h4>
+            <h4>Lista de Ações Realizadas</h4>
         </div>
     </div>
 
@@ -217,7 +215,7 @@ include("../links.php");
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[observacao]</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Curso'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Tipo de Ação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -234,7 +232,7 @@ include("../links.php");
         <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de nova atividade</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de nova Ação</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
@@ -272,7 +270,7 @@ include("../links.php");
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar dados da atividade</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar dados da ação</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>

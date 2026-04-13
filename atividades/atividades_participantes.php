@@ -11,54 +11,18 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 include("../links.php");
 include_once "../lib_gop.php";
+// pego o id da atividade para listar os participantes
+$id_atividade = $_GET['id'];
 
 date_default_timezone_set('America/Sao_Paulo');
-// funcão para retornar o dia da semana por extenso
-function diaSemana($data)
-{
-    $diasemana = date("w", strtotime($data));
-    switch ($diasemana) {
-        case 0:
-            return "Domingo";
-            break;
-        case 1:
-            return "Segunda-feira";
-            break;
-        case 2:
-            return "Terça-feira";
-            break;
-        case 3:
-            return "Quarta-feira";
-            break;
-        case 4:
-            return "Quinta-feira";
-            break;
-        case 5:
-            return "Sexta-feira";
-            break;
-        case 6:
-            return "Sábado";
-            break;
-    }
-}
+// select para listar os participantes da atividade selecionada
+$c_sql2 = "select participamentes_atividade.id, cadastro.NOME AS participante,
+    participamentes_atividade.observacao
+    from participamentes_atividade
+    JOIN cadastro ON participamentes_atividade.id_participante = cadastro.ID
+    where participamentes_atividade.id_atividade = $id_atividade";
+$result2 = $conection->query($c_sql2);
 
-$c_mostradata = date("Y-m-d");
-if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para executar sql de pesquisa na agenda
-    // rotina para pesquisa na tabela de atividades com base na data selecionada
-    $d_data = $_POST["data1"];
-    $d_data2 = $_POST["data2"];
-    $c_dia_semana = diaSemana($d_data);
-    $c_dia_semana2 = diaSemana($d_data2);
-    $c_sql2 = "select atividades_realizadas.id,  data_inicio, data_final,num_vagas, carga_horaria, instrutores.NOME AS instrutor,
-     cursos.DESCRICAO AS atividade,
-    atividades_realizadas.observacao 
-    from atividades_realizadas 
-    JOIN cursos ON atividades_realizadas.id_curso=cursos.ID
-    JOIN instrutores ON atividades_realizadas.id_instrutor=instrutores.ID
-    where data_inicio >= '$d_data' and data_final <= '$d_data2' or data_inicio <= '$d_data2' and data_final >= '$d_data' order by data_inicio desc";
-    //echo $c_sql2;
-    $result2 = $conection->query($c_sql2);
-}
 ?>
 
 
@@ -86,7 +50,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [5]
+                    'aTargets': [2]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -125,36 +89,40 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
     </script>
 
     <!-- Função javascript e ajax para inclusão dos dados -->
-    <script>
-        $(document).ready(function() {
-            $('#frmadd').submit(function(e) {
-                e.preventDefault();
-                var id_atividade = <?php echo $_GET['id']; ?>;
-                var id_participante = $('#add_participanteField').val();
-                var observacao = $('#add_observacaoField').val();
+    <script type="text/javascript">
+        $(document).on('submit', '#frmadd', function(e) {
+            e.preventDefault();
+            var c_participante = $('#add_participanteField').val();
+            var c_observacao = $('#add_observacaoField').val();
+
+            if (c_participante != '') {
 
                 $.ajax({
-                    type: 'POST',
-                    url: 'atividades_participantes_add.php',
+                    // url para o arquivo de inclusão de participante com o id da atividade
+                    url: "participante_novo.php?id=" + <?php echo $id_atividade; ?>,
+                    type: "post",
                     data: {
-                        id_atividade: id_atividade,
-                        id_participante: id_participante,
-                        observacao: observacao
+                        c_participante: c_participante,
+                        c_observacao: c_observacao
+
                     },
-                    success: function(response) {
-                        // Lógica para lidar com a resposta do servidor, se necessário
-                        console.log(response);
-                        // Fechar o modal após a inclusão
-                        $('#novoModal').modal('hide');
-                        // Recarregar a página para atualizar a lista de participantes
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        var status = json.status;
+
                         location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        // Lógica para lidar com erros, se necessário
-                        console.error(error);
+                        if (status == 'true') {
+
+                            $('#novoModal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('falha ao incluir dados');
+                        }
                     }
                 });
-            });
+            } else {
+                alert('Preencha todos os campos obrigatórios');
+            }
         });
     </script>
 
@@ -173,7 +141,6 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
             Novo Participante
         </button>
         <a class="btn btn-info btn-sm" type="button" title="Voltar ao menu" href='/casaazul/atividades/atividades_lista.php'> <img src="\casaazul\images\voltar.png" alt="" width="20" height="20"> Voltar</a>
-
         <hr>
         <!-- montagem da tabela de agenda -->
         <table class="table display table-striped table-bordered participantes">
@@ -191,14 +158,12 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                 if (!empty($c_sql2)) {
 
                     while ($c_linha2 = $result2->fetch_assoc()) {
-
-
                         echo "
                                     <tr>
                                     <td>$c_linha2[participante]</td>
                                     <td>$c_linha2[observacao]</td>
                                     <td>
-                                    <a class='btn btn-secondary btn-sm' href='/casaazul/atividades/atividades_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha2[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                                     </td>
                                    
                                     </tr>
