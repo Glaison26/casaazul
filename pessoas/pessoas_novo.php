@@ -2,12 +2,37 @@
 session_start();
 include("../conexao.php");
 include("../links.php");
+include("../lib_gop.php");
 // configuro fuso horário
 date_default_timezone_set('America/Sao_Paulo');
+
+
 // post das informações
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //$conexao = new mysqli('localhost', 'root', '', 'casaazul');
-
+    // faço consistencia do cpf digitado
+    $cpf = $_POST['cpf'];
+    $cpf = preg_replace('/[^0-9]/', '', $cpf); // Remove caracteres não numéricos
+    if (strlen($cpf) != 11) {
+        echo "<script>alert('CPF inválido. O CPF deve conter 11 dígitos.'); window.location='pessoas_novo.php';</script>";
+        exit;
+    }
+    // verifico se o cpf já existe no banco de dados
+    $sql_check_cpf = "SELECT id FROM cadastro WHERE cpf = '$cpf'";
+    $result_check_cpf = $conection->query($sql_check_cpf);
+    if ($result_check_cpf->num_rows > 0) {
+        echo "<script>alert('CPF já cadastrado.'); window.location='pessoas_novo.php';</script>";
+        // chamo função para manter os dados digitados no formulário, exceto o cpf
+     
+           
+        exit;
+    }
+    // verifico se cpf é válido usando a função de validação de CPF  
+      if (!validaCPF($cpf)) {
+        echo "<script>alert('CPF inválido.'); window.location='pessoas_novo.php';</script>";
+       
+        exit;
+    }
 
     $nome = $_POST['nome'];
     $datanasc =  new DateTime($_POST['datanasc']);
@@ -70,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return value
         }
     </script>
+   
     <!-- script para capturar cep -->
     <script>
         // script para capturar endereço pelo cep
