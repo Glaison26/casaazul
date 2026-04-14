@@ -25,31 +25,36 @@ CREATE TABLE IF NOT EXISTS `atividades` (
   `descricao` varchar(200) DEFAULT NULL,
   `observacao` blob,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela casaazul.atividades: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela casaazul.atividades: ~4 rows (aproximadamente)
 INSERT INTO `atividades` (`id`, `descricao`, `observacao`) VALUES
 	(1, 'Entrega de Cestas Básicas', _binary 0x4365737461206d656e73616c20652073656d616e616c),
-	(2, 'Passeio Cultural', _binary 0x436f6d204f6e6962757320696e636c7569646f);
+	(2, 'Passeio Cultural', _binary 0x436f6d204f6e6962757320696e636c7569646f),
+	(3, 'Bailes', _binary 0x7465737465),
+	(4, 'Rua de laser', _binary 0x436f6d2061706f696f20646120504d206520626f6d626569726f73);
 
 -- Copiando estrutura para tabela casaazul.atividades_realizadas
 CREATE TABLE IF NOT EXISTS `atividades_realizadas` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `id_curso` int DEFAULT NULL,
   `data_inicio` date DEFAULT NULL,
   `data_final` date DEFAULT NULL,
   `id_instrutor` int DEFAULT NULL,
   `num_vagas` int DEFAULT NULL,
-  `carga_horaria` varchar(5) DEFAULT NULL,
+  `carga_horaria` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `observacao` blob,
   PRIMARY KEY (`id`),
   KEY `FK_atividades_realizadas_cursos` (`id_curso`),
   KEY `FK_atividades_realizadas_instrutores` (`id_instrutor`),
   CONSTRAINT `FK_atividades_realizadas_cursos` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`ID`),
-  CONSTRAINT `FK_atividades_realizadas_instrutores` FOREIGN KEY (`id_instrutor`) REFERENCES `instrutores` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `FK_atividades_realizadas_instrutores` FOREIGN KEY (`id_instrutor`) REFERENCES `instrutores` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela casaazul.atividades_realizadas: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela casaazul.atividades_realizadas: ~2 rows (aproximadamente)
+INSERT INTO `atividades_realizadas` (`id`, `id_curso`, `data_inicio`, `data_final`, `id_instrutor`, `num_vagas`, `carga_horaria`, `observacao`) VALUES
+	(1, 3, '2026-04-11', '2026-04-11', 1, 7, '34 hoas semanais', _binary 0x7465737465),
+	(2, 5, '2026-04-11', '2026-04-17', 1, 30, '48 horas Semanais', _binary 0x746573746520646520);
 
 -- Copiando estrutura para tabela casaazul.cadastro
 CREATE TABLE IF NOT EXISTS `cadastro` (
@@ -76,56 +81,79 @@ CREATE TABLE IF NOT EXISTS `cadastro` (
   `datasocio` date DEFAULT NULL,
   `observacao` blob,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela casaazul.cadastro: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela casaazul.cadastro: ~3 rows (aproximadamente)
 INSERT INTO `cadastro` (`id`, `nome`, `datanasc`, `identidade`, `cpf`, `cep`, `endereco`, `bairro`, `cidade`, `nomepai`, `nomemae`, `fone1`, `fone2`, `fone3`, `niss`, `email`, `data_cadastro`, `numerofilhos`, `sexo`, `socio`, `datasocio`, `observacao`) VALUES
-	(4, 'Glaison Queiroz', '1968-10-26', '4662097', '69551022653', '34505480', 'Rua da Intendencia 316', 'Centro', 'Sabará', 'Valdir Queiroz', 'Emilia Pereira Queiroz', '(31) 98426-2508', '(31) 3672-7688', '', '45465465', 'glaison26.queiroz@gmail.com', '2026-04-01', 0, 'M', NULL, NULL, _binary '');
+	(4, 'Glaison Queiroz', '1968-10-26', '4662097', '69551022653', '34505480', 'Rua da Intendencia 316', 'Centro', 'Sabará', 'Valdir Queiroz', 'Emilia Pereira Queiroz', '(31) 98426-2508', '(31) 3672-7688', '', '45465465', 'glaison26.queiroz@gmail.com', '2026-04-01', 0, 'M', NULL, NULL, _binary ''),
+	(5, 'maria da Silva', '2005-04-13', '6464564', '4564564', '34505060', 'Praça Paulo de Souza Lima', 'Caieira', 'Sabará', '', '', '(31) 22222-2222', '', '', '', '', '2026-04-14', 0, 'F', NULL, NULL, _binary ''),
+	(6, 'Lorena Carvalho', '2000-06-12', '433232233', '90377764000', '34505080', 'Rua Honorina da Silva Oliveira, 100', 'Caieira', 'Sabará', '', '', '(31) 121321-3212', '', '', '', '', '2026-04-14', 0, 'M', NULL, NULL, _binary '');
 
 -- Copiando estrutura para tabela casaazul.cursos
 CREATE TABLE IF NOT EXISTS `cursos` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `DESCRICAO` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `OBSERVACAO` blob,
+  `descricao` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `observacao` blob,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela casaazul.cursos: ~4 rows (aproximadamente)
-INSERT INTO `cursos` (`ID`, `DESCRICAO`, `OBSERVACAO`) VALUES
+-- Copiando dados para a tabela casaazul.cursos: ~5 rows (aproximadamente)
+INSERT INTO `cursos` (`ID`, `descricao`, `observacao`) VALUES
 	(1, 'Informática Básica I', _binary 0x77696e646f7773206520646967697461c3a7c3a36f),
 	(2, 'Informática Microsoft office', _binary 0x776f72642c20657863656c6c2c20706f77657220706f696e74),
 	(3, 'Balé', _binary 0x436c61737369636f206520636f6e7465706f72616e696f),
 	(4, 'OfficeBoy', _binary 0x436f6d20486162696c697461c3a7c3a36f204d6f746f),
-	(5, 'Eletricista', _binary 0x42617369636f);
+	(5, 'Eletricista Basico', _binary 0x42617369636f);
 
 -- Copiando estrutura para tabela casaazul.instrutores
 CREATE TABLE IF NOT EXISTS `instrutores` (
-  `ID` int NOT NULL AUTO_INCREMENT,
-  `NOME` varchar(150) NOT NULL,
-  `CEP` char(12) NOT NULL,
-  `ENDERECO` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `BAIRRO` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `ESCOLARIDADE` varchar(40) DEFAULT NULL,
-  `FONE1` varchar(20) DEFAULT NULL,
-  `FONE2` varchar(20) DEFAULT NULL,
-  `FONE3` varchar(20) DEFAULT NULL,
-  `EMAIL` varchar(150) DEFAULT NULL,
-  `ID_CURSO` int NOT NULL DEFAULT '0',
-  `DATANASC` date DEFAULT NULL,
-  `UF` char(2) NOT NULL,
-  `CPF` char(11) NOT NULL,
-  `IDENTIDADE` varchar(20) NOT NULL,
-  `CIDADE` varchar(100) NOT NULL,
-  `OBSERVACAO` blob,
-  `BANCO` char(5) DEFAULT NULL,
-  `AGENCIA` char(6) DEFAULT NULL,
-  `CONTA` char(15) DEFAULT NULL,
-  `TITULAR` varchar(90) DEFAULT NULL,
-  `SEXO` char(1) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `cep` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `endereco` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `bairro` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `escolaridade` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `fone1` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `fone2` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `fone3` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `email` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `id_curso` int NOT NULL DEFAULT '0',
+  `datanasc` date DEFAULT NULL,
+  `uf` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `cpf` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `identidade` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `cidade` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `observacao` blob,
+  `banco` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `agencia` char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `conta` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `titular` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `sexo` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `tipo_conta` varchar(50) NOT NULL DEFAULT '',
+  `chave_pix` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela casaazul.instrutores: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela casaazul.instrutores: ~1 rows (aproximadamente)
+INSERT INTO `instrutores` (`id`, `nome`, `cep`, `endereco`, `bairro`, `escolaridade`, `fone1`, `fone2`, `fone3`, `email`, `id_curso`, `datanasc`, `uf`, `cpf`, `identidade`, `cidade`, `observacao`, `banco`, `agencia`, `conta`, `titular`, `sexo`, `tipo_conta`, `chave_pix`) VALUES
+	(1, 'Glaison Queiroz', '34505480', 'Rua da Intendência', 'Centro', 'Ensino Superior Incompleto', '(31) 8383-8888', '', NULL, 'glisia.queiroz.adm@gmail.com', 0, '2026-01-26', 'MG', '69551022653', 'm48848', 'Sabará', _binary '', '', '', '', '', 'M', '', NULL);
+
+-- Copiando estrutura para tabela casaazul.participamentes_atividade
+CREATE TABLE IF NOT EXISTS `participamentes_atividade` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_participante` int DEFAULT NULL,
+  `id_atividade` int DEFAULT NULL,
+  `observacao` blob,
+  PRIMARY KEY (`id`),
+  KEY `FK_participamentes_atividade_cadastro` (`id_participante`),
+  KEY `FK_participamentes_atividade_atividades_realizadas` (`id_atividade`),
+  CONSTRAINT `FK_participamentes_atividade_atividades_realizadas` FOREIGN KEY (`id_atividade`) REFERENCES `atividades_realizadas` (`id`),
+  CONSTRAINT `FK_participamentes_atividade_cadastro` FOREIGN KEY (`id_participante`) REFERENCES `cadastro` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela casaazul.participamentes_atividade: ~1 rows (aproximadamente)
+INSERT INTO `participamentes_atividade` (`id`, `id_participante`, `id_atividade`, `observacao`) VALUES
+	(4, 4, 2, _binary 0x5072696d6569726120617469766964616465206e61204361736120417a756c);
 
 -- Copiando estrutura para tabela casaazul.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -136,11 +164,12 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `tipo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `ativo` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela casaazul.usuarios: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela casaazul.usuarios: ~2 rows (aproximadamente)
 INSERT INTO `usuarios` (`id`, `nome`, `login`, `senha`, `tipo`, `ativo`) VALUES
-	(1, 'Glaison Queiroz', 'Glaison', 'U2FiYXJhQDIwMjY=', 'Administrador', 'S');
+	(1, 'Glaison Queiroz', 'Glaison', 'U2FiYXJhQDIwMjY=', 'Administrador', 'S'),
+	(2, 'Casa Azul', 'casaazul', 'Y2FzYWF6dWxAMjAyNg==', 'Administrador', 'S');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
