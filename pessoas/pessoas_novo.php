@@ -46,15 +46,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $niss = $_POST['niss'];
         $email = $_POST['email'];
         $sexo = $_POST['sexo'];
+        $genero = $_POST['genero'];
         $data_cadastro =  new DateTime($_POST['data_cadastro']);
         $data_cadastro = $data_cadastro->format('Y-m-d');
         $numerofilhos = $_POST['numerofilhos'];
         $observacao = $_POST['observacao'];
 
         $c_sql = "INSERT INTO cadastro (nome, datanasc, identidade, cpf, cep, endereco, bairro, cidade, nomepai, nomemae, fone1, fone2, fone3,
-     niss, email, sexo, data_cadastro, numerofilhos, observacao) VALUES ('$nome', '$datanasc', '$identidade', '$cpf', '$cep', '$endereco', 
+     niss, email, sexo, data_cadastro, numerofilhos, observacao, genero) VALUES ('$nome', '$datanasc', '$identidade', '$cpf', '$cep', '$endereco', 
      '$bairro', '$cidade', '$nomepai', '$nomemae', '$fone1', '$fone2', '$fone3', '$niss', '$email', '$sexo', '$data_cadastro',
-     '$numerofilhos', '$observacao')";
+     '$numerofilhos', '$observacao', '$genero')";
 
         $result = $conection->query($c_sql);
 
@@ -241,13 +242,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <input type="email" class="form-control" name="email" maxlength="150" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
                     </div>
-                    <label class="col-sm-1">Gênero:</label>
-                    <div class="col-sm-4">
+                    <label class="col-sm-1">Sexo:</label>
+                    <div class="col-sm-3">
                         <select name="sexo" class="form-control form-control-lg" class="form-control" required value="<?php echo isset($_POST['sexo']) ? $_POST['sexo'] : ''; ?>">
                             <option value=""></option>
                             <option value="M">Masculino</option>
                             <option value="F">Feminino</option>
                         </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-1">Gênero:</label>
+                    <div class="col-sm-3">
+                        <select name="genero" class="form-control form-control-lg" class="form-control" required value="<?php echo isset($_POST['genero']) ? $_POST['genero'] : ''; ?>">
+                            <option value=""></option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1">Número de Filhos:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control" name="numerofilhos" required value="<?php echo isset($_POST['numerofilhos']) ? $_POST['numerofilhos'] : '0'; ?>">
                     </div>
                 </div>
 
@@ -256,10 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="col-sm-3">
                         <input type="date" name="data_cadastro" class="form-control" value="<?php echo date('Y-m-d'); ?>" value="<?php echo isset($_POST['data_cadastro']) ? $_POST['data_cadastro'] : ''; ?>" required>
                     </div>
-                    <label class="col-sm-1">Número de Filhos:</label>
-                    <div class="col-sm-4">
-                        <input type="number" class="form-control" name="numerofilhos" required value="<?php echo isset($_POST['numerofilhos']) ? $_POST['numerofilhos'] : '0'; ?>">
-                    </div>
+
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-1 col-form-label">Observação:</label>

@@ -8,7 +8,7 @@ $pessoa = null;
 $id = $_GET['id'] ?? null;
 
 if ($id) {
-   // leitura do paciente através de sql usando id passada
+    // leitura do paciente através de sql usando id passada
     $c_sql = "select * from cadastro where id=$id";
     $result = $conection->query($c_sql);
     $pessoa = $result->fetch_assoc();
@@ -17,8 +17,8 @@ if ($id) {
         header('location: /casaazul/pessoas/pessoas_lista.php');
         exit;
     }
-    
-   // Converto as datas para o formato 'Y-m-d' para exibição no formulário
+
+    // Converto as datas para o formato 'Y-m-d' para exibição no formulário
     if ($pessoa['datanasc']) {
         $pessoa['datanasc'] = date('Y-m-d', strtotime($pessoa['datanasc']));
     }
@@ -36,7 +36,16 @@ if ($id) {
     $cidade = $pessoa['cidade'] ?? '';
     $nomepai = $pessoa['nomepai'] ?? '';
     $nomemae = $pessoa['nomemae'] ?? '';
-    
+    $genero = $pessoa['genero'] ?? '';
+    $fone1 = $pessoa['fone1'] ?? '';
+    $fone2 = $pessoa['fone2'] ?? '';
+    $fone3 = $pessoa['fone3'] ?? '';
+    $niss = $pessoa['niss'] ?? '';
+    $email = $pessoa['email'] ?? '';
+    $sexo = $pessoa['sexo'] ?? '';
+    $data_cadastro = $pessoa['data_cadastro'] ?? '';    
+    $numerofilhos = $pessoa['numerofilhos'] ?? 0;
+    $observacao = $pessoa['observacao'] ?? '';
 
 }
 
@@ -61,12 +70,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $numerofilhos = $_POST['numerofilhos'] ?? 0;
     $observacao = $_POST['observacao'] ?? '';
     $id = $_GET['id'] ?? null;
-    
+
 
     if ($id) {
-        $c_sql = "UPDATE cadastro SET nome='$nome', identidade='$identidade', cpf='$cpf', datanasc='$datanasc', cep='$cep', endereco='$endereco', bairro='$bairro', cidade='$cidade', nomepai='$nomepai', nomemae='$nomemae', fone1='$fone1', fone2='$fone2', fone3='$fone3', niss='$niss', email='$email', sexo='$sexo', data_cadastro='$data_cadastro', numerofilhos=$numerofilhos, observacao='$observacao' WHERE id=$id";
+        $c_sql = "UPDATE cadastro SET nome='$nome', identidade='$identidade', cpf='$cpf', datanasc='$datanasc', cep='$cep', endereco='$endereco',
+         bairro='$bairro', cidade='$cidade', nomepai='$nomepai', nomemae='$nomemae', fone1='$fone1', fone2='$fone2', 
+         fone3='$fone3', niss='$niss', email='$email', sexo='$sexo', data_cadastro='$data_cadastro', numerofilhos='$numerofilhos', 
+         observacao='$observacao' WHERE id=$id";
     } else {
-        $c_sql = "INSERT INTO cadastro (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, nomepai, nomemae, fone1, fone2, fone3, niss, email, sexo, data_cadastro, numerofilhos, observacao) VALUES ('$nome', '$identidade', '$cpf', '$datanasc', '$cep', '$endereco', '$bairro', '$cidade', '$nomepai', '$nomemae', '$fone1', '$fone2', '$fone3', '$niss', '$email', '$sexo', '$data_cadastro', $numerofilhos, '$observacao')";
+        $c_sql = "INSERT INTO cadastro (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, nomepai, nomemae, fone1, fone2, fone3, niss, email, sexo, data_cadastro, numerofilhos, observacao) VALUES ('$nome', '$identidade', '$cpf', '$datanasc', '$cep', '$endereco', '$bairro', '$cidade', '$nomepai',
+         '$nomemae', '$fone1', '$fone2', '$fone3', '$niss', '$email', '$sexo', '$data_cadastro', '$numerofilhos', '$observacao')";
     }
     // fecha o banco de dados e volta para a lista de pessoas
     if ($conection->query($c_sql) === TRUE) {
@@ -224,21 +237,33 @@ if ($id) {
                         </select>
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <label class="col-sm-1">Gênero:</label>
+                    <div class="col-sm-3">
+                        <select name="genero" class="form-control form-control-lg" class="form-control" required value="<?php echo isset($_POST['genero']) ? $_POST['genero'] : ''; ?>">
+                            <option value=""></option>
+                            <option value="M" <?php echo (isset($pessoa['genero']) && $pessoa['genero'] === 'M') ? 'selected' : ''; ?>>Masculino</option>
+                            <option value="F" <?php echo (isset($pessoa['genero']) && $pessoa['genero'] === 'F') ? 'selected' : ''; ?>>Feminino</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1">Número de Filhos:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control" name="numerofilhos" requered value="<?php echo $numerofilhos?>">
+                    </div>
+
+                </div>
 
                 <div class="row mb-3">
                     <label class="col-sm-1 col-form-label">Data de Cadastro:</label>
                     <div class="col-sm-3">
                         <input type="date" name="data_cadastro" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
                     </div>
-                    <label class="col-sm-1">Número de Filhos:</label>
-                    <div class="col-sm-4">
-                        <input type="number" class="form-control" name="numerofilhos" requered value="0">
-                    </div>
+                   
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-1 col-form-label">Observação:</label>
                     <div class="col-sm-8">
-                        <textarea name="observacao" class="form-control" rows="4"></textarea>
+                        <textarea name="observacao" class="form-control" rows="4"><?php echo isset($pessoa['observacao']) ? $pessoa['observacao'] : ''; ?></textarea>
                     </div>
                 </div>
                 <hr>
@@ -246,10 +271,10 @@ if ($id) {
                     <div class="offset-sm-0 col-sm-3">
                         <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                         <a class='btn btn-danger' href='/casaazul/pessoas/pessoas_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
-                       
+
                     </div>
                 </div>
-            
+
             </form>
         </div>
     </div>
