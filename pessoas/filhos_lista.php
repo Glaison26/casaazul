@@ -10,21 +10,30 @@ $result_pessoa = $conection->query($c_sql_pessoa);
 if (!$result_pessoa) {
     die("Erro ao Executar Sql!!" . $conection->connect_error);
 }
+// sql para pegar a quantidade de filhos cadastrados para a pessoa
+$c_sql_filhos = "SELECT COUNT(*) as total FROM dependentes WHERE id_pessoa = $id";
+$result_filhos = $conection->query($c_sql_filhos);
+if (!$result_filhos) {
+    die("Erro ao Executar Sql!!" . $conection->connect_error);
+}
+$i_total_filhos = $result_filhos->fetch_assoc()['total'] ?? 0;
+
 $pessoa = $result_pessoa->fetch_assoc();
 $pessoa_nome = $pessoa['nome'] ?? 'Pessoa Desconecida';
 $pessoa_numero_filhos = $pessoa['numerofilhos'] ?? 0;
 // função para calcular idade a partir da data de nascimento
-// desabilito o botão de incluir filhos caso numero de registros seja igual ao numero de filhos da pessoa
-if ($id) {
-    $result_filhos = $conection->query($c_sql);
-    if (!$result_filhos) {
-        die("Erro ao Executar Sql!!" . $conection->connect_error);
+// desabilito o botão de incluir filhos caso numero de registros de dependentes seja igual ou maior ao numero de filhos da pessoa
+if (($pessoa_numero_filhos > 0) && ($pessoa_numero_filhos <= $i_total_filhos)) {
+    // desabilitar o botão de incluir filhos usando php para adicionar a classe disabled do bootstrap
+    echo "<style>
+    #btn_novo_filho {
+        pointer-events: none;
+        opacity: 0.5;
     }
-    $numero_filhos_cadastrados = $result_filhos->num_rows;
-    if ($numero_filhos_cadastrados >= $pessoa['numerofilhos']) {
-        echo "<script>$(document).ready(function() { $('#btn_novo_filho').prop('disabled', true); });</script>";
-    }
+    </style>";
 }
+
+
 function calcularIdade($data_nascimento)
 {
     $data_nascimento = new DateTime($data_nascimento);
@@ -49,7 +58,7 @@ function calcularIdade($data_nascimento)
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [4]
+                    'aTargets': [5]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -101,7 +110,7 @@ function calcularIdade($data_nascimento)
         <!-- painel para mostrar o nome da pessoa -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Filhos de <?php echo $pessoa_nome; ?></h3>
+                <h3 class="panel-title">Filhos de <?php echo $pessoa_nome . $pessoa_numero_filhos . $i_total_filhos; ?></h3>
             </div>
             <div class="panel-body">
                 
@@ -136,13 +145,13 @@ function calcularIdade($data_nascimento)
                             $c_sexo = 'Masculino';
                         else
                             $c_sexo = 'Feminino';
-                        $i_idade = calcularIdade($c_linha['datanasc']);
+                        $i_idade = calcularIdade($c_linha['data_nasc']);
 
                         echo "
                     <tr>
                         <td>$c_linha[nome]</td>
                         <td>$c_linha[data_nasc]</td>
-                        <td>$c_linha[$i_idade]</td>
+                        <td>$i_idade</td>
                         <td>$c_sexo</td>
                        
                         <td>$c_sexo</td>
