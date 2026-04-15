@@ -110,7 +110,7 @@ function calcularIdade($data_nascimento)
         <!-- painel para mostrar o nome da pessoa -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Filhos de <?php echo $pessoa_nome . $pessoa_numero_filhos . $i_total_filhos; ?></h3>
+                <h3 class="panel-title">Filhos de <?php echo $pessoa_nome; ?></h3>
             </div>
             <div class="panel-body">
                 
