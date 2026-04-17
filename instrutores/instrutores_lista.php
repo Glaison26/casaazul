@@ -96,11 +96,11 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
 
                     // insiro os registro do banco de dados na tabela 
                     while ($c_linha = $result->fetch_assoc()) {
-                        if ($c_linha['sexo']=='M')
+                        if ($c_linha['sexo'] == 'M')
                             $c_sexo = 'Masculino';
                         else
                             $c_sexo = 'Feminino';
-                 
+
                         echo "
                     <tr>
                         <td>$c_linha[nome]</td>

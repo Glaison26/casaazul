@@ -96,6 +96,7 @@ function calcularIdade($data_nascimento)
         });
     </script>
 
+
 </head>
 
 <body>
@@ -113,8 +114,11 @@ function calcularIdade($data_nascimento)
                 <h3 class="panel-title">Filhos de <?php echo $pessoa_nome; ?></h3>
             </div>
             <div class="panel-body">
-                
-                <a class="btn btn-success btn-sm" name="btn_novo_filho" id="btn_novo_filho" href="/casaazul/pessoas/filhos_novo.php?id=<?php echo $id; ?>"><span class="glyphicon glyphicon-plus"></span> Incluir Filho</a>
+
+                <!-- botao para chamar a janela modal para incluir novo filho -->
+                <button id="btn_novo_filho" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalNovoFilho">
+                    <span class="glyphicon glyphicon-plus"></span> Incluir Novo Filho
+                </button>
                 <a class="btn btn-secondary btn-sm" href="/casaazul/pessoas/pessoas_lista.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
             </div>
             <!-- botão para voltar para a lista de pessoas -->
@@ -168,7 +172,46 @@ function calcularIdade($data_nascimento)
             </table>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Janela modal para incluir novo filho com nome, data de nascimento e sexo -->
+    <div class="modal fade" id="modalNovoFilho" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Incluir Novo Filho</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNovoFilho" action="/casaazul/pessoas/filhos_incluir.php" method="POST">
+                        <input type="hidden" name="id_pessoa" value="<?php echo $id; ?>">
+                        <div class="form-group">
+                            <label for="nome">Nome:</label>
+                            <input type="text" class="form-control" id="nome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="data_nasc">Data de Nascimento:</label>
+                            <input type="date" class="form-control" id="data_nasc" name="data_nasc" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sexo">Sexo:</label>
+                            <select class="form-control" id="sexo" name="sexo" required>
+                                <option value="M">Masculino</option>
+                                <option value="F">Feminino</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
-</html>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
