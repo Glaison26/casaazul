@@ -46,6 +46,7 @@ if ($id) {
     $data_cadastro = $pessoa['data_cadastro'] ?? '';    
     $numerofilhos = $pessoa['numerofilhos'] ?? 0;
     $observacao = $pessoa['observacao'] ?? '';
+    $genero = $pessoa['genero'] ?? '';
 
 }
 
@@ -69,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data_cadastro = $_POST['data_cadastro'] ?? '';
     $numerofilhos = $_POST['numerofilhos'] ?? 0;
     $observacao = $_POST['observacao'] ?? '';
+    $genero = $_POST['genero'] ?? '';
     $id = $_GET['id'] ?? null;
 
 
@@ -76,10 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $c_sql = "UPDATE cadastro SET nome='$nome', identidade='$identidade', cpf='$cpf', datanasc='$datanasc', cep='$cep', endereco='$endereco',
          bairro='$bairro', cidade='$cidade', nomepai='$nomepai', nomemae='$nomemae', fone1='$fone1', fone2='$fone2', 
          fone3='$fone3', niss='$niss', email='$email', sexo='$sexo', data_cadastro='$data_cadastro', numerofilhos='$numerofilhos', 
-         observacao='$observacao' WHERE id=$id";
+         observacao='$observacao', genero='$genero' WHERE id=$id";
     } else {
-        $c_sql = "INSERT INTO cadastro (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, nomepai, nomemae, fone1, fone2, fone3, niss, email, sexo, data_cadastro, numerofilhos, observacao) VALUES ('$nome', '$identidade', '$cpf', '$datanasc', '$cep', '$endereco', '$bairro', '$cidade', '$nomepai',
-         '$nomemae', '$fone1', '$fone2', '$fone3', '$niss', '$email', '$sexo', '$data_cadastro', '$numerofilhos', '$observacao')";
+        $c_sql = "INSERT INTO cadastro (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, nomepai, nomemae, fone1, fone2, fone3, niss, email, sexo, data_cadastro, numerofilhos, observacao, genero) VALUES ('$nome', '$identidade', '$cpf', '$datanasc', '$cep', '$endereco', '$bairro', '$cidade', '$nomepai',
+         '$nomemae', '$fone1', '$fone2', '$fone3', '$niss', '$email', '$sexo', '$data_cadastro', '$numerofilhos', '$observacao', '$genero')";
     }
     // fecha o banco de dados e volta para a lista de pessoas
     if ($conection->query($c_sql) === TRUE) {
