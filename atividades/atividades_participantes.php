@@ -12,7 +12,12 @@ include("../conexao.php");
 include("../links.php");
 include_once "../lib_gop.php";
 // pego o id da atividade para listar os participantes
-$id_atividade = $_GET['id'];
+if (isset($_GET['id'])) {
+    $id_atividade = $_GET['id'];
+    $_SESSION['id_atividade'] = $id_atividade;
+} else {
+    $id_atividade = $_SESSION['id_atividade'];
+}
 
 date_default_timezone_set('America/Sao_Paulo');
 // select para listar os participantes da atividade selecionada
@@ -86,6 +91,15 @@ $result2 = $conection->query($c_sql2);
             });
 
         });
+    </script>
+
+    <!-- script para confirmar a exclusão do registro -->
+    <script>
+        function confirmacao(id) {
+            if (confirm("Deseja realmente excluir este registro?")) {
+                window.location.href = "participante_excluir.php?id=" + id;
+            }
+        }
     </script>
 
     <!-- Função javascript e ajax para inclusão dos dados -->

@@ -192,7 +192,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
             <thead class="thead">
                 <tr class="info">
 
-
+                    <th scope="col">#</th>
                     <th scope="col">Data Início</th>
                     <th scope="col">Atividade</th>
                     <th scope="col">Data Término</th>
@@ -215,7 +215,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                         echo "
                                     <tr>
                                     
-                                    
+                                    <td>$c_linha2[id]</td>
                                     <td>" . date("d-m-Y", strtotime($c_linha2['data_inicio'])) . "</td>
                                     <td>$c_linha2[atividade]</td>
                                     <td>" . date("d-m-Y", strtotime($c_linha2['data_final'])) . "</td>

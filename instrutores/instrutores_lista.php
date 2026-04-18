@@ -57,6 +57,14 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
 
         });
     </script>
+    <!-- script para confirmar a exclusão do registro -->
+    <script>
+        function confirmacao(id) {
+            if (confirm("Deseja realmente excluir este registro?")) {
+                window.location.href = "instrutores_excluir.php?id=" + id;
+            }
+        }
+    </script>
 
 </head>
 

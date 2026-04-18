@@ -16,7 +16,7 @@ include("../links.php");
         function confirmacao(id) {
             var resposta = confirm("Deseja remover esse registro?");
             if (resposta == true) {
-                window.location.href = "/gop/cadastros/marcas/marcas_excluir.php?id=" + id;
+                window.location.href = "/casaazul/tipo_acoes/tipo_acoes_excluir.php?id=" + id;
             }
         }
     </script>

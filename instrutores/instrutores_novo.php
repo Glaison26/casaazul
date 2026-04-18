@@ -2,44 +2,66 @@
 session_start();
 include("../conexao.php");
 include("../links.php");
+include_once "../lib_gop.php";
 // configuro fuso horário
 date_default_timezone_set('America/Sao_Paulo');
 // post das informações
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome = $_POST['nome'];
-    $identidade = $_POST['identidade'];
-    $cpf = $_POST['cpf'];
-    $datanasc = $_POST['datanasc'];
-    $cep = $_POST['cep'];
-    $endereco = $_POST['endereco'];
-    $bairro = $_POST['bairro'];
-    $cidade = $_POST['cidade'];
-    $fone1 = $_POST['fone1'];
-    $fone2 = $_POST['fone2'];
-    $escolaridade = $_POST['escolaridade'];
-    $sexo = $_POST['sexo'];
-    $email = $_POST['email'];
-    $nome_banco = $_POST['nome_banco'];
-    $numero_agencia = $_POST['numero_agencia'];
-    $numero_conta = $_POST['numero_conta'];
-    $tipo_conta = $_POST['tipo_conta'];
-    $titular_conta = $_POST['titular_conta'];
-    $observacao = $_POST['observacao'];
-    $pix = $_POST['pix'];
-    $uf = 'MG';
-    // inclusão dos dadospor sql
-    $c_sql = "INSERT INTO instrutores (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, fone1, fone2, escolaridade, sexo, email,
+    do {
+        $nome = $_POST['nome'];
+        $identidade = $_POST['identidade'];
+        $cpf = $_POST['cpf'];
+        $datanasc = $_POST['datanasc'];
+        $cep = $_POST['cep'];
+        $endereco = $_POST['endereco'];
+        $bairro = $_POST['bairro'];
+        $cidade = $_POST['cidade'];
+        $fone1 = $_POST['fone1'];
+        $fone2 = $_POST['fone2'];
+        $escolaridade = $_POST['escolaridade'];
+        $sexo = $_POST['sexo'];
+        $email = $_POST['email'];
+        $nome_banco = $_POST['nome_banco'];
+        $numero_agencia = $_POST['numero_agencia'];
+        $numero_conta = $_POST['numero_conta'];
+        $tipo_conta = $_POST['tipo_conta'];
+        $titular_conta = $_POST['titular_conta'];
+        $observacao = $_POST['observacao'];
+        $pix = $_POST['pix'];
+        $uf = 'MG';
+        $cpf = preg_replace('/[^0-9]/', '', $cpf); // Remove caracteres não numéricos
+
+
+        // verifico se o cpf já existe no banco de dados
+        $sql_check_cpf = "SELECT id FROM instrutores WHERE cpf = '$cpf'";
+        $result_check_cpf = $conection->query($sql_check_cpf);
+        if ($result_check_cpf->num_rows > 0) {
+            $msg_erro = "CPF informado já cadastrado favor verificar!!";
+            break;
+        }
+
+        if (!validaCPF($cpf) && !empty($cpf)) {
+            $msg_erro = "CPF informado inválido!!";
+            break;
+        }
+        // inclusão dos dadospor sql
+        $c_sql = "INSERT INTO instrutores (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, fone1, fone2, escolaridade, sexo, email,
      banco, agencia, conta, tipo_conta, titular, observacao, uf, chave_pix) VALUES ('$nome', '$identidade', '$cpf', '$datanasc', '$cep', '$endereco',
      '$bairro', '$cidade', '$fone1', '$fone2', '$escolaridade', '$sexo', '$email', '$nome_banco', '$numero_agencia', '$numero_conta', '$tipo_conta',
      '$titular_conta', '$observacao', '$uf', '$pix')";
-    $result = $conection->query($c_sql);
-    // verifico se a query foi correto
-    if (!$result) {
-        die("Erro ao Executar Sql!!" . $conection->connect_error);
-    }
-    header('location: /casaazul/instrutores/instrutores_lista.php');
+        $result = $conection->query($c_sql);
+        // verifico se a query foi correto
+        if (!$result) {
+            die("Erro ao Executar Sql!!" . $conection->connect_error);
+        }
+        header('location: /casaazul/instrutores/instrutores_lista.php');
+    } while (false);
 }
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -117,6 +139,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
         <div class="container content-box">
+            <?php
+            if (!empty($msg_erro)) {
+                echo "
+            <div class='alert alert-warning' role='alert'>
+                <h4>$msg_erro</h4>
+            </div>
+                ";
+            }
+            ?>
 
 
             <form method="POST" action="">
@@ -234,9 +265,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="row mb-3">
                                 <label class="col-sm-1 col-form-label">Nome do Banco:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="nome_banco" class="form-control" maxlength="100" value=                               
-                                    
-                    >
+                                    <input type="text" name="nome_banco" class="form-control" maxlength="100" value=>
                                 </div>
                                 <label class="col-sm-1">Número da Agência:</label>
                                 <div class="col-sm-4">

@@ -1,8 +1,14 @@
 <?php
 include("../conexao.php");
 include("../links.php");
+session_start();
 //
-$id = $_GET['id'] ?? null;
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $_SESSION['id_pessoa'] = $id;
+} else {
+    $id = $_SESSION['id_pessoa'];
+}
 $c_sql = "SELECT * FROM dependentes WHERE id_pessoa = $id ORDER BY nome";
 // sql para pegar o nome dapessoa
 $c_sql_pessoa = "SELECT nome, numerofilhos FROM cadastro WHERE id = $id";
@@ -96,6 +102,15 @@ function calcularIdade($data_nascimento)
         });
     </script>
 
+      <script language="Javascript">
+        function confirmacao(id) {
+            var resposta = confirm("Deseja remover esse registro?");
+            if (resposta == true) {
+                window.location.href = "/casaazul/pessoas/filhos_excluir.php?id=" + id;
+            }
+        }
+    </script>
+
     <!-- script para incluir filho -->
     <script type="text/javascript">
         // Função javascript e ajax para inclusão dos dados
@@ -139,77 +154,6 @@ function calcularIdade($data_nascimento)
         });
     </script>
 
-    <!--  script javascript Coleta dados da tabela de dependentes (filhos) -->
-    <!-- Coleta dados da tabela para edição do registro -->
-     <script>
-        $(document).ready(function() {
-
-            $('.editbtn').on('click', function() {
-
-                $('#editmodal').modal('show');
-
-                $tr = $(this).closest('tr');
-
-                var data = $tr.children("td").map(function() {
-                    return $(this).text();
-                }).get();
-
-                console.log(data);
-
-                $('#up_idField').val(data[0]);
-                $('#up_descricaoField').val(data[1]);
-                $('#up_observacaoField').val(data[2]);
-
-            });
-        });
-    </script>
-
-
-    <script type="text/javascript">
-        ~
-        // Função javascript e ajax para Alteração dos dados
-        $(document).on('submit', '#frmup', function(e) {
-            e.preventDefault();
-            var c_id = $('#id_pessoa').val();
-            var c_nome = $('#up_nomeField').val();
-            var c_data_nasc = $('#up_data_nascField').val();
-            var c_sexo = $('#up_sexoField').val();
-
-            if (c_nome != '') {
-
-                $.ajax({
-                    url: "filho_editar.php",
-                    type: "post",
-                    data: {
-                        c_id: c_id,
-                        c_nome: c_nome,
-                        c_data_nasc: c_data_nasc,
-                        c_sexo: c_sexo
-                    },
-                    success: function(data) {
-                        var json = JSON.parse(data);
-                        var status = json.status;
-                        if (status == 'true') {
-                            $('#editmodal').modal('hide');
-                            location.reload();
-                        } else {
-                            alert('falha ao alterar dados');
-                        }
-                    }
-                });
-
-            } else {
-                alert('Todos os campos devem ser preenchidos!!');
-            }
-        });
-    </script>
-
-
-
-
-
-
-
 </head>
 
 <body>
@@ -217,7 +161,7 @@ function calcularIdade($data_nascimento)
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>Casa Azul - Sistema de Gestão</h4>
-                <h5>Lista de Pessoas Fisicas<h5>
+                <h5>Lista de Filhos Pessoas Fisicas<h5>
             </div>
         </div>
         <br>
@@ -275,7 +219,7 @@ function calcularIdade($data_nascimento)
                         <td>$i_idade</td>
                         <td>$c_sexo</td>
                     <td>
-                    <button type='button' class='btn btn-primary btn-sm editbtn' data-toggle='modal' data-target='#editmodal' title='Editar'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -318,31 +262,6 @@ function calcularIdade($data_nascimento)
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal para edição dos dados -->
-    <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar Grupo</h4>
-                </div>
-                <div class="modal-body">
-                    <div class='alert alert-warning' role='alert'>
-                        <h5>Campos com (*) são obrigatórios</h5>
-                    </div>
-                    <form id="frmup" method="POST" action="">
-                        <input type="hidden" id="up_idField" name="up_idField">
-
-
-                        <div class="modal-footer">
-                              <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Tipo de Ação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
-                            <button class="btn btn-secondary" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Fechar</button>
                         </div>
                     </form>
                 </div>
