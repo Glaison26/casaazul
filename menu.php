@@ -38,14 +38,14 @@ $_SESSION['meu_sql'] = "nada";
 
     <!-- Navbar resposiva -->
     <nav class="bg-blue-800 p-4 shadow-lg" responsive-navbar>
-         <div class="container mx-auto mt-2 text-white">
-        <p>Bem-vindo, <span class="font-bold"><?php echo $_SESSION['c_usuario']; ?></span>! Hoje é <?php echo date('d/m/Y'); ?>, <?php echo date('H:i'); ?> horas.</p>
-    </div>
+        <div class="container mx-auto mt-2 text-white">
+            <p>Bem-vindo, <span class="font-bold"><?php echo $_SESSION['c_usuario']; ?></span>! Hoje é <?php echo date('d/m/Y'); ?>, <?php echo date('H:i'); ?> horas.</p>
+        </div>
 
         <br>
         <div class="container mx-auto flex items-center justify-between">
-             <div class="text-white font-bold text-xl">
-                 Casa Azul - Sistema Gerencial 
+            <div class="text-white font-bold text-xl">
+                Casa Azul - Sistema Gerencial
             </div>
 
             <div class="hidden md:flex items-center space-x-6">
@@ -61,7 +61,7 @@ $_SESSION['meu_sql'] = "nada";
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/pessoas/pessoas_lista.php">Pessoas Físicas</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/atividades/atividades_lista.php">Agenda de Atividades</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Agenda de Ações</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/acoes/acoes_lista.php">Agenda de Ações</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/cursos/cursos_lista.php">Cadastro de Cursos</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/instrutores/instrutores_lista.php">Cadastro de Instrutores</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/tipo_acoes/tipo_acoes_lista.php">Tipos de Ação</a>
@@ -130,18 +130,18 @@ $_SESSION['meu_sql'] = "nada";
             <a href="/casaazul/atividades/atividades_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-calendar-alt mr-2"></i>agenda de Atividades
             </a>
-            <a href="#" class="text-white hover:text-blue-200 transition flex items-center">
+            <a href="/casaazul/acoes/acoes_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-tasks mr-2"></i>Ações
             </a>
         </div>
         <!--painel de boas vindas com data e hora e nome do usuário -->
-    
-   
+
+
     </nav>
     <main class="container mx-auto px-4 py-8">
         <div class="bg-white rounded-lg shadow-md p-6 mb-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Bem-vindo ao Sistema</h2>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Visualização de Prescrições -->
                 <div class="border-l-4 border-blue-800 pl-4">
@@ -149,22 +149,22 @@ $_SESSION['meu_sql'] = "nada";
                         <i class="fas fa-user-plus mr-2"></i>Gerenciamento Cadastro de Pessoas Físicas
                     </h3>
                     <p class="text-gray-700 leading-relaxed">
-                        Gerencie o cadastro de todas as pessoas físicas que utilizam os serviços de cultura, cursos e lazer oferecidos pela Casa Azul. 
-                        Mantenha informações atualizadas de participantes, consulte históricos de participação em atividades e acompanhe o engajamento de cada usuário. 
+                        Gerencie o cadastro de todas as pessoas físicas que utilizam os serviços de cultura, cursos e lazer oferecidos pela Casa Azul.
+                        Mantenha informações atualizadas de participantes, consulte históricos de participação em atividades e acompanhe o engajamento de cada usuário.
                         O sistema oferece controle completo sobre registros pessoais, documentação e histórico de frequência em cursos e eventos culturais.
                     </p>
                 </div>
-                
+
                 <!-- Inclusão de Prescrições -->
                 <div class="border-l-4 border-blue-800 pl-4">
                     <h3 class="text-xl font-bold text-blue-800 mb-3">
                         <i class="fas fa-calendar-alt mr-2"></i>Agenda de Atividades e ações realizadas
                     </h3>
                     <p class="text-gray-700 leading-relaxed">
-                        Organize e acompanhe todas as atividades, cursos e ações comunitárias oferecidas pela Casa Azul. 
-                        Crie cronogramas de eventos culturais, cursos de capacitação e atividades de lazer. 
-                        Gerencie inscrições de participantes, controle de frequência e avaliação de desempenho. 
-                        O sistema permite visualizar agendas, atribuir instrutores, definir tipos de ações e monitorar o sucesso de cada iniciativa. 
+                        Organize e acompanhe todas as atividades, cursos e ações comunitárias oferecidas pela Casa Azul.
+                        Crie cronogramas de eventos culturais, cursos de capacitação e atividades de lazer.
+                        Gerencie inscrições de participantes, controle de frequência e avaliação de desempenho.
+                        O sistema permite visualizar agendas, atribuir instrutores, definir tipos de ações e monitorar o sucesso de cada iniciativa.
                         Mantenha um registro completo de todas as atividades realizadas e acompanhe o impacto social das ações comunitárias desenvolvidas pela instituição.
                     </p>
                 </div>
