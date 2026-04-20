@@ -12,6 +12,7 @@ include("../conexao.php");
 include("../links.php");
 include_once "../lib_gop.php";
 
+
 date_default_timezone_set('America/Sao_Paulo');
 // funcão para retornar o dia da semana por extenso
 function diaSemana($data)
@@ -41,6 +42,18 @@ function diaSemana($data)
             break;
     }
 }
+// executo query se já foi escolhido data
+if ($_SESSION['sql'] != '') {
+    $c_sql2 = $_SESSION['sql'];
+    $result2 = $conection->query($c_sql2);
+
+    // verifico se a query foi correto
+    if (!$result2) {
+        die("Erro ao Executar Sql !!" . $conection->connect_error);
+    }
+} else {
+    $c_sql2 = "";
+}
 
 $c_mostradata = date("Y-m-d");
 if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para executar sql de pesquisa na agenda
@@ -58,6 +71,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
     where data_inicio >= '$d_data' and data_final <= '$d_data2' or data_inicio <= '$d_data2' and data_final >= '$d_data' order by data_inicio desc";
     //echo $c_sql2;
     $result2 = $conection->query($c_sql2);
+    $_SESSION['sql'] = $c_sql2;
 }
 ?>
 

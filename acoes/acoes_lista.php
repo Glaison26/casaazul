@@ -41,6 +41,17 @@ function diaSemana($data)
             break;
     }
 }
+if ($_SESSION['sql'] != '') {
+    $c_sql2 = $_SESSION['sql'];
+    $result2 = $conection->query($c_sql2);
+
+    // verifico se a query foi correto
+    if (!$result2) {
+        die("Erro ao Executar Sql !!" . $conection->connect_error);
+    }
+} else {
+    $c_sql2 = "";
+}
 
 $c_mostradata = date("Y-m-d");
 if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  // botão para executar sql de pesquisa na agenda
@@ -55,6 +66,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
     where data >= '$d_data' and data <= '$d_data2' order by data desc";
     //echo $c_sql2;
     $result2 = $conection->query($c_sql2);
+    $_SESSION['sql'] = $c_sql2;
 }
 ?>
 
@@ -220,7 +232,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                                     <td>$c_linha2[participantes]</td>
                                     
                                     <td>
-                                    <a class='btn btn-primary btn-sm' href='/casaazul/acoes/participantes_acoes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes <span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_participantes</span></a>&nbsp;&nbsp;
+                                    <a class='btn btn-primary btn-sm' href='/casaazul/acoes/participantes_acoes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes <span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_participantes</span></a>&nbsp;
                                     <a class='btn btn-secondary btn-sm' href='/casaazul/acoes/acoes_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha2[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
 
