@@ -14,25 +14,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
     $registro = $result->fetch_assoc();
     // PEGO OS DADOS DO BANCO DE DADOS PARA EXIBIR NO FORMULÁRIO
-    $nome = $registro['NOME'];
-    $identidade = $registro['IDENTIDADE'];
-    $cpf = $registro['CPF'];
-    $datanasc = $registro['DATANASC'];
-    $cep = $registro['CEP'];
-    $endereco = $registro['ENDERECO'];
-    $bairro = $registro['BAIRRO'];
-    $cidade = $registro['CIDADE'];
-    $fone1 = $registro['FONE1'];
-    $fone2 = $registro['FONE2'];
-    $escolaridade = $registro['ESCOLARIDADE'];
-    $sexo = $registro['SEXO'];
-    $email = $registro['EMAIL'];
-    $nome_banco = $registro['BANCO'];
-    $numero_agencia = $registro['AGENCIA'];
-    $numero_conta = $registro['CONTA'];
+    $nome = $registro['nome'];
+    $identidade = $registro['identidade'];
+    $cpf = $registro['cpf'];
+    $datanasc = $registro['datanasc'];
+    $cep = $registro['cep'];
+    $endereco = $registro['endereco'];
+    $bairro = $registro['bairro'];
+    $cidade = $registro['cidade'];
+    $fone1 = $registro['fone1'];
+    $fone2 = $registro['fone2'];
+    $escolaridade = $registro['escolaridade'];
+    $sexo = $registro['sexo'];
+    $email = $registro['email'];
+    $nome_banco = $registro['banco'];
+    $numero_agencia = $registro['agencia'];
+    $numero_conta = $registro['conta'];
     $tipo_conta = $registro['tipo_conta'];
-    $titular_conta = $registro['TITULAR'];
-    $observacao = $registro['OBSERVACAO'];
+    $titular_conta = $registro['titular'];
+    $observacao = $registro['observacao'];
 }
 // post das informações
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -223,20 +223,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-sm-3">
                                     <select name="escolaridade" class="form-control form-control-lg" required>
                                         <option value=""></option>
-                                        <option value="Ensino Fundamental Incompleto" <?php echo (isset($registro['ESCOLARIDADE']) && $registro['ESCOLARIDADE'] === 'Ensino Fundamental Incompleto') ? 'selected' : ''; ?>>Ensino Fundamental Incompleto</option>
-                                        <option value="Ensino Fundamental Completo" <?php echo (isset($registro['ESCOLARIDADE']) && $registro['ESCOLARIDADE'] === 'Ensino Fundamental Completo') ? 'selected' : ''; ?>>Ensino Fundamental Completo</option>
-                                        <option value="Ensino Médio Incompleto" <?php echo (isset($registro['ESCOLARIDADE']) && $registro['ESCOLARIDADE'] === 'Ensino Médio Incompleto') ? 'selected' : ''; ?>>Ensino Médio Incompleto</option>
-                                        <option value="Ensino Médio Completo" <?php echo (isset($registro['ESCOLARIDADE']) && $registro['ESCOLARIDADE'] === 'Ensino Médio Completo') ? 'selected' : ''; ?>>Ensino Médio Completo</option>
-                                        <option value="Ensino Superior Incompleto" <?php echo (isset($registro['ESCOLARIDADE']) && $registro['ESCOLARIDADE'] === 'Ensino Superior Incompleto') ? 'selected' : ''; ?>>Ensino Superior Incompleto</option>
-                                        <option value="Ensino Superior Completo" <?php echo (isset($registro['ESCOLARIDADE']) && $registro['ESCOLARIDADE'] === 'Ensino Superior Completo') ? 'selected' : ''; ?>>Ensino Superior Completo</option>
+                                        <option value="Ensino Fundamental Incompleto" <?php echo (isset($registro['escolaridade']) && $registro['escolaridade'] === 'Ensino Fundamental Incompleto') ? 'selected' : ''; ?>>Ensino Fundamental Incompleto</option>
+                                        <option value="Ensino Fundamental Completo" <?php echo (isset($registro['escolaridade']) && $registro['escolaridade'] === 'Ensino Fundamental Completo') ? 'selected' : ''; ?>>Ensino Fundamental Completo</option>
+                                        <option value="Ensino Médio Incompleto" <?php echo (isset($registro['escolaridade']) && $registro['escolaridade'] === 'Ensino Médio Incompleto') ? 'selected' : ''; ?>>Ensino Médio Incompleto</option>
+                                        <option value="Ensino Médio Completo" <?php echo (isset($registro['escolaridade']) && $registro['escolaridade'] === 'Ensino Médio Completo') ? 'selected' : ''; ?>>Ensino Médio Completo</option>
+                                        <option value="Ensino Superior Incompleto" <?php echo (isset($registro['escolaridade']) && $registro['escolaridade'] === 'Ensino Superior Incompleto') ? 'selected' : ''; ?>>Ensino Superior Incompleto</option>
+                                        <option value="Ensino Superior Completo" <?php echo (isset($registro['escolaridade']) && $registro['escolaridade'] === 'Ensino Superior Completo') ? 'selected' : ''; ?>>Ensino Superior Completo</option>
                                     </select>
                                 </div>
                                 <label class="col-sm-1">Sexo:</label>
                                 <div class="col-sm-4">
                                     <select name="sexo" class="form-control form-control-lg" class="form-control" required>
                                         <option value=""></option>
-                                        <option value="M" <?php echo (isset($registro['SEXO']) && $registro['SEXO'] === 'M') ? 'selected' : ''; ?>>Masculino</option>
-                                        <option value="F" <?php echo (isset($registro['SEXO']) && $registro['SEXO'] === 'F') ? 'selected' : ''; ?>>Feminino</option>
+                                        <option value="M" <?php echo (isset($registro['sexo']) && $registro['sexo'] === 'M') ? 'selected' : ''; ?>>Masculino</option>
+                                        <option value="F" <?php echo (isset($registro['sexo']) && $registro['sexo'] === 'F') ? 'selected' : ''; ?>>Feminino</option>
                                     </select>
                                 </div>
                             </div>
