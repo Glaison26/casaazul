@@ -44,6 +44,14 @@ include_once "../lib_gop.php";
             where ar.id_instrutor = " . $_GET['id'] . "
             ORDER BY i.nome, ar.data_inicio";
             $result = $conection->query($c_sql);
+            // sql para buscar o nome do instrutor
+            $c_sql_instrutor = "SELECT nome FROM instrutores WHERE id = " . $_GET['id'];
+            $result_instrutor = $conection->query($c_sql_instrutor);
+            if ($result_instrutor->num_rows > 0) {
+                $row_instrutor = $result_instrutor->fetch_assoc();
+                echo "<h3>Atividades realizadas por: " . $row_instrutor['nome'] . "</h3>";
+            }
+
             if ($result->num_rows > 0) {
                 echo "<table class='table table-bordered'>
                         <thead>
