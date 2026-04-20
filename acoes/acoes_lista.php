@@ -220,7 +220,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                                     <td>$c_linha2[participantes]</td>
                                     
                                     <td>
-                                    <a class='btn btn-primary btn-sm' href='/casaazul/acoes/participantes_acoes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes <span style='background-color: #d9ff00; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_participantes</span></a>&nbsp;&nbsp;
+                                    <a class='btn btn-primary btn-sm' href='/casaazul/acoes/participantes_acoes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes <span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_participantes</span></a>&nbsp;&nbsp;
                                     <a class='btn btn-secondary btn-sm' href='/casaazul/acoes/acoes_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha2[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
 
