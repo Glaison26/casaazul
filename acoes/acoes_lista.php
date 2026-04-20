@@ -49,9 +49,9 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
     $d_data2 = $_POST["data2"];
     $c_dia_semana = diaSemana($d_data);
     $c_dia_semana2 = diaSemana($d_data2);
-    $c_sql2 = "select acoes.id,  DATA, acoes.descricao, participantes, atividades.descricao AS tipo
+    $c_sql2 = "select acoes.id,  data, acoes.descricao, participantes, atividades.descricao AS tipo
             from acoes 
-            JOIN atividades ON acoes.id=atividades.id
+            JOIN atividades ON acoes.id_tipo_atividade=atividades.id
     where data >= '$d_data' and data <= '$d_data2' order by data desc";
     //echo $c_sql2;
     $result2 = $conection->query($c_sql2);
@@ -152,7 +152,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
         <!-- Formulário com as datas -->
         <form method="post">
             <div class="row mb-2">
-                <label class="col-md-2 form-label">Pesquisa Data</label>
+                <label class="col-md-2 form-label">Intervalo da Pesquisa</label>
                 <div class="col-sm-2">
                     <input type="Date" required maxlength="10" class="form-control" name="data1" id="data1" value=<?php echo $c_mostradata; ?>>
                 </div>
@@ -160,8 +160,8 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                 <div class="col-sm-2">
                     <input type="date" required maxlength="10" class="form-control" name="data2" id="data2" value=<?php echo $c_mostradata; ?>>
                 </div>
-                
-                <a class="btn btn-success btn-sm" href="/casaazul/atividades/atividades_incluir.php"><span class="glyphicon glyphicon-plus"></span> Nova Ação</a>&nbsp;&nbsp;
+
+                <a class="btn btn-success btn-sm" href="/casaazul/acoes/acao_incluir.php"><span class="glyphicon glyphicon-plus"></span> Nova Ação</a>&nbsp;&nbsp;
                 <button type="submit" return false name='btnagenda' id='btnagenda' class="btn btn-primary "><img src="\casaazul\images\buscar.png" alt="" width="20" height="20"></span> Consultar</button>&nbsp;&nbsp;
                 <a class='btn btn-info' title="Voltar ao menu" href='/casaazul/menu.php'> <img src="\casaazul\images\voltar.png" alt="" width="20" height="20"> Voltar</a>
             </div>
@@ -205,23 +205,23 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                 if (!empty($c_sql2)) {
 
                     while ($c_linha2 = $result2->fetch_assoc()) {
-
-
+                        // select para contar o número de participantes da ação
+                        $id_acao = $c_linha2['id'];
+                        $c_sql_participantes = "SELECT COUNT(*) AS qtd_participantes FROM participantes_acoes WHERE id_acao = $id_acao";
+                        $result_participantes = $conection->query($c_sql_participantes);
+                        $row_participantes = $result_participantes->fetch_assoc();
+                        $qtd_participantes = $row_participantes['qtd_participantes'];
                         echo "
                                     <tr>
-                                    
                                     <td>$c_linha2[id]</td>
-                                    <td>" . date("d-m-Y", strtotime($c_linha2['data_inicio'])) . "</td>
-                                    <td>$c_linha2[atividade]</td>
-                                    <td>" . date("d-m-Y", strtotime($c_linha2['data_final'])) . "</td>
-                                    <td>$c_linha2[num_vagas]</td>
-                                    <td>$c_linha2[carga_horaria]</td>
-                                    <td>$c_linha2[instrutor]</td>
-                                   
+                                    <td>" . date("d-m-Y", strtotime($c_linha2['data'])) . "</td>
+                                    <td>$c_linha2[descricao]</td>
+                                    <td>$c_linha2[tipo]</td>
+                                    <td>$c_linha2[participantes]</td>
                                     
                                     <td>
-                                    <a class='btn btn-info btn-sm' href='/casaazul/atividades/atividades_participantes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes</a>
-                                    <a class='btn btn-secondary btn-sm' href='/casaazul/atividades/atividades_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                                    <a class='btn btn-primary btn-sm' href='/casaazul/acoes/participantes_acoes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes <span style='background-color: #d9ff00; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_participantes</span></a>&nbsp;&nbsp;
+                                    <a class='btn btn-secondary btn-sm' href='/casaazul/acoes/acoes_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha2[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
 
                                    
