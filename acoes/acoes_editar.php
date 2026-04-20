@@ -3,6 +3,21 @@ include("../conexao.php");
 include("../links.php");
 // configuro fuso horário
 date_default_timezone_set('America/Sao_Paulo');
+// post das informações
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // grava dados da nova atividade
+    $id = $_GET['id'];
+    $c_acao = $_POST['descricao'];
+    $c_data = $_POST['data'];
+    $c_participantes = $_POST['participantes'];
+    $c_tipo = $_POST['tipo'];
+    $c_observacao = $_POST['observacao'];
+    
+    $c_sql = "UPDATE acoes SET descricao='$c_acao', data='$c_data', participantes='$c_participantes', id_tipo_atividade='$c_tipo', observacao='$c_observacao' WHERE id=$id";
+    $result = $conection->query($c_sql);
+
+    header('location: /casaazul/acoes/acoes_lista.php');
+}
 ?>
 <!-- html para editar registro de ação -->
 <!DOCTYPE html>

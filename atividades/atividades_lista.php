@@ -210,7 +210,12 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                 if (!empty($c_sql2)) {
 
                     while ($c_linha2 = $result2->fetch_assoc()) {
-
+                        // select para contar o número de participantes da ação
+                        $id_atividade = $c_linha2['id'];
+                        $c_sql_participantes = "SELECT COUNT(*) AS qtd_participantes FROM participamentes_atividade WHERE id_atividade = $id_atividade";
+                        $result_participantes = $conection->query($c_sql_participantes);
+                        $row_participantes = $result_participantes->fetch_assoc();
+                        $qtd_participantes = $row_participantes['qtd_participantes'];
 
                         echo "
                                     <tr>
@@ -225,7 +230,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                                    
                                     
                                     <td>
-                                    <a class='btn btn-info btn-sm' href='/casaazul/atividades/atividades_participantes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes</a>
+                                    <a class='btn btn-primary btn-sm' href='/casaazul/atividades/atividades_participantes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes&nbsp<span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_participantes</span></a>
                                     <a class='btn btn-secondary btn-sm' href='/casaazul/atividades/atividades_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha2[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
 

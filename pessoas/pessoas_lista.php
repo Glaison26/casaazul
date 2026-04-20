@@ -81,8 +81,9 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
                         <th>Bairro</th>
                         <th>CEP</th>
                         <th>Telefone 1</th>
-                        <th>Telefone 2</th>
+                        
                         <th>Sexo</th>
+                        <th style="width: 30px;">No. de Filhos</th>
                         <th>Opções</th>
                     </tr>
                 </thead>
@@ -96,6 +97,11 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
 
                     // insiro os registro do banco de dados na tabela 
                     while ($c_linha = $result->fetch_assoc()) {
+                        // sql para contar o numero de filhos da pessoa
+                        $c_sql_filhos = "SELECT COUNT(*) AS qtd_filhos FROM dependentes WHERE id_pessoa = $c_linha[id]";
+                        $result_filhos = $conection->query($c_sql_filhos);
+                        $row_filhos = $result_filhos->fetch_assoc();
+                        $qtd_filhos = $row_filhos['qtd_filhos'];
                         if ($c_linha['sexo']=='M')
                             $c_sexo = 'Masculino';
                         else
@@ -108,11 +114,12 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
                         <td>$c_linha[bairro]</td>
                         <td>$c_linha[cep]</td>
                         <td>$c_linha[fone1]</td>
-                        <td>$c_linha[fone2]</td>
+                        
                         <td>$c_sexo</td>
+                        <td>$c_linha[numerofilhos]</td>
                         <td>
                     <a class='btn btn-secondary btn-sm' href='/casaazul/pessoas/pessoas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-info btn-sm' href='/casaazul/pessoas/filhos_lista.php?id=$c_linha[id]'><span class='glyphicon glyphicon-user'></span> Filhos</a>                    
+                    <a class='btn btn-info btn-sm' href='/casaazul/pessoas/filhos_lista.php?id=$c_linha[id]'><span class='glyphicon glyphicon-user'></span> Filhos&nbsp<span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_filhos</span></a>                    
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 

@@ -11,6 +11,7 @@ if (!isset($_SESSION['newsession'])) {
 include("../conexao.php");
 include("../links.php");
 include_once "../lib_gop.php";
+date_default_timezone_set('America/Sao_Paulo');
 // pego o id da atividade para listar os participantes
 if (isset($_GET['id'])) {
     $id_acao = $_GET['id'];
@@ -18,8 +19,12 @@ if (isset($_GET['id'])) {
 } else {
     $id_acao = $_SESSION['id_acao'];
 }
+// sql pra pegar o numero de participantes da ação 
+$sql_participante = "SELECT participantes FROM acoes WHERE id = $id_acao";
+$result_participante = $conection->query($sql_participante);
+$row_participante = $result_participante->fetch_assoc();
+$numero_participantes = $row_participante['participantes'];
 
-date_default_timezone_set('America/Sao_Paulo');
 // select para listar os participantes da acoes selecionada
 $c_sql2 = "select participantes_acoes.id, cadastro.nome AS participante,
     participantes_acoes.observacao
@@ -27,6 +32,20 @@ $c_sql2 = "select participantes_acoes.id, cadastro.nome AS participante,
     JOIN cadastro ON participantes_acoes.id_participante = cadastro.ID
     where participantes_acoes.id_acao = $id_acao";
 $result2 = $conection->query($c_sql2);
+// sql para pegar numero de participantes da ação
+$c_sql_participantes = "SELECT COUNT(*) AS qtd_participantes FROM participantes_acoes WHERE id_acao = $id_acao";
+$result_participantes = $conection->query($c_sql_participantes);
+$row_participantes = $result_participantes->fetch_assoc();
+$qtd_participantes = $row_participantes['qtd_participantes'];
+// se quantidade de participantes for maior ou igual ao numero de participantes da ação desabilido o botão usando css
+if ($qtd_participantes >= $numero_participantes) {
+    echo "<style>
+    #btn_novo {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+    </style>";
+}
 
 ?>
 
@@ -151,7 +170,7 @@ $result2 = $conection->query($c_sql2);
 
 
         <!-- botão para abrir modal de inclusão de participante -->
-        <button type="button" title="Inclusão de Novo Participante" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+        <button type="button" name="btn_novo" id="btn_novo" title="Inclusão de Novo Participante" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Novo Participante
         </button>
         <a class="btn btn-info btn-sm" type="button" title="Voltar ao menu" href='/casaazul/acoes/acoes_lista.php'> <img src="\casaazul\images\voltar.png" alt="" width="20" height="20"> Voltar</a>
