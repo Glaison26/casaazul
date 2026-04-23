@@ -113,8 +113,6 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
                         $result_atividades = $conection->query($c_sql_atividades);
                         $row_atividades = $result_atividades->fetch_assoc();
                         $qtd_atividades = $row_atividades['qtd_atividades'];
-
-
                         echo "
                     <tr>
                         <td>$c_linha[nome]</td>
@@ -125,9 +123,9 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
                         <td>$c_linha[fone2]</td>
                         <td>$c_sexo</td>
                         <td>
+                        <a class='btn btn-secondary btn-sm' href='/casaazul/instrutores/instrutores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                         <a class='btn btn-primary btn-sm' href='/casaazul/instrutores/instrutor_atividade.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Atividades <span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_atividades</span></a>&nbsp;&nbsp;
-                    <a class='btn btn-secondary btn-sm' href='/casaazul/instrutores/instrutores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
+                        <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
                     </tr>";
