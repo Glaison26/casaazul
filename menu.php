@@ -69,19 +69,13 @@ $_SESSION['sql'] = "";
 
                     </div>
                 </div>
-
-
                 <!-- Relatórios -->
-
-
                 <div class="relative dropdown">
                     <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                         Consultas <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="#">Atividades</a>
-
-
                     </div>
                 </div>
 

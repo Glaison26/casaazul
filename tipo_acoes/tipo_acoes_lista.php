@@ -9,7 +9,15 @@ include("../links.php");
 ?>
 <!doctype html>
 <html lang="en">
-
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão Casa Azul</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" type="imagex/png" href="./imagens/img_gop.ico">
+    
+</head>
 <body>
 
     <script language="Javascript">
@@ -175,7 +183,7 @@ include("../links.php");
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>Casa Azul - Sistema de Gestão</h4>
-            <h4>Lista de Ações Realizadas</h4>
+            <h4>Lista de tipos de ações</h4>
         </div>
     </div>
 
@@ -208,7 +216,7 @@ include("../links.php");
 
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
-
+                    $qtd_acoes = 0;
                     echo "
                     <tr>
                     <td>$c_linha[id]</td>
@@ -216,6 +224,7 @@ include("../links.php");
                     <td>$c_linha[observacao]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Tipo de Ação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <a class='btn btn-info btn-sm' href='/casaazul/pessoas/filhos_lista.php?id=$c_linha[id]'><i class='fas fa-tasks mr-2'></i></span> Ações Realizadas&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_acoes</span></a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
