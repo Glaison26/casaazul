@@ -102,6 +102,17 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
                         $result_filhos = $conection->query($c_sql_filhos);
                         $row_filhos = $result_filhos->fetch_assoc();
                         $qtd_filhos = $row_filhos['qtd_filhos'];
+                        // sql para contar o numero de atividades realizadas pela pessoa
+                        $c_sql_atividades = "SELECT COUNT(*) AS qtd_atividades FROM participamentes_atividade WHERE id_participante = $c_linha[id]";
+                        $result_atividades = $conection->query($c_sql_atividades);
+                        $row_atividades = $result_atividades->fetch_assoc();
+                        $qtd_atividades = $row_atividades['qtd_atividades'];
+                        // sql para contar o numero de ações participadas pela pessoa
+                        $c_sql_acoes = "SELECT COUNT(*) AS qtd_acoes FROM participantes_acoes WHERE id_participante = $c_linha[id]";
+                        $result_acoes = $conection->query($c_sql_acoes);
+                        $row_acoes = $result_acoes->fetch_assoc();
+                        $qtd_acoes = $row_acoes['qtd_acoes'];
+
                         if ($c_linha['sexo']=='M')
                             $c_sexo = 'Masculino';
                         else
@@ -119,7 +130,9 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
                         <td>$c_linha[numerofilhos]</td>
                         <td>
                     <a class='btn btn-secondary btn-sm' href='/casaazul/pessoas/pessoas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-info btn-sm' href='/casaazul/pessoas/filhos_lista.php?id=$c_linha[id]'><span class='glyphicon glyphicon-user'></span> Filhos&nbsp<span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_filhos</span></a>                    
+                    <a class='btn btn-info btn-sm' href='/casaazul/pessoas/filhos_lista.php?id=$c_linha[id]'><span class='glyphicon glyphicon-user'></span> Filhos&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_filhos</span></a>
+                    <a class='btn btn-primary btn-sm' href='/casaazul/pessoas/pessoas_atividades.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Atividades&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_atividades</span></a>
+                    <a class='btn btn-success btn-sm' href='/casaazul/pessoas/pessoas_acoes.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Ações&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_acoes</span></a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 

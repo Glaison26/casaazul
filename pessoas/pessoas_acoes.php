@@ -9,18 +9,15 @@ include("../links.php");
 include_once "../lib_gop.php";
 ?>
 
-<!-- Página para exibir as atividades realizadas por cada instrutor -->
+<!-- Página para exibir as ações participadas por cada pessoa física -->
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atividades por Instrutor - Casa Azul</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-        <script>
+    <title>Ações Participadas</title>
+    <script>
         $(document).ready(function() {
             $('.tablista').DataTable({
                 // 
@@ -28,7 +25,7 @@ include_once "../lib_gop.php";
                 "order": [0, 1, 2, 3, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [5]
+                    'aTargets': [3]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -67,68 +64,65 @@ include_once "../lib_gop.php";
     </script>
 
 </head>
+
 <body>
     <div class="container-fluid">
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>Gestão - Caso Azul</h4>
-                    <h5>Atividades por Instrutor<h5>
+                    <h5>Ações Participadas por Pessoa Física<h5>
                 </div>
             </div>
         </div>
         <div class="container content-box">
-            <!-- botão para voltar para a lista de instrutores -->
-            <a class="btn btn-secondary btn-sm" href="/casaazul/instrutores/instrutores_lista.php"><span class="glyphicon glyphicon-arrow-left"></span> Voltar para Lista de Instrutores</a>
+            <!-- botão para voltar para a lista de pessoas físicas -->
+            <a class="btn btn-secondary btn-sm" href="/casaazul/pessoas/pessoas_lista.php"><span class="glyphicon glyphicon-arrow-left"></span> Voltar para Lista de Pessoas Físicas</a>
             <hr>
             <?php
-            // rotina para listar as atividades realizadas por cada instrutor
-            $c_sql = "SELECT i.nome AS instrutor, c.descricao AS curso, ar.data_inicio, ar.data_final, ar.num_vagas, ar.carga_horaria, ar.observacao
-            FROM atividades_realizadas ar
-            JOIN instrutores i ON ar.id_instrutor = i.id
-            JOIN cursos c ON ar.id_curso = c.id
-            where ar.id_instrutor = " . $_GET['id'] . "
-            ORDER BY i.nome, ar.data_inicio";
+            // rotina para listar as ações participadas por cada pessoa física
+            // sql para buscar as ações participadas por cada pessoa física na tabela participantes_atividade ligado a tabela cadastro de pessoas
+            $c_sql = "SELECT acoes.`data`, acoes.descricao, atividades.descricao AS acao, acoes.participantes, acoes.observacao FROM participantes_acoes
+JOIN acoes ON participantes_acoes.id_acao = acoes.id
+JOIN atividades ON acoes.id_tipo_atividade = atividades.id
+where participantes_acoes.id_participante = " . $_GET['id'];
             $result = $conection->query($c_sql);
-            // sql para buscar o nome do instrutor
-            $c_sql_instrutor = "SELECT nome FROM instrutores WHERE id = " . $_GET['id'];
-            $result_instrutor = $conection->query($c_sql_instrutor);
-            if ($result_instrutor->num_rows > 0) {
-                $row_instrutor = $result_instrutor->fetch_assoc();
-                echo "<h3>Atividades realizadas por: " . $row_instrutor['nome'] . "</h3>";
+            // sql para buscar o nome da pessoa física
+            $c_sql_pessoa = "SELECT nome FROM cadastro WHERE id = " . $_GET['id'];
+            $result_pessoa = $conection->query($c_sql_pessoa);
+            if ($result_pessoa->num_rows > 0) {
+                $row_pessoa = $result_pessoa->fetch_assoc();
+                echo "<h3>Ações com participação de: " . $row_pessoa['nome'] . "</h3>";
             }
 
             if ($result->num_rows > 0) {
                 echo "<table class='table table-bordered tablista'>
                         <thead>
                             <tr>
-                                
-                                <th>Curso</th>
-                                <th>Data de Início</th>
-                                <th>Data Final</th>
-                                <th>Número de Vagas</th>
-                                <th>Carga Horária</th>
+                                <th>Data</th>
+                                <th>Ação</th>
+                                <th>Número de Participantes</th>
                                 <th>Observação</th>
                             </tr>
                         </thead>
                         <tbody>";
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>
+                            <td>" . date("d/m/Y", strtotime($row['data'])) . "</td>
                             
-                            <td>{$row['curso']}</td>
-                            <td>" . date("d/m/Y", strtotime($row['data_inicio'])) . "</td>
-                            <td>" . date("d/m/Y", strtotime($row['data_final'])) . "</td>
-                            <td>{$row['num_vagas']}</td>
-                            <td>{$row['carga_horaria']}</td>
+                            <td>{$row['acao']}</td>
+                            <td>{$row['participantes']}</td>
                             <td>{$row['observacao']}</td>
-                          </tr>";
+                        </tr>";
                 }
                 echo "</tbody></table>";
             } else {
-                echo "<p>Nenhuma atividade encontrada.</p>";
+                echo "<p>Nenhuma ação encontrada para esta pessoa física.</p>";
             }
             ?>
         </div>
     </div>
+
 </body>
+
 </html>
