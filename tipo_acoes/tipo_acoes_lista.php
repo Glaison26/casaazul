@@ -13,7 +13,7 @@ include("../links.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestão Casa Azul</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="shortcut icon" type="imagex/png" href="./imagens/img_gop.ico">
     
@@ -217,6 +217,13 @@ include("../links.php");
                 // insiro os registro do banco de dados na tabela 
                 while ($c_linha = $result->fetch_assoc()) {
                     $qtd_acoes = 0;
+                    // sql para contar a quantidade de ações realizadas para cada tipo de ação
+                    $c_sql_qtd = "SELECT COUNT(*) AS qtd FROM acoes WHERE id_tipo_atividade = $c_linha[id]";
+                    $result_qtd = $conection->query($c_sql_qtd);
+                    if ($result_qtd) {
+                        $c_linha_qtd = $result_qtd->fetch_assoc();
+                        $qtd_acoes = $c_linha_qtd['qtd'];
+                    }
                     echo "
                     <tr>
                     <td>$c_linha[id]</td>
@@ -224,7 +231,7 @@ include("../links.php");
                     <td>$c_linha[observacao]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Tipo de Ação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
-                    <a class='btn btn-info btn-sm' href='/casaazul/pessoas/filhos_lista.php?id=$c_linha[id]'><i class='fas fa-tasks mr-2'></i></span> Ações Realizadas&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_acoes</span></a>
+                    <a class='btn btn-info btn-sm' href='/casaazul/tipo_acoes/tipo_acoes_realizadas.php?id=$c_linha[id]'><i class='fas fa-tasks mr-2'></i></span> Ações Realizadas&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_acoes</span></a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
