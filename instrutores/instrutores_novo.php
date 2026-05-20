@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pix = $_POST['pix'];
         $uf = 'MG';
         $cpf = preg_replace('/[^0-9]/', '', $cpf); // Remove caracteres não numéricos
+        $cnpj = preg_replace('/[^0-9]/', '', $_POST['cnpj']); // Remove caracteres não numéricos
 
 
         // verifico se o cpf já existe no banco de dados
@@ -39,16 +40,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $msg_erro = "CPF informado já cadastrado favor verificar!!";
             break;
         }
+            // verifico se o cnpj já existe no banco de dados
+            
+            $sql_check_cnpj = "SELECT id FROM instrutores WHERE cnpj = '$cnpj'";
+            $result_check_cnpj = $conection->query($sql_check_cnpj);
+            if (($result_check_cnpj->num_rows > 0)&&(!empty($cnpj))) {
+                $msg_erro = "CNPJ informado já cadastrado favor verificar!!";
+                break;
+            }
+    
+            // valido o cpf
+        
 
         if (!validaCPF($cpf) && !empty($cpf)) {
             $msg_erro = "CPF informado inválido!!";
             break;
         }
+        // valido o cnpj
+        if (!valida_CNPJ($cnpj) && !empty($cnpj)) {
+            $msg_erro = "CNPJ informado inválido!!";
+            break;
+        }
         // inclusão dos dadospor sql
         $c_sql = "INSERT INTO instrutores (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, fone1, fone2, escolaridade, sexo, email,
-     banco, agencia, conta, tipo_conta, titular, observacao, uf, chave_pix) VALUES ('$nome', '$identidade', '$cpf', '$datanasc', '$cep', '$endereco',
+     banco, agencia, conta, tipo_conta, titular, observacao, uf, chave_pix, cnpj) VALUES ('$nome', '$identidade', '$cpf', '$datanasc', '$cep', '$endereco',
      '$bairro', '$cidade', '$fone1', '$fone2', '$escolaridade', '$sexo', '$email', '$nome_banco', '$numero_agencia', '$numero_conta', '$tipo_conta',
-     '$titular_conta', '$observacao', '$uf', '$pix')";
+     '$titular_conta', '$observacao', '$uf', '$pix', '$cnpj')";
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
@@ -133,8 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
-                    <h4>Gestão - Caso Azul</h4>
-                    <h5>Novo Cadastro de Instrutor<h5>
+                    <h4>Gestão - Casa Azul</h4>
+                    <h5>Novo Cadastro de Colaboradores<h5>
                 </div>
             </div>
         </div>
@@ -173,13 +190,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-sm-2">
                                     <input type="text" name="identidade" class="form-control" maxlength="9" value="<?php echo isset($_POST['identidade']) ? $_POST['identidade'] : ''; ?>" required>
                                 </div>
+
+                                <label class="col-sm-2 col-form-label">Data de Nascimento:</label>
+                                <div class="col-sm-2">
+                                    <input type="date" name="datanasc" class="form-control" value="<?php echo isset($_POST['datanasc']) ? $_POST['datanasc'] : ''; ?>" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
                                 <label class="col-sm-1">CPF:</label>
                                 <div class="col-sm-2">
                                     <input type="text" placeholder="Apenas números" name="cpf" class="form-control" maxlength="11" value="<?php echo isset($_POST['cpf']) ? $_POST['cpf'] : ''; ?>" required>
                                 </div>
-                                <label class="col-sm-1 col-form-label">Data de Nascimento:</label>
+                                 <label class="col-sm-2 col-form-label">CNPJ:</label>
                                 <div class="col-sm-2">
-                                    <input type="date" name="datanasc" class="form-control" value="<?php echo isset($_POST['datanasc']) ? $_POST['datanasc'] : ''; ?>" required>
+                                    <input type="text" name="cnpj" placeholder="Apenas números" class="form-control" value="<?php echo isset($_POST['cnpj']) ? $_POST['cnpj'] : ''; ?>">
                                 </div>
                             </div>
 
@@ -319,7 +343,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="row mb-3">
                         <div class="offset-sm-0 col-sm-3">
                             <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
-                            <a class='btn btn-danger' href='/casaazul/instrutores/instrutores_lista.php'><span class='glyphicon glyphicon-remove'></span> Cancelar</a>
+                            <a class='btn btn-danger' href='/casaazul/instrutores/instrutores_lista.php'><span class='glyphicon glyphicon-log-out'></span> Voltar</a>
 
                         </div>
                     </div>

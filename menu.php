@@ -63,9 +63,9 @@ $_SESSION['sql'] = "";
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/pessoas/pessoas_lista.php">Pessoas Físicas</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/atividades/atividades_lista.php">Agenda de Atividades</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/acoes/acoes_lista.php">Agenda de Ações</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/cursos/cursos_lista.php">Cadastro de Cursos</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/instrutores/instrutores_lista.php">Cadastro de Instrutores</a>
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/tipo_acoes/tipo_acoes_lista.php">Tipos de Ação</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/cursos/cursos_lista.php">Cadastro de Atividades</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/instrutores/instrutores_lista.php">Cadastro de Colaboradores</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/tipo_acoes/tipo_acoes_lista.php">Cadastro de Ações</a>
 
                     </div>
                 </div>

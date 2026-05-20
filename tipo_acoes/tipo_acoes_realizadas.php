@@ -70,7 +70,7 @@ include_once "../lib_gop.php";
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
-                    <h4>Gestão - Caso Azul</h4>
+                    <h4>Gestão - Casa Azul</h4>
                     <h5>Atividades por Pessoa Física<h5>
                 </div>
             </div>

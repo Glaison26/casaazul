@@ -130,7 +130,7 @@ if ($id) {
         <div style="padding-top:5px;">
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
-                    <h4>Gestão - Caso Azul</h4>
+                    <h4>Gestão - Casa Azul</h4>
                     <h5>Editar Cadastro de Pessoa física<h5>
                 </div>
             </div>

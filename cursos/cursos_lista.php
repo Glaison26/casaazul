@@ -175,13 +175,13 @@ include("../links.php");
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>Casa Azul - Sistema de Gestão</h4>
-            <h4>Lista de Cursos Ministrados</h4>
+            <h4>Lista de Atividades Realizaveis</h4>
         </div>
     </div>
 
     <div class="container-fluid">
 
-        <button type="button" title="Inclusão de Novo Curso" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
+        <button type="button" title="Inclusão de Nova Atividade" class="btn btn-success btn-sm" data-toggle="modal" data-target="#novoModal"><span class="glyphicon glyphicon-plus"></span>
             Incluir
         </button>
         <a class="btn btn-secondary btn-sm" href="/casaazul/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
@@ -215,7 +215,7 @@ include("../links.php");
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[observacao]</td>
                     <td>
-                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Curso'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
+                    <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Atividade'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -232,7 +232,7 @@ include("../links.php");
         <div class="modal-dialog modal-dialog-centered" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de novo curso</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Inclusão de nova Atividade</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>
@@ -270,7 +270,7 @@ include("../links.php");
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar dados do curso</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar dados da Atividade</h4>
                 </div>
                 <div class="modal-body">
                     <div class='alert alert-warning' role='alert'>

@@ -73,7 +73,7 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>Casa Azul - Sistema de Gestão</h4>
-                <h5>Lista de Instrutores<h5>
+                <h5>Lista de Colaboradores<h5>
             </div>
         </div>
         <br>
@@ -115,7 +115,8 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
                         $qtd_atividades = $row_atividades['qtd_atividades'];
                         echo "
                     <tr>
-                        <td>$c_linha[nome]</td>
+                        <!-- registro do nome com link para visualizar o registro completo -->
+                        <td><a href='/casaazul/instrutores/instrutores_visualizar.php?id=$c_linha[id]'>$c_linha[nome]</a></td>
                         <td>$c_linha[endereco]</td>
                         <td>$c_linha[bairro]</td>
                         <td>$c_linha[cep]</td>
@@ -124,7 +125,7 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
                         <td>$c_sexo</td>
                         <td>
                         <a class='btn btn-secondary btn-sm' href='/casaazul/instrutores/instrutores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                        <a class='btn btn-primary btn-sm' href='/casaazul/instrutores/instrutor_atividade.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Atividades <span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_atividades</span></a>&nbsp;&nbsp;
+                        <a class='btn btn-primary btn-sm' href='/casaazul/instrutores/instrutor_atividade.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Atividades <span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_atividades</span></a>
                         <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
