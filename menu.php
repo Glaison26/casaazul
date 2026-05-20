@@ -50,11 +50,7 @@ $_SESSION['sql'] = "";
             </div>
 
             <div class="hidden md:flex items-center space-x-6">
-
-
                 <!-- Dropdown Cadastro -->
-
-
                 <div class="relative dropdown">
                     <button class="text-white hover:text-blue-200 transition flex items-center focus:outline-none">
                         Cadastros <i class="fas fa-chevron-down ml-1 text-xs"></i>
@@ -66,6 +62,7 @@ $_SESSION['sql'] = "";
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/cursos/cursos_lista.php">Cadastro de Atividades</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/instrutores/instrutores_lista.php">Cadastro de Colaboradores</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/tipo_acoes/tipo_acoes_lista.php">Cadastro de Ações</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/parcerias/parcerias_lista.php">Cadastro de Parcerias</a>
 
                     </div>
                 </div>
