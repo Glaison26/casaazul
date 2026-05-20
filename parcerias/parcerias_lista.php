@@ -2,7 +2,7 @@
 include("../conexao.php");
 include("../links.php");
 //
-$c_sql = "SELECT * FROM parcerias ORDER BY nome";
+$c_sql = "SELECT * FROM parcerias ORDER BY identificacao";
 
 ?>
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ $c_sql = "SELECT * FROM parcerias ORDER BY nome";
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [7]
+                    'aTargets': [6]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -61,7 +61,7 @@ $c_sql = "SELECT * FROM parcerias ORDER BY nome";
     <script>
         function confirmacao(id) {
             if (confirm("Deseja realmente excluir este registro?")) {
-                window.location.href = "instrutores_excluir.php?id=" + id;
+                window.location.href = "parcerias_excluir.php?id=" + id;
             }
         }
     </script>
@@ -84,13 +84,13 @@ $c_sql = "SELECT * FROM parcerias ORDER BY nome";
             <table class="table table-bordered table-striped tabparcerias">
                 <thead class="thead">
                     <tr>
-                        <th>Nome</th>
-                        <th>Endereço</th>
-                        <th>Bairro</th>
-                        <th>CEP</th>
-                        <th>Telefone 1</th>
-                        <th>Telefone 2</th>
-                        <th>Sexo</th>
+                        <th>Identificação</th>
+                        <th>Número</th>
+                        <th>Vigência Inicio</th>
+                        <th>Vigência Fim</th>
+                        <th>Prorrogação Inicio</th>
+                        <th>Prorrogação Fim</th>
+
                         <th>Opções</th>
                     </tr>
                 </thead>
@@ -104,30 +104,24 @@ $c_sql = "SELECT * FROM parcerias ORDER BY nome";
 
                     // insiro os registro do banco de dados na tabela 
                     while ($c_linha = $result->fetch_assoc()) {
-                        if ($c_linha['sexo'] == 'M')
-                            $c_sexo = 'Masculino';
-                        else
-                            $c_sexo = 'Feminino';
-                        $qtd_atividades = 0;
-                        $c_sql_atividades = "SELECT COUNT(*) AS qtd_atividades FROM atividades_realizadas WHERE id_instrutor = $c_linha[id]";
-                        $result_atividades = $conection->query($c_sql_atividades);
-                        $row_atividades = $result_atividades->fetch_assoc();
-                        $qtd_atividades = $row_atividades['qtd_atividades'];
+                        // substituo o formato da data para o formato brasileiro dd/mm/yyyy
+                      
+
                         echo "
                     <tr>
-                        <!-- registro do nome com link para visualizar o registro completo -->
-                        <td><a href='/casaazul/instrutores/instrutores_visualizar.php?id=$c_linha[id]'>$c_linha[nome]</a></td>
-                        <td>$c_linha[endereco]</td>
-                        <td>$c_linha[bairro]</td>
-                        <td>$c_linha[cep]</td>
-                        <td>$c_linha[fone1]</td>
-                        <td>$c_linha[fone2]</td>
-                        <td>$c_sexo</td>
+                       
+                        <td>$c_linha[identificacao]</td>
+                        <td>$c_linha[numero]</td>
+                        
+                        <td>" . date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['vigencia_inicio']))) . "</td>
+                        <td>" . date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['vigencia_fim']))) . "</td>
+                        <td>" . date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prorrogacao_inicio']))) . "</td>
+                        <td>" . date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prorrogacao_fim']))) . "</td>
                         <td>
-                        <a class='btn btn-secondary btn-sm' href='/casaazul/instrutores/instrutores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                        <a class='btn btn-primary btn-sm' href='/casaazul/instrutores/instrutor_atividade.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Atividades <span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_atividades</span></a>
-                        <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
-                    </td>
+                            
+                            <a href='/casaazul/parcerias/parcerias_editar.php?id=$c_linha[id]' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
+                            <button onclick='confirmacao($c_linha[id])' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash'></span> Excluir</button>
+                        </td>
 
                     </tr>";
                     }

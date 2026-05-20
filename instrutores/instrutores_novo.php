@@ -31,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $uf = 'MG';
         $cpf = preg_replace('/[^0-9]/', '', $cpf); // Remove caracteres não numéricos
         $cnpj = preg_replace('/[^0-9]/', '', $_POST['cnpj']); // Remove caracteres não numéricos
+        $id_parceria = $_POST['parceria_id'];
+        $tipovinculacao = $_POST['vinculacao'];
 
 
         // verifico se o cpf já existe no banco de dados
@@ -40,17 +42,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $msg_erro = "CPF informado já cadastrado favor verificar!!";
             break;
         }
-            // verifico se o cnpj já existe no banco de dados
-            
-            $sql_check_cnpj = "SELECT id FROM instrutores WHERE cnpj = '$cnpj'";
-            $result_check_cnpj = $conection->query($sql_check_cnpj);
-            if (($result_check_cnpj->num_rows > 0)&&(!empty($cnpj))) {
-                $msg_erro = "CNPJ informado já cadastrado favor verificar!!";
-                break;
-            }
-    
-            // valido o cpf
-        
+        // verifico se o cnpj já existe no banco de dados
+
+        $sql_check_cnpj = "SELECT id FROM instrutores WHERE cnpj = '$cnpj'";
+        $result_check_cnpj = $conection->query($sql_check_cnpj);
+        if (($result_check_cnpj->num_rows > 0) && (!empty($cnpj))) {
+            $msg_erro = "CNPJ informado já cadastrado favor verificar!!";
+            break;
+        }
+
+        // valido o cpf
+
 
         if (!validaCPF($cpf) && !empty($cpf)) {
             $msg_erro = "CPF informado inválido!!";
@@ -63,9 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         // inclusão dos dadospor sql
         $c_sql = "INSERT INTO instrutores (nome, identidade, cpf, datanasc, cep, endereco, bairro, cidade, fone1, fone2, escolaridade, sexo, email,
-     banco, agencia, conta, tipo_conta, titular, observacao, uf, chave_pix, cnpj) VALUES ('$nome', '$identidade', '$cpf', '$datanasc', '$cep', '$endereco',
+     banco, agencia, conta, tipo_conta, titular, observacao, uf, chave_pix, cnpj, id_parceria, tipo_vinculacao) VALUES ('$nome', '$identidade', '$cpf', '$datanasc', '$cep', '$endereco',
      '$bairro', '$cidade', '$fone1', '$fone2', '$escolaridade', '$sexo', '$email', '$nome_banco', '$numero_agencia', '$numero_conta', '$tipo_conta',
-     '$titular_conta', '$observacao', '$uf', '$pix', '$cnpj')";
+     '$titular_conta', '$observacao', '$uf', '$pix', '$cnpj', '$id_parceria', '$tipovinculacao')";
         $result = $conection->query($c_sql);
         // verifico se a query foi correto
         if (!$result) {
@@ -172,6 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Apresentação</a></li>
                     <li role="presentation"><a href="#bancos" aria-controls="bancos" role="tab" data-toggle="tab">Dados Bancários</a></li>
+                    <li role="presentation"><a href="#vinculacao" aria-controls="vinculacao" role="tab" data-toggle="tab">Vinculação</a></li>
                     <li role="presentation"><a href="#observacao" aria-controls="observacao" role="tab" data-toggle="tab">Observações</a></li>
 
                 </ul>
@@ -201,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-sm-2">
                                     <input type="text" placeholder="Apenas números" name="cpf" class="form-control" maxlength="11" value="<?php echo isset($_POST['cpf']) ? $_POST['cpf'] : ''; ?>" required>
                                 </div>
-                                 <label class="col-sm-2 col-form-label">CNPJ:</label>
+                                <label class="col-sm-2 col-form-label">CNPJ:</label>
                                 <div class="col-sm-2">
                                     <input type="text" name="cnpj" placeholder="Apenas números" class="form-control" value="<?php echo isset($_POST['cnpj']) ? $_POST['cnpj'] : ''; ?>">
                                 </div>
@@ -268,8 +271,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </select>
                                 </div>
                             </div>
-
-
                             <div class="row mb-3">
                                 <label class="col-sm-1 col-form-label">Email:</label>
                                 <div class="col-sm-8">
@@ -326,12 +327,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                     </div> <!-- fim de aba de dados bancários -->
+                    <div role="tabpanel" class="tab-pane" id="vinculacao">
+                        <div style="padding-top:15px;padding-left:20px;">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Tipo de vinculação:</label>
+                                <div class="col-sm-3">
+                                    <select name="vinculacao" class="form-control form-control-lg" value="<?php echo isset($_POST['vinculacao']) ? $_POST['vinculacao'] : ''; ?>">
+                                        <option value=""></option>
+                                        <option value="MEI" <?php echo (isset($_POST['vinculacao']) && $_POST['vinculacao'] === 'MEI') ? 'selected' : ''; ?>>MEI</option>
+                                        <option value="Autônomo" <?php echo (isset($_POST['vinculacao']) && $_POST['vinculacao'] === 'Autônomo') ? 'selected' : ''; ?>>Autônomo</option>
+                                        <option value="Voluntário" <?php echo (isset($_POST['vinculacao']) && $_POST['vinculacao'] === 'Voluntário') ? 'selected' : ''; ?>>Voluntário</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <!-- combobox com a parceria da tabela paricerias para vincular o instrutor a uma parceria, o combobox com identificação e número da parceria    -->
+                                <label class="col-sm-2 col-form-label">Vincular a Parceria:</label>
+                                <div class="col-sm-3">
+                                    <select name="parceria_id" class="form-control form-control-lg" value="<?php echo isset($_POST['parceria_id']) ? $_POST['parceria_id'] : ''; ?>">
+                                        <option value=""></option>
+                                        <?php
+                                        $sql_parcerias = "SELECT id, identificacao, numero FROM parcerias";
+                                        $result_parcerias = $conection->query($sql_parcerias);
+                                        if ($result_parcerias->num_rows > 0) {
+                                            while ($row_parceria = $result_parcerias->fetch_assoc()) {
+                                                echo "<option value='" . $row_parceria['id'] . "'>" . $row_parceria['identificacao'] . " - " . $row_parceria['numero'] . (isset($_POST['parceria_id']) && $_POST['parceria_id'] === $row_parceria['id'] ? " selected" : "") . "</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div role="tabpanel" class="tab-pane" id="observacao">
                         <div style="padding-top:15px;padding-left:20px;">
 
                             <div class="row mb-3">
-                                <label class="col-sm-1 col-form-label">Observação:</label>
+                                <label class="col-sm-2 col-form-label">Observação:</label>
                                 <div class="col-sm-8">
                                     <textarea name="observacao" class="form-control" rows="8"><?php echo isset($_POST['observacao']) ? $_POST['observacao'] : ''; ?></textarea>
                                 </div>
