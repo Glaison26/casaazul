@@ -65,7 +65,7 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>Casa Azul - Sistema de Gestão</h4>
-                <h5>Lista de Pessoas Fisicas<h5>
+                <h5>Lista de Beneficiários<h5>
             </div>
         </div>
         <br>

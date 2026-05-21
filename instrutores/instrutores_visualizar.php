@@ -34,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $tipo_conta = $registro['tipo_conta'];
     $titular_conta = $registro['titular'];
     $observacao = $registro['observacao'];
+    $id_parceria = $registro['id_parceria'];
+    $tipovinculacao = $registro['tipo_vinculacao'];
 }
 
 ?>
@@ -67,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Apresentação</a></li>
                     <li role="presentation"><a href="#bancos" aria-controls="bancos" role="tab" data-toggle="tab">Dados Bancários</a></li>
+                    <li role="presentation"><a href="#vinculacao" aria-controls="vinculacao" role="tab" data-toggle="tab">Vinculação</a></li>
                     <li role="presentation"><a href="#observacao" aria-controls="observacao" role="tab" data-toggle="tab">Observações</a></li>
 
                 </ul>
@@ -85,18 +88,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                                 <div class="col-sm-2">
                                     <input readonly type="text" name="identidade" class="form-control" maxlength="9" value="<?php echo $identidade; ?>" required>
                                 </div>
-                               
+
                                 <label class="col-sm-2 col-form-label">Data de Nascimento:</label>
                                 <div class="col-sm-2">
                                     <input readonly type="date" name="datanasc" class="form-control" value="<?php echo $datanasc; ?>" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                 <label class="col-sm-1">CPF:</label>
+                                <label class="col-sm-1">CPF:</label>
                                 <div class="col-sm-2">
                                     <input readonly type="text" placeholder="Apenas números" name="cpf" class="form-control" maxlength="11" value="<?php echo $cpf; ?>" required>
                                 </div>
-                                 <label class="col-sm-2 col-form-label">CNPJ:</label>
+                                <label class="col-sm-2 col-form-label">CNPJ:</label>
                                 <div class="col-sm-2">
                                     <input readonly type="text" placeholder="Apenas números" name="cnpj" class="form-control" maxlength="14" value="<?php echo $cnpj; ?>">
                                 </div>
@@ -218,7 +221,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         </div>
 
                     </div> <!-- fim de aba de dados bancários -->
+                    <!-- aba de vinculação -->
+                    <div role="tabpanel" class="tab-pane" id="vinculacao">
+                        <div style="padding-top:15px;padding-left:20px;">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Tipo de vinculação:</label>
+                                <div class="col-sm-3">
+                                    <select readonly name="vinculacao" class="form-control form-control-lg" value="<?php echo isset($_POST['vinculacao']) ? $_POST['vinculacao'] : ''; ?>">
+                                        <option value=""></option>
+                                        <option value="MEI" <?php echo (isset($registro['tipo_vinculacao']) && $registro['tipo_vinculacao'] === 'MEI') ? 'selected' : ''; ?>>MEI</option>
+                                        <option value="Autônomo" <?php echo (isset($registro['tipo_vinculacao']) && $registro['tipo_vinculacao'] === 'Autônomo') ? 'selected' : ''; ?>>Autônomo</option>
+                                        <option value="Voluntário" <?php echo (isset($registro['tipo_vinculacao']) && $registro['tipo_vinculacao'] === 'Voluntário') ? 'selected' : ''; ?>>Voluntário</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <!-- combobox com a parceria da tabela paricerias para vincular o instrutor a uma parceria, o combobox com identificação e número da parceria    -->
+                                <label class="col-sm-2 col-form-label">Vincular a Parceria:</label>
+                                <div class="col-sm-3">
+                                    <select readonly name="parceria_id" class="form-control form-control-lg" value="<?php echo isset($_POST['parceria_id']) ? $_POST['parceria_id'] : ''; ?>">
+                                        <option value=""></option>
+                                        <?php
+                                        $sql_parcerias = "SELECT id, identificacao, numero FROM parcerias";
+                                        $result_parcerias = $conection->query($sql_parcerias);
+                                        if ($result_parcerias->num_rows > 0) {
+                                            while ($row_parceria = $result_parcerias->fetch_assoc()) {
+                                                echo "<option " . (isset($registro['id_parceria']) && $registro['id_parceria'] == $row_parceria['id'] ? "selected" : "") . " value='" . $row_parceria['id'] . "'>" . $row_parceria['identificacao'] . " - " . $row_parceria['numero'] . " </option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
                     <div role="tabpanel" class="tab-pane" id="observacao">
                         <div style="padding-top:15px;padding-left:20px;">
 
@@ -234,7 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                     <div class="row mb-3">
                         <div class="offset-sm-0 col-sm-3">
-                            
+
                             <a class='btn btn-danger' href='/casaazul/instrutores/instrutores_lista.php'><span class='glyphicon glyphicon-log-out'></span> Voltar</a>
 
                         </div>

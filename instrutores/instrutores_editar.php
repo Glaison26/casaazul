@@ -60,10 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titular_conta = $_POST['titular_conta'];
     $observacao = $_POST['observacao'];
     $uf = 'MG';
+    $id_parceria = $_POST['parceria_id'];
+    $vinculacao = $_POST['vinculacao'];
     // inclusão dos dadospor sql
     $c_sql = "Update instrutores SET NOME='$nome', IDENTIDADE='$identidade', CPF='$cpf', cnpj='$cnpj', DATANASC='$datanasc', CEP='$cep', ENDERECO='$endereco', BAIRRO='$bairro', 
     CIDADE='$cidade', UF='$uf', FONE1='$fone1', FONE2='$fone2', ESCOLARIDADE='$escolaridade', SEXO='$sexo', EMAIL='$email', BANCO='$nome_banco',
-    AGENCIA='$numero_agencia', CONTA='$numero_conta', TIPO_CONTA='$tipo_conta', TITULAR='$titular_conta', OBSERVACAO='$observacao' where id=$id";
+    AGENCIA='$numero_agencia', CONTA='$numero_conta', TIPO_CONTA='$tipo_conta', TITULAR='$titular_conta', 
+    OBSERVACAO='$observacao', ID_PARCERIA='$id_parceria',  TIPO_VINCULACAO='$vinculacao' where id=$id";
     $result = $conection->query($c_sql);
     if (!$result) {
         die("Erro ao Executar Sql!!" . $conection->connect_error);

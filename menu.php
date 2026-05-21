@@ -56,7 +56,7 @@ $_SESSION['sql'] = "";
                         Cadastros <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden bg-white text-gray-800 pt-2 shadow-xl rounded-md w-48 z-50">
-                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/pessoas/pessoas_lista.php">Pessoas Físicas</a>
+                        <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/pessoas/pessoas_lista.php">Cadastro de Beneficiários</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/atividades/atividades_lista.php">Agenda de Atividades</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/acoes/acoes_lista.php">Agenda de Ações</a>
                         <a class="block px-4 py-2 hover:bg-blue-100 border-b border-gray-100" href="/casaazul/cursos/cursos_lista.php">Cadastro de Atividades</a>
@@ -117,13 +117,13 @@ $_SESSION['sql'] = "";
     <nav class="bg-blue-600 p-3 shadow-md">
         <div class="container mx-auto flex items-center space-x-6">
             <a href="/casaazul/pessoas/pessoas_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
-                <i class="fas fa-user-plus mr-2"></i>Pessoa Física
+                <i class="fas fa-user-plus mr-2"></i>Cadastro de Beneficiários
             </a>
             <a href="/casaazul/atividades/atividades_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
                 <i class="fas fa-calendar-alt mr-2"></i>agenda de Atividades
             </a>
             <a href="/casaazul/acoes/acoes_lista.php" class="text-white hover:text-blue-200 transition flex items-center">
-                <i class="fas fa-tasks mr-2"></i>Ações
+                <i class="fas fa-tasks mr-2"></i>Agenda de Ações
             </a>
         </div>
         <!--painel de boas vindas com data e hora e nome do usuário -->
