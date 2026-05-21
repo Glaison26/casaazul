@@ -67,8 +67,26 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
     atividades_realizadas.observacao 
     from atividades_realizadas 
     JOIN cursos ON atividades_realizadas.id_curso=cursos.ID
-    JOIN instrutores ON atividades_realizadas.id_instrutor=instrutores.ID
-    where data_inicio >= '$d_data' and data_final <= '$d_data2' or data_inicio <= '$d_data2' and data_final >= '$d_data' order by data_inicio desc";
+    JOIN instrutores ON atividades_realizadas.id_instrutor=instrutores.ID";
+    // verifico se data inicial e final foram selecionadas e monto sql para pesquisa
+    if (!empty($d_data) && !empty($d_data2)) {
+    $c_sql2 .=" where data_inicio >= '$d_data' and data_final <= '$d_data2' or data_inicio <= '$d_data2' and data_final >= '$d_data' order by data_inicio desc";
+    } else if (!empty($d_data)) {
+        $c_sql2 .="where data_inicio = '$d_data' order by data_inicio desc";
+    } else if (!empty($d_data2)) {
+        $c_sql2 .="where data_inicio = '$d_data2' order by data_inicio desc";
+    } else {
+        $c_sql2 .="order by data_inicio desc";
+    }
+    // se checkbox de ignorar datas estiver marcado, ignoro as datas e mostro toda a agenda
+    if (isset($_POST['ignorar_datas']) && $_POST['ignorar_datas'] == '1') {
+        $c_sql2 = "select atividades_realizadas.id,  data_inicio, data_final,num_vagas, carga_horaria, instrutores.NOME AS instrutor,
+        cursos.DESCRICAO AS atividade,
+       atividades_realizadas.observacao 
+       from atividades_realizadas 
+       JOIN cursos ON atividades_realizadas.id_curso=cursos.ID
+       JOIN instrutores ON atividades_realizadas.id_instrutor=instrutores.ID order by data_inicio desc";
+    }
     //echo $c_sql2;
     $result2 = $conection->query($c_sql2);
     $_SESSION['sql'] = $c_sql2;
@@ -176,6 +194,15 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                 <p class="col-md-0 form-label">a</p>
                 <div class="col-sm-2">
                     <input type="date" required maxlength="10" class="form-control" name="data2" id="data2" value=<?php echo $c_mostradata; ?>>
+                </div>
+                <!-- checkbox para ignorar datas e mostrar toda a agenda -->
+                <div class="col-sm-2">
+                    <div class="form-check">
+                        <input  type="checkbox" name="ignorar_datas" id="ignorar_datas" value="1">
+                        <label class="form-check-label" for="ignorar_datas">
+                            Ignorar Datas
+                        </label>
+                    </div>
                 </div>
                 <!-- botão para abrir modal de inclusão de atividades -->
                 <a class="btn btn-success btn-sm" href="/casaazul/atividades/atividades_incluir.php"><span class="glyphicon glyphicon-plus"></span> Nova Atividade</a>&nbsp;&nbsp;
