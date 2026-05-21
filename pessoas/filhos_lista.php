@@ -55,7 +55,7 @@ function calcularIdade($data_nascimento)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Filhos de Pessoa Fisica</title>
+    <title>Lista de Filhos de Beneficiários</title>
     <script>
         $(document).ready(function() {
             $('.tabfilhos').DataTable({
@@ -161,7 +161,7 @@ function calcularIdade($data_nascimento)
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>Casa Azul - Sistema de Gestão</h4>
-                <h5>Lista de Filhos Pessoas Fisicas<h5>
+                <h5>Lista de Filhos de Beneficiários<h5>
             </div>
         </div>
         <br>

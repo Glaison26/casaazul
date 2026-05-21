@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             <form method="POST" action="">
                 <!-- abas de cadastro ede instrutores -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Apresentação</a></li>
+                    <li role="presentation" class="active"><a href="#apresentacao" aria-controls="apresentacao" role="tab" data-toggle="tab">Dados Pessoais</a></li>
                     <li role="presentation"><a href="#bancos" aria-controls="bancos" role="tab" data-toggle="tab">Dados Bancários</a></li>
                     <li role="presentation"><a href="#vinculacao" aria-controls="vinculacao" role="tab" data-toggle="tab">Vinculação</a></li>
                     <li role="presentation"><a href="#observacao" aria-controls="observacao" role="tab" data-toggle="tab">Observações</a></li>

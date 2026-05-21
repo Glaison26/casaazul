@@ -73,7 +73,7 @@ include_once "../lib_gop.php";
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>Gestão - Casa Azul</h4>
-                    <h5>Atividades por Instrutor<h5>
+                    <h5>Atividades por Colaborador<h5>
                 </div>
             </div>
         </div>

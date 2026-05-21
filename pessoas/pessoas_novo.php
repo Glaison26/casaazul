@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>Gestão - Casa Azul</h4>
-                    <h5>Novo Cadastro de Pessoa física<h5>
+                    <h5>Novo Cadastro de Beneficiários<h5>
                 </div>
             </div>
         </div>
@@ -254,11 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="row mb-3">
                     <label class="col-sm-1">Gênero:</label>
                     <div class="col-sm-3">
-                        <select name="genero" class="form-control form-control-lg" class="form-control" required value="<?php echo isset($_POST['genero']) ? $_POST['genero'] : ''; ?>">
-                            <option value=""></option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Feminino</option>
-                        </select>
+                       <input type="text" name="genero" class="form-control" maxlength="20" value="<?php echo isset($_POST['genero']) ? $_POST['genero'] : ''; ?>">
                     </div>
                     <label class="col-sm-1">Número de Filhos:</label>
                     <div class="col-sm-4">

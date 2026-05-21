@@ -58,6 +58,15 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
         });
     </script>
 
+    <script>
+        // função para confirmar a exclusão do registro
+        function confirmacao(id) {
+            if (confirm("Tem certeza que deseja excluir este registro?")) {
+                window.location.href = "pessoas_excluir.php?id=" + id;
+            }
+        }   
+    </script>
+
 </head>
 
 <body>

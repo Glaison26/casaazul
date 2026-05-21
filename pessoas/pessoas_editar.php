@@ -43,11 +43,10 @@ if ($id) {
     $niss = $pessoa['niss'] ?? '';
     $email = $pessoa['email'] ?? '';
     $sexo = $pessoa['sexo'] ?? '';
-    $data_cadastro = $pessoa['data_cadastro'] ?? '';    
+    $data_cadastro = $pessoa['data_cadastro'] ?? '';
     $numerofilhos = $pessoa['numerofilhos'] ?? 0;
     $observacao = $pessoa['observacao'] ?? '';
     $genero = $pessoa['genero'] ?? '';
-
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -131,7 +130,7 @@ if ($id) {
             <div class="panel panel-primary class">
                 <div class="panel-heading text-center">
                     <h4>Gestão - Casa Azul</h4>
-                    <h5>Editar Cadastro de Pessoa física<h5>
+                    <h5>Editar Cadastro de Beneficiários<h5>
                 </div>
             </div>
         </div>
@@ -242,15 +241,11 @@ if ($id) {
                 <div class="row mb-3">
                     <label class="col-sm-1">Gênero:</label>
                     <div class="col-sm-3">
-                        <select name="genero" class="form-control form-control-lg" class="form-control" required value="<?php echo isset($_POST['genero']) ? $_POST['genero'] : ''; ?>">
-                            <option value=""></option>
-                            <option value="M" <?php echo (isset($pessoa['genero']) && $pessoa['genero'] === 'M') ? 'selected' : ''; ?>>Masculino</option>
-                            <option value="F" <?php echo (isset($pessoa['genero']) && $pessoa['genero'] === 'F') ? 'selected' : ''; ?>>Feminino</option>
-                        </select>
+                        <input type="text" name="genero" class="form-control" maxlength="20" value="<?php echo isset($pessoa['genero']) ? $pessoa['genero'] : ''; ?>">
                     </div>
                     <label class="col-sm-1">Número de Filhos:</label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control" name="numerofilhos" requered value="<?php echo $numerofilhos?>">
+                        <input type="number" class="form-control" name="numerofilhos" requered value="<?php echo $numerofilhos ?>">
                     </div>
 
                 </div>
@@ -260,7 +255,7 @@ if ($id) {
                     <div class="col-sm-3">
                         <input type="date" name="data_cadastro" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
                     </div>
-                   
+
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-1 col-form-label">Observação:</label>
