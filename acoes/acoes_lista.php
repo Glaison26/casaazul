@@ -80,7 +80,6 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
         JOIN atividades ON acoes.id_tipo_atividade=atividades.id order by data desc";
     }
 
-
     //echo $c_sql2;
     $result2 = $conection->query($c_sql2);
     $_SESSION['sql'] = $c_sql2;
