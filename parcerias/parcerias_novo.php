@@ -12,8 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $prorrogacao_inicio = $prorrogacao_inicio->format('Y-m-d');
     $prorrogacao_fim = new DateTime($_POST['prorrogacao_fim']);
     $prorrogacao_fim = $prorrogacao_fim->format('Y-m-d');
-   
-   
+    
     $c_sql = "INSERT INTO parcerias (identificacao, numero, vigencia_inicio, vigencia_fim, prorrogacao_inicio, prorrogacao_fim) 
     VALUES ('$identificacao', '$numero', '$vigencia_inicio', '$vigencia_fim', '$prorrogacao_inicio', '$prorrogacao_fim')";
 
