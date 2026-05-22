@@ -7,10 +7,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $numero = $_POST['numero'];
     $vigencia_inicio = $_POST['vigencia_inicio'];
     $vigencia_fim = $_POST['vigencia_fim'];
-    $prorrogacao_inicio = $_POST['prorrogacao_inicio'];
-    $prorrogacao_fim = $_POST['prorrogacao_fim'];
+    // converto as datas para o formato do banco de dados
+    $prorrogacao_inicio = new DateTime($_POST['prorrogacao_inicio']);
+    $prorrogacao_inicio = $prorrogacao_inicio->format('Y-m-d');
+    $prorrogacao_fim = new DateTime($_POST['prorrogacao_fim']);
+    $prorrogacao_fim = $prorrogacao_fim->format('Y-m-d');
+   
+   
+    $c_sql = "INSERT INTO parcerias (identificacao, numero, vigencia_inicio, vigencia_fim, prorrogacao_inicio, prorrogacao_fim) 
+    VALUES ('$identificacao', '$numero', '$vigencia_inicio', '$vigencia_fim', '$prorrogacao_inicio', '$prorrogacao_fim')";
 
-    $c_sql = "INSERT INTO parcerias (identificacao, numero, vigencia_inicio, vigencia_fim, prorrogacao_inicio, prorrogacao_fim) VALUES ('$identificacao', '$numero', '$vigencia_inicio', '$vigencia_fim', '$prorrogacao_inicio', '$prorrogacao_fim')";
+    if ($_POST['prorrogacao_inicio'] == "" && $_POST['prorrogacao_fim'] == "") {
+        $c_sql = "INSERT INTO parcerias (identificacao, numero, vigencia_inicio, vigencia_fim) 
+        VALUES ('$identificacao', '$numero', '$vigencia_inicio', '$vigencia_fim')";
+    }
+     
+    //echo $c_sql;
+    //die();
+    
     if ($conection->query($c_sql) === TRUE) {
         echo "<script>alert('Parceria cadastrada com sucesso!'); window.location.href='/casaazul/parcerias/parcerias_lista.php';</script>";
     } else {
@@ -18,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     // fecho a conexão com o banco de dados
     $conection->close();
-    // voltopara a página de lista de parcerias
+    // volto para a página de lista de parcerias
     header("Location: /casaazul/parcerias/parcerias_lista.php");
 }
 ?>
@@ -86,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="offset-sm-0 col-sm-3">
                     <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-floppy-saved'></span> Salvar</button>
                     <a class='btn btn-danger' href='/casaazul/parcerias/parcerias_lista.php'><span class='glyphicon glyphicon-log-out'></span> Voltar</a>
-
                 </div>
             </div>
         </form>

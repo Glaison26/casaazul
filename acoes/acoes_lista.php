@@ -65,15 +65,15 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
             JOIN atividades ON acoes.id_tipo_atividade=atividades.id";
     // verifico se data inicial e final foram selecionadas e monto sql para pesquisa
     if (isset($d_data) && isset($d_data2)) {
-    $c_sql2 .= " where data >= '$d_data' and data <= '$d_data2' order by data desc";
+        $c_sql2 .= " where data >= '$d_data' and data <= '$d_data2' order by data desc";
     } else if (isset($d_data)) {
         $c_sql2 .= " where data = '$d_data' order by data desc";
-     } else if (isset($d_data2)) {
+    } else if (isset($d_data2)) {
         $c_sql2 .= " where data = '$d_data2' order by data desc";
-     } else {
-         $c_sql2 .="order by data desc";
-     }
-     // se checkbox de ignorar datas estiver marcado, ignoro as datas e mostro toda a agenda
+    } else {
+        $c_sql2 .= "order by data desc";
+    }
+    // se checkbox de ignorar datas estiver marcado, ignoro as datas e mostro toda a agenda
     if (isset($_POST['ignorar_datas']) && $_POST['ignorar_datas'] == '1') {
         $c_sql2 = "select acoes.id,  data, acoes.descricao, participantes, atividades.descricao AS tipo
         from acoes 
@@ -83,6 +83,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
     //echo $c_sql2;
     $result2 = $conection->query($c_sql2);
     $_SESSION['sql'] = $c_sql2;
+    $c_mostradata = date("Y-m-d");
 }
 ?>
 
@@ -160,9 +161,6 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
 
     <!-- script para abrir modal de inclusão de participante -->
 
-
-
-
     <?php
     if (isset($d_data)) {
         $c_mostradata = date("d-m-Y", strtotime(str_replace('/', '-', $d_data)));
@@ -182,16 +180,16 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
             <div class="row mb-2">
                 <label class="col-md-2 form-label">Intervalo da Pesquisa</label>
                 <div class="col-sm-2">
-                    <input type="Date" required maxlength="10" class="form-control" name="data1" id="data1" value=<?php echo $c_mostradata; ?>>
+                    <input type="Date" required maxlength="10" class="form-control" name="data1" id="data1" value=<?php echo date("Y-m-d"); ?>>
                 </div>
                 <p class="col-md-0 form-label">a</p>
                 <div class="col-sm-2">
-                    <input type="date" required maxlength="10" class="form-control" name="data2" id="data2" value=<?php echo $c_mostradata; ?>>
+                    <input type="date" required maxlength="10" class="form-control" name="data2" id="data2" value=<?php echo date("Y-m-d"); ?>>
                 </div>
-                 <!-- checkbox para ignorar datas e mostrar toda a agenda -->
+                <!-- checkbox para ignorar datas e mostrar toda a agenda -->
                 <div class="col-sm-2">
                     <div class="form-check">
-                        <input  type="checkbox" name="ignorar_datas" id="ignorar_datas" value="1">
+                        <input type="checkbox" name="ignorar_datas" id="ignorar_datas" value="1">
                         <label class="form-check-label" for="ignorar_datas">
                             Ignorar Datas
                         </label>

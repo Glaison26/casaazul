@@ -104,8 +104,19 @@ $c_sql = "SELECT * FROM parcerias ORDER BY identificacao";
 
                     // insiro os registro do banco de dados na tabela 
                     while ($c_linha = $result->fetch_assoc()) {
+                        // verifico se as datas de prorrogação estão em branco, se sim, atribuo a string "Sem Prorrogação" para exibir na tabela
+
                         // substituo o formato da data para o formato brasileiro dd/mm/yyyy
-                      
+
+                        
+                        if (empty($c_linha['prorrogacao_inicio'])) {
+                            $c_data_prorrogacao_inicio = "Sem Prorrogação";
+                        } else
+                            $c_data_prorrogacao_inicio = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prorrogacao_inicio'])));
+                        if (empty($c_linha['prorrogacao_fim'])) {
+                            $c_data_prorrogacao_fim  = "Sem Prorrogação";
+                        }else
+                        $c_data_prorrogacao_fim = date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prorrogacao_fim'])));
 
                         echo "
                     <tr>
@@ -115,8 +126,8 @@ $c_sql = "SELECT * FROM parcerias ORDER BY identificacao";
                         
                         <td>" . date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['vigencia_inicio']))) . "</td>
                         <td>" . date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['vigencia_fim']))) . "</td>
-                        <td>" . date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prorrogacao_inicio']))) . "</td>
-                        <td>" . date("d-m-Y", strtotime(str_replace('/', '-', $c_linha['prorrogacao_fim']))) . "</td>
+                        <td>" .  $c_data_prorrogacao_inicio . "</td>
+                        <td>" . $c_data_prorrogacao_fim . "</td>
                         <td>
                             
                             <a href='/casaazul/parcerias/parcerias_editar.php?id=$c_linha[id]' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-pencil'></span> Editar</a>

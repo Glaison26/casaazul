@@ -189,11 +189,11 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
             <div class="row mb-2">
                 <label class="col-md-2 form-label">Pesquisa Data</label>
                 <div class="col-sm-2">
-                    <input type="Date" required maxlength="10" class="form-control" name="data1" id="data1" value=<?php echo $c_mostradata; ?>>
+                    <input type="Date" required maxlength="10" class="form-control" name="data1" id="data1" value=<?php echo date("Y-m-d"); ?>>
                 </div>
                 <p class="col-md-0 form-label">a</p>
                 <div class="col-sm-2">
-                    <input type="date" required maxlength="10" class="form-control" name="data2" id="data2" value=<?php echo $c_mostradata; ?>>
+                    <input type="date" required maxlength="10" class="form-control" name="data2" id="data2" value=<?php echo date("Y-m-d"); ?>>
                 </div>
                 <!-- checkbox para ignorar datas e mostrar toda a agenda -->
                 <div class="col-sm-2">
