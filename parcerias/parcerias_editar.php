@@ -16,9 +16,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $numero = $_POST['numero'];
     $vigencia_inicio = $_POST['vigencia_inicio'];
     $vigencia_fim = $_POST['vigencia_fim'];
-    $prorrogacao_inicio = $_POST['prorrogacao_inicio'];
-    $prorrogacao_fim = $_POST['prorrogacao_fim'];
-
+    // converto as datas para o formato do banco de dados
+    $prorrogacao_inicio = new DateTime($_POST['prorrogacao_inicio']);
+    $prorrogacao_inicio = $prorrogacao_inicio->format('Y-m-d');
+    $prorrogacao_fim = new DateTime($_POST['prorrogacao_fim']);
+    $prorrogacao_fim = $prorrogacao_fim->format('Y-m-d');
+    // insiro dado no bacode dados com data de prorrogação preenchida, caso a data de prorrogação esteja em branco, insiro o valor null no banco de dados
+    if ($_POST['prorrogacao_inicio'] == "") {
+        $prorrogacao_inicio = 'null';
+    }
+    if ($_POST['prorrogacao_fim'] == "") {
+        $prorrogacao_fim = 'null';
+    }
+    if ($_POST['prorrogacao_inicio'] == "" && $_POST['prorrogacao_fim'] == "") {
+        $sql_update = "UPDATE parcerias SET identificacao='$identificacao', numero='$numero', vigencia_inicio='$vigencia_inicio', 
+        vigencia_fim='$vigencia_fim', prorrogacao_inicio=null, prorrogacao_fim=null WHERE id=$id";
+    } else
     $sql_update = "UPDATE parcerias SET identificacao='$identificacao', numero='$numero', vigencia_inicio='$vigencia_inicio', 
     vigencia_fim='$vigencia_fim', prorrogacao_inicio='$prorrogacao_inicio', prorrogacao_fim='$prorrogacao_fim' WHERE id=$id";
     if ($conection->query($sql_update) === TRUE) {
