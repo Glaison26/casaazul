@@ -107,8 +107,7 @@ $c_sql = "SELECT * FROM parcerias ORDER BY identificacao";
                         // verifico se as datas de prorrogação estão em branco, se sim, atribuo a string "Sem Prorrogação" para exibir na tabela
 
                         // substituo o formato da data para o formato brasileiro dd/mm/yyyy
-
-                        
+                       
                         if (empty($c_linha['prorrogacao_inicio'])) {
                             $c_data_prorrogacao_inicio = "Sem Prorrogação";
                         } else
