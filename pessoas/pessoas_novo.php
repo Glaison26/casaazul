@@ -162,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="row mb-3">
                     <label class="col-sm-1 col-form-label">Identidade:</label>
                     <div class="col-sm-2">
-                        <input type="text" name="identidade" class="form-control" maxlength="9" value="<?php echo isset($_POST['identidade']) ? $_POST['identidade'] : ''; ?>" required>
+                        <input type="text" name="identidade" class="form-control" maxlength="10" value="<?php echo isset($_POST['identidade']) ? $_POST['identidade'] : ''; ?>" required>
                     </div>
                     <label class="col-sm-1">CPF:</label>
                     <div class="col-sm-2">

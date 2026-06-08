@@ -69,6 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      '$bairro', '$cidade', '$fone1', '$fone2', '$escolaridade', '$sexo', '$email', '$nome_banco', '$numero_agencia', '$numero_conta', '$tipo_conta',
      '$titular_conta', '$observacao', '$uf', '$pix', '$cnpj', '$id_parceria', '$tipovinculacao')";
         $result = $conection->query($c_sql);
+        echo $c_sql;
+       // die();
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -191,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="row mb-3">
                                 <label class="col-sm-1 col-form-label">Identidade:</label>
                                 <div class="col-sm-2">
-                                    <input type="text" name="identidade" class="form-control" maxlength="9" value="<?php echo isset($_POST['identidade']) ? $_POST['identidade'] : ''; ?>" required>
+                                    <input type="text" name="identidade" class="form-control" maxlength="10" value="<?php echo isset($_POST['identidade']) ? $_POST['identidade'] : ''; ?>" required>
                                 </div>
 
                                 <label class="col-sm-2 col-form-label">Data de Nascimento:</label>
@@ -332,7 +334,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Tipo de vinculação:</label>
                                 <div class="col-sm-3">
-                                    <select name="vinculacao" class="form-control form-control-lg" value="<?php echo isset($_POST['vinculacao']) ? $_POST['vinculacao'] : ''; ?>">
+                                    <select name="vinculacao" class="form-control requered form-control-lg" value="<?php echo isset($_POST['vinculacao']) ? $_POST['vinculacao'] : ''; ?>">
                                         <option value=""></option>
                                         <option value="MEI" <?php echo (isset($_POST['vinculacao']) && $_POST['vinculacao'] === 'MEI') ? 'selected' : ''; ?>>MEI</option>
                                         <option value="Autônomo" <?php echo (isset($_POST['vinculacao']) && $_POST['vinculacao'] === 'Autônomo') ? 'selected' : ''; ?>>Autônomo</option>
@@ -344,7 +346,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <!-- combobox com a parceria da tabela paricerias para vincular o instrutor a uma parceria, o combobox com identificação e número da parceria    -->
                                 <label class="col-sm-2 col-form-label">Vincular a Parceria:</label>
                                 <div class="col-sm-3">
-                                    <select name="parceria_id" class="form-control form-control-lg" value="<?php echo isset($_POST['parceria_id']) ? $_POST['parceria_id'] : ''; ?>">
+                                    <select name="parceria_id" required class="form-control form-control-lg" value="<?php echo isset($_POST['parceria_id']) ? $_POST['parceria_id'] : ''; ?>">
                                         <option value=""></option>
                                         <?php
                                         $sql_parcerias = "SELECT id, identificacao, numero FROM parcerias";
