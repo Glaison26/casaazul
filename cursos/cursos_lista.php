@@ -175,7 +175,7 @@ include("../links.php");
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>Casa Azul - Sistema de Gestão</h4>
-            <h4>Lista de Atividades Realizaveis</h4>
+            <h4>Lista de Atividades</h4>
         </div>
     </div>
 
@@ -189,10 +189,15 @@ include("../links.php");
         <table class="table table-bordered table-striped tabcursos">
             <thead class="thead">
                 <tr>
-                    <th scope="col">#</th>
+                   <!-- titulo com id invisivel para ordenação da tabela -->
+                    <th scope="col" style="display:none;">ID</th>
+                    <!-- titulo com descrição da atividade com tamanho definido -->
+                    <th scope="col" style="width: 90%;">Atividade</th>
+
+                    
                     <th scope="col">Descrição</th>
-                    <th scope="col">Observação</th>
                     <th scope="col">Opções</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -211,13 +216,15 @@ include("../links.php");
 
                     echo "
                     <tr>
-                    <td>$c_linha[id]</td>
+                    <td style='display:none;'>$c_linha[id]</td>
                     <td>$c_linha[descricao]</td>
                     <td>$c_linha[observacao]</td>
+                    
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Atividade'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
+                    <th></td>
 
                     </tr>
                     ";

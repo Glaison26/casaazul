@@ -9,15 +9,17 @@ include("../links.php");
 ?>
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestão Casa Azul</title>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="shortcut icon" type="imagex/png" href="./imagens/img_gop.ico">
-    
+
 </head>
+
 <body>
 
     <script language="Javascript">
@@ -183,7 +185,7 @@ include("../links.php");
     <div class="panel panel-primary class">
         <div class="panel-heading text-center">
             <h4>Casa Azul - Sistema de Gestão</h4>
-            <h4>Lista de tipos de ações</h4>
+            <h4>Lista Ações</h4>
         </div>
     </div>
 
@@ -194,53 +196,58 @@ include("../links.php");
         </button>
         <a class="btn btn-secondary btn-sm" href="/casaazul/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
-        <table class="table table-bordered table-striped tabatividades">
-            <thead class="thead">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Observação</th>
-                    <th scope="col">Opções</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-
-                // faço a Leitura da tabela com sql
-                $c_sql = "SELECT atividades.id, atividades.descricao, atividades.observacao FROM atividades ORDER BY atividades.descricao";
-                $result = $conection->query($c_sql);
-                // verifico se a query foi correto
-                if (!$result) {
-                    die("Erro ao Executar Sql!!" . $conection->connect_error);
-                }
-
-                // insiro os registro do banco de dados na tabela 
-                while ($c_linha = $result->fetch_assoc()) {
-                    $qtd_acoes = 0;
-                    // sql para contar a quantidade de ações realizadas para cada tipo de ação
-                    $c_sql_qtd = "SELECT COUNT(*) AS qtd FROM acoes WHERE id_tipo_atividade = $c_linha[id]";
-                    $result_qtd = $conection->query($c_sql_qtd);
-                    if ($result_qtd) {
-                        $c_linha_qtd = $result_qtd->fetch_assoc();
-                        $qtd_acoes = $c_linha_qtd['qtd'];
-                    }
-                    echo "
+        <!-- formato tabela para exibição dos dados por toda a área horizontal da tela -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped  tabatividades">
+                <thead class="thead">
                     <tr>
-                    <td>$c_linha[id]</td>
-                    <td>$c_linha[descricao]</td>
+                        <th scope="col" style='display:none;'>#</th>
+                        <th scppe="col">Ações</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Opções</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+
+                    // faço a Leitura da tabela com sql
+                    $c_sql = "SELECT atividades.id, atividades.descricao, atividades.observacao FROM atividades ORDER BY atividades.descricao";
+                    $result = $conection->query($c_sql);
+                    // verifico se a query foi correto
+                    if (!$result) {
+                        die("Erro ao Executar Sql!!" . $conection->connect_error);
+                    }
+
+                    // insiro os registro do banco de dados na tabela 
+                    while ($c_linha = $result->fetch_assoc()) {
+                        $qtd_acoes = 0;
+                        // sql para contar a quantidade de ações realizadas para cada tipo de ação
+                        $c_sql_qtd = "SELECT COUNT(*) AS qtd FROM acoes WHERE id_tipo_atividade = $c_linha[id]";
+                        $result_qtd = $conection->query($c_sql_qtd);
+                        if ($result_qtd) {
+                            $c_linha_qtd = $result_qtd->fetch_assoc();
+                            $qtd_acoes = $c_linha_qtd['qtd'];
+                        }
+                        echo "
+                    <tr>
+                    <td style='display:none;'>$c_linha[id]</td>
+                    <td style='width:400px'>$c_linha[descricao]</td>
                     <td>$c_linha[observacao]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Tipo de Ação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
                     <a class='btn btn-info btn-sm' href='/casaazul/tipo_acoes/tipo_acoes_realizadas.php?id=$c_linha[id]'><i class='fas fa-tasks mr-2'></i></span> Ações Realizadas&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_acoes</span></a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
+                   
 
                     </tr>
                     ";
-                }
-                ?>
-            </tbody>
-        </table>
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- janela Modal para inclusão de registro -->
@@ -319,5 +326,6 @@ include("../links.php");
     </div>
 
 </body>
+
 
 </html>
