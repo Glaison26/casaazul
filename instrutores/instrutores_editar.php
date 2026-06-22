@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $observacao = $registro['observacao'];
     $id_parceria = $registro['id_parceria'];
     $tipovinculacao = $registro['tipo_vinculacao'];
+    $pix = $registro['chave_pix'];
 }
 // post das informações
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -62,11 +63,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uf = 'MG';
     $id_parceria = $_POST['parceria_id'];
     $vinculacao = $_POST['vinculacao'];
+    $pix = $_POST['pix'];
     // inclusão dos dadospor sql
     $c_sql = "Update instrutores SET NOME='$nome', IDENTIDADE='$identidade', CPF='$cpf', cnpj='$cnpj', DATANASC='$datanasc', CEP='$cep', ENDERECO='$endereco', BAIRRO='$bairro', 
     CIDADE='$cidade', UF='$uf', FONE1='$fone1', FONE2='$fone2', ESCOLARIDADE='$escolaridade', SEXO='$sexo', EMAIL='$email', BANCO='$nome_banco',
     AGENCIA='$numero_agencia', CONTA='$numero_conta', TIPO_CONTA='$tipo_conta', TITULAR='$titular_conta', 
-    OBSERVACAO='$observacao', ID_PARCERIA='$id_parceria',  TIPO_VINCULACAO='$vinculacao' where id=$id";
+    OBSERVACAO='$observacao', ID_PARCERIA='$id_parceria',  TIPO_VINCULACAO='$vinculacao', chave_pix='$pix' where id=$id";
     $result = $conection->query($c_sql);
     if (!$result) {
         die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -177,18 +179,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-sm-2">
                                     <input type="text" name="identidade" class="form-control" maxlength="10" value="<?php echo $identidade; ?>" required>
                                 </div>
-                               
+
                                 <label class="col-sm-2 col-form-label">Data de Nascimento:</label>
                                 <div class="col-sm-2">
                                     <input type="date" name="datanasc" class="form-control" value="<?php echo $datanasc; ?>" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                 <label class="col-sm-1">CPF:</label>
+                                <label class="col-sm-1">CPF:</label>
                                 <div class="col-sm-2">
                                     <input type="text" placeholder="Apenas números" name="cpf" class="form-control" maxlength="11" value="<?php echo $cpf; ?>" required>
                                 </div>
-                                 <label class="col-sm-2 col-form-label">CNPJ:</label>
+                                <label class="col-sm-2 col-form-label">CNPJ:</label>
                                 <div class="col-sm-2">
                                     <input type="text" placeholder="Apenas números" name="cnpj" class="form-control" maxlength="14" value="<?php echo $cnpj; ?>">
                                 </div>
@@ -306,13 +308,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-sm-3">
                                     <input type="text" name="titular_conta" class="form-control" maxlength="100" value="<?php echo $titular_conta; ?>">
                                 </div>
+                                 <label class="col-sm-1 col-form-label">Chave PIX:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="pix" class="form-control" maxlength="100" value="<?php echo $pix; ?>">
+                                </div>
                             </div>
                         </div>
 
                     </div> <!-- fim de aba de dados bancários -->
                     <!-- aba de vinculação -->
                     <div role="tabpanel" class="tab-pane" id="vinculacao">
-                          <div style="padding-top:15px;padding-left:20px;">
+                        <div style="padding-top:15px;padding-left:20px;">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Tipo de vinculação:</label>
                                 <div class="col-sm-3">

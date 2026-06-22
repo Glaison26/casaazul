@@ -42,7 +42,7 @@ include("../links.php");
         $(document).ready(function() {
             $('.tabatividades').DataTable({
                 // 
-                "iDisplayLength": -1,
+                "iDisplayLength": 10,
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
@@ -198,12 +198,13 @@ include("../links.php");
         <hr>
         <!-- formato tabela para exibição dos dados por toda a área horizontal da tela -->
         <div class="table-responsive">
-            <table class="table table-bordered table-striped  tabatividades">
+            <table class="table table-bordered table-striped fixed-table  tabatividades">
                 <thead class="thead">
                     <tr>
+
                         <th scope="col" style='display:none;'>#</th>
-                        <th scppe="col">Ações</th>
-                        <th scope="col">Descrição</th>
+                        <th scope="col">Ações</th>
+                        <th scope="col">Observação</th>
                         <th scope="col">Opções</th>
 
                     </tr>
@@ -231,8 +232,9 @@ include("../links.php");
                         }
                         echo "
                     <tr>
+                   
                     <td style='display:none;'>$c_linha[id]</td>
-                    <td style='width:400px'>$c_linha[descricao]</td>
+                    <td>$c_linha[descricao]</td>
                     <td>$c_linha[observacao]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Tipo de Ação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
@@ -324,6 +326,40 @@ include("../links.php");
             </div>
         </div>
     </div>
+
+    <style>
+        .fixed-table {
+            table-layout: fixed;
+            width: 100%;
+            /* Required for fixed layout to activate */
+            border-collapse: collapse;
+        }
+
+        .fixed-table th,
+        .fixed-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            /* Optional: Truncate overflowing text with ellipses */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Define explicit column widths on the first row or headers */
+        .col-small {
+            width: 100px;
+        }
+
+        .col-large {
+            width: 300px;
+        }
+
+        .col-flexible {
+            width: auto;
+        }
+
+        /* Takes up remaining space */
+    </style>
 
 </body>
 

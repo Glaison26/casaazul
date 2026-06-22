@@ -34,6 +34,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_parceria = $_POST['parceria_id'];
         $tipovinculacao = $_POST['vinculacao'];
 
+        // validando se os campos obrigatórios foram preenchidos
+        if (empty($nome)) {
+
+            $msg_erro = "Favor preencher Campo Nome!!";
+            break;
+        }
+        if (empty($identidade)) {
+
+            $msg_erro = "Favor preencher Campo Identidade!!";
+            break;
+        }
+        if (empty($cpf)) {
+
+            $msg_erro = "Favor preencher Campo CPF!!";
+            break;
+        }
+        if (empty($datanasc)) {
+
+            $msg_erro = "Favor preencher Campo Data de Nascimento!!";
+            break;
+        }
+        if (empty($cep)) {
+
+            $msg_erro = "Favor preencher Campo CEP!!";
+            break;
+        }
+        if (empty($endereco)) {
+
+            $msg_erro = "Favor preencher Campo Endereço!!";
+            break;
+        }
+        if (empty($bairro)) {
+
+            $msg_erro = "Favor preencher Campo Bairro!!";
+            break;
+        }
+        if (empty($cidade)) {
+
+            $msg_erro = "Favor preencher Campo Cidade!!";
+            break;
+        }
+        if (empty($fone1)) {
+
+            $msg_erro = "Favor preencher Campo Telefone 1!!";
+            break;
+        }
+        if (empty($escolaridade)) {
+
+            $msg_erro = "Favor preencher Campo Escolaridade!!";
+            break;
+        }
+        if (empty($sexo)) {
+
+            $msg_erro = "Favor preencher Campo Sexo!!";
+            break;
+        }
+        if (empty($id_parceria)) {
+
+            $msg_erro = "Favor preencher Campo Vincular a Parceria!!";
+            break;
+        }
+        if (empty($tipovinculacao)) {
+
+            $msg_erro = "Favor preencher Campo Tipo de Vinculação!!";
+            break;
+        }
+
 
         // verifico se o cpf já existe no banco de dados
         $sql_check_cpf = "SELECT id FROM instrutores WHERE cpf = '$cpf'";
@@ -70,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      '$titular_conta', '$observacao', '$uf', '$pix', '$cnpj', '$id_parceria', '$tipovinculacao')";
         $result = $conection->query($c_sql);
         echo $c_sql;
-       // die();
+        // die();
         // verifico se a query foi correto
         if (!$result) {
             die("Erro ao Executar Sql!!" . $conection->connect_error);
@@ -160,6 +227,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
         <div class="container content-box">
+            
+            <!-- mensagem alertando que os campos com * são obrigatórios -->
+            <div class="alert alert-info" role="alert">
+                <h4>Campos com * são obrigatórios!!</h4>
+            </div>
+
             <?php
             if (!empty($msg_erro)) {
                 echo "
@@ -169,6 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ";
             }
             ?>
+
 
 
             <form method="POST" action="">
@@ -184,27 +258,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div role="tabpanel" class="tab-pane active" id="apresentacao">
                         <div style="padding-top:15px;padding-left:20px;">
                             <div class="row mb-3">
-                                <label class="col-sm-1 col-form-label">Nome:</label>
+                                <label class="col-sm-1 col-form-label">Nome *:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="nome" placeholder="Nome completo" class="form-control" maxlength="200" value="<?php echo isset($_POST['nome']) ? $_POST['nome'] : ''; ?>" required>
+                                    <input type="text" name="nome" placeholder="Nome completo" class="form-control" maxlength="200" value="<?php echo isset($_POST['nome']) ? $_POST['nome'] : ''; ?>">
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-1 col-form-label">Identidade:</label>
+                                <label class="col-sm-1 col-form-label">Identidade *:</label>
                                 <div class="col-sm-2">
-                                    <input type="text" name="identidade" class="form-control" maxlength="10" value="<?php echo isset($_POST['identidade']) ? $_POST['identidade'] : ''; ?>" required>
+                                    <input type="text" name="identidade" class="form-control" maxlength="10" value="<?php echo isset($_POST['identidade']) ? $_POST['identidade'] : ''; ?>">
                                 </div>
 
-                                <label class="col-sm-2 col-form-label">Data de Nascimento:</label>
+                                <label class="col-sm-2 col-form-label">Data de Nascimento *:</label>
                                 <div class="col-sm-2">
-                                    <input type="date" name="datanasc" class="form-control" value="<?php echo isset($_POST['datanasc']) ? $_POST['datanasc'] : ''; ?>" required>
+                                    <input type="date" name="datanasc" class="form-control" value="<?php echo isset($_POST['datanasc']) ? $_POST['datanasc'] : ''; ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-1">CPF:</label>
+                                <label class="col-sm-1">CPF *:</label>
                                 <div class="col-sm-2">
-                                    <input type="text" placeholder="Apenas números" name="cpf" class="form-control" maxlength="11" value="<?php echo isset($_POST['cpf']) ? $_POST['cpf'] : ''; ?>" required>
+                                    <input type="text" placeholder="Apenas números" name="cpf" class="form-control" maxlength="11" value="<?php echo isset($_POST['cpf']) ? $_POST['cpf'] : ''; ?>">
                                 </div>
                                 <label class="col-sm-2 col-form-label">CNPJ:</label>
                                 <div class="col-sm-2">
@@ -215,24 +289,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <hr>
                             <div class="row mb-3">
 
-                                <label class="col-sm-1 col-form-label">CEP:</label>
+                                <label class="col-sm-1 col-form-label">CEP *:</label>
                                 <div class="col-sm-2">
-                                    <input type="text" name="cep" id="cep" maxlength="12" class="form-control" value="<?php echo isset($_POST['cep']) ? $_POST['cep'] : ''; ?>" required>
+                                    <input type="text" name="cep" id="cep" maxlength="12" class="form-control" value="<?php echo isset($_POST['cep']) ? $_POST['cep'] : ''; ?>">
                                 </div>
-                                <label class="col-sm-1">Endereço:</label>
+                                <label class="col-sm-1">Endereço *:</label>
                                 <div class="col-sm-5">
-                                    <input type="text" name="endereco" id="endereco" class="form-control" maxlength="150" value="<?php echo isset($_POST['endereco']) ? $_POST['endereco'] : ''; ?>" required>
+                                    <input type="text" name="endereco" id="endereco" class="form-control" maxlength="150" value="<?php echo isset($_POST['endereco']) ? $_POST['endereco'] : ''; ?>">
                                 </div>
 
                             </div>
 
                             <div class="row mb-3">
 
-                                <label class="col-sm-1 col-form-label">Bairro:</label>
+                                <label class="col-sm-1 col-form-label">Bairro *:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="bairro" id="bairro" class="form-control" maxlength="120" value="<?php echo isset($_POST['bairro']) ? $_POST['bairro'] : ''; ?>" required>
+                                    <input type="text" name="bairro" id="bairro" class="form-control" maxlength="120" value="<?php echo isset($_POST['bairro']) ? $_POST['bairro'] : ''; ?>">
                                 </div>
-                                <label class="col-sm-1 col-form-label">Cidade:</label>
+                                <label class="col-sm-1 col-form-label">Cidade :</label>
                                 <div class="col-sm-4">
                                     <input type="text" name="cidade" id="cidade" class="form-control" maxlength="120" value="<?php echo isset($_POST['cidade']) ? $_POST['cidade'] : ''; ?>">
                                 </div>
@@ -240,9 +314,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <hr>
 
                             <div class="row mb-3">
-                                <label class="col-sm-1 col-form-label">Telefone 1:</label>
+                                <label class="col-sm-1 col-form-label">Telefone 1 *:</label>
                                 <div class="col-sm-3">
-                                    <input type="tel" name="fone1" class="form-control" maxlength="20" onkeyup="handlePhone(event)" value="<?php echo isset($_POST['fone1']) ? $_POST['fone1'] : ''; ?>" required>
+                                    <input type="tel" name="fone1" class="form-control" maxlength="20" onkeyup="handlePhone(event)" value="<?php echo isset($_POST['fone1']) ? $_POST['fone1'] : ''; ?>">
                                 </div>
                                 <label class="col-sm-1">Telefone 2:</label>
                                 <div class="col-sm-4">
@@ -252,9 +326,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <!-- combobox com escolaridade do instrutor -->
                             <div class="row mb-3">
-                                <label class="col-sm-1 col-form-label">Escolaridade:</label>
+                                <label class="col-sm-1 col-form-label">Escolaridade*:</label>
                                 <div class="col-sm-3">
-                                    <select name="escolaridade" class="form-control form-control-lg" required value="<?php echo isset($_POST['escolaridade']) ? $_POST['escolaridade'] : ''; ?>">
+                                    <select name="escolaridade" class="form-control form-control-lg" value="<?php echo isset($_POST['escolaridade']) ? $_POST['escolaridade'] : ''; ?>">
                                         <option value=""></option>
                                         <option value="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
                                         <option value="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
@@ -264,9 +338,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <option value="Ensino Superior Completo">Ensino Superior Completo</option>
                                     </select>
                                 </div>
-                                <label class="col-sm-1">Sexo:</label>
+                                <label class="col-sm-1">Sexo *:</label>
                                 <div class="col-sm-4">
-                                    <select name="sexo" class="form-control form-control-lg" class="form-control" value="<?php echo isset($_POST['sexo']) ? $_POST['sexo'] : ''; ?>" required>
+                                    <select name="sexo" class="form-control form-control-lg" class="form-control" value="<?php echo isset($_POST['sexo']) ? $_POST['sexo'] : ''; ?>">
                                         <option value=""></option>
                                         <option value="M">Masculino</option>
                                         <option value="F">Feminino</option>
@@ -332,7 +406,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div role="tabpanel" class="tab-pane" id="vinculacao">
                         <div style="padding-top:15px;padding-left:20px;">
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Tipo de vinculação:</label>
+                                <label class="col-sm-2 col-form-label">Tipo de vinculação *:</label>
                                 <div class="col-sm-3">
                                     <select name="vinculacao" class="form-control requered form-control-lg" value="<?php echo isset($_POST['vinculacao']) ? $_POST['vinculacao'] : ''; ?>">
                                         <option value=""></option>
@@ -344,9 +418,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="row mb-3">
                                 <!-- combobox com a parceria da tabela paricerias para vincular o instrutor a uma parceria, o combobox com identificação e número da parceria    -->
-                                <label class="col-sm-2 col-form-label">Vincular a Parceria:</label>
+                                <label class="col-sm-2 col-form-label">Vincular a Parceria *:</label>
                                 <div class="col-sm-3">
-                                    <select name="parceria_id" required class="form-control form-control-lg" value="<?php echo isset($_POST['parceria_id']) ? $_POST['parceria_id'] : ''; ?>">
+                                    <select name="parceria_id" class="form-control form-control-lg" value="<?php echo isset($_POST['parceria_id']) ? $_POST['parceria_id'] : ''; ?>">
                                         <option value=""></option>
                                         <?php
                                         $sql_parcerias = "SELECT id, identificacao, numero FROM parcerias";

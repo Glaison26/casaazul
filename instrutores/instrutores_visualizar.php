@@ -227,30 +227,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Tipo de vinculação:</label>
                                 <div class="col-sm-3">
-                                    <select readonly name="vinculacao" class="form-control form-control-lg" value="<?php echo isset($_POST['vinculacao']) ? $_POST['vinculacao'] : ''; ?>">
-                                        <option value=""></option>
-                                        <option value="MEI" <?php echo (isset($registro['tipo_vinculacao']) && $registro['tipo_vinculacao'] === 'MEI') ? 'selected' : ''; ?>>MEI</option>
-                                        <option value="Autônomo" <?php echo (isset($registro['tipo_vinculacao']) && $registro['tipo_vinculacao'] === 'Autônomo') ? 'selected' : ''; ?>>Autônomo</option>
-                                        <option value="Voluntário" <?php echo (isset($registro['tipo_vinculacao']) && $registro['tipo_vinculacao'] === 'Voluntário') ? 'selected' : ''; ?>>Voluntário</option>
-                                    </select>
+                                    <input readonly type="text" name="tipovinculacao" class="form-control" maxlength="100" value="<?php echo $tipovinculacao; ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <!-- combobox com a parceria da tabela paricerias para vincular o instrutor a uma parceria, o combobox com identificação e número da parceria    -->
                                 <label class="col-sm-2 col-form-label">Vincular a Parceria:</label>
                                 <div class="col-sm-3">
-                                    <select readonly name="parceria_id" class="form-control form-control-lg" value="<?php echo isset($_POST['parceria_id']) ? $_POST['parceria_id'] : ''; ?>">
-                                        <option value=""></option>
-                                        <?php
-                                        $sql_parcerias = "SELECT id, identificacao, numero FROM parcerias";
-                                        $result_parcerias = $conection->query($sql_parcerias);
-                                        if ($result_parcerias->num_rows > 0) {
-                                            while ($row_parceria = $result_parcerias->fetch_assoc()) {
-                                                echo "<option " . (isset($registro['id_parceria']) && $registro['id_parceria'] == $row_parceria['id'] ? "selected" : "") . " value='" . $row_parceria['id'] . "'>" . $row_parceria['identificacao'] . " - " . $row_parceria['numero'] . " </option>";
-                                            }
-                                        }
-                                        ?>
-                                    </select>
+                                    <?php
+                                    // consulta para pegar o nome da parceria vinculada ao instrutor
+                                    $p_sql = "SELECT identificacao FROM parcerias WHERE id=$id_parceria";
+                                    $p_result = $conection->query($p_sql);
+                                    if (!$p_result) {
+                                        die("Erro ao Executar Sql!!" . $conection->connect_error);
+                                    }
+                                    $p_registro = $p_result->fetch_assoc();
+                                    $nome_parceria = $p_registro['identificacao'];
+                                    echo "<input readonly type='text' name='nome_parceria' class='form-control' maxlength='100' value='$nome_parceria'>";
+                                    ?>
                                 </div>
                             </div>
                         </div>
