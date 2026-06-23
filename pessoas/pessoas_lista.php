@@ -20,7 +20,7 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [7]
+                    'aTargets': [6]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -90,8 +90,6 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
                         <th>Bairro</th>
                         <th>CEP</th>
                         <th>Telefone 1</th>
-                        
-                        <th>Sexo</th>
                         <th style="width: 30px;">No. de Filhos</th>
                         <th>Opções</th>
                     </tr>
@@ -135,13 +133,13 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
                         <td>$c_linha[cep]</td>
                         <td>$c_linha[fone1]</td>
                         
-                        <td>$c_sexo</td>
+                        
                         <td>$c_linha[numerofilhos]</td>
                         <td>
                     <a class='btn btn-secondary btn-sm' href='/casaazul/pessoas/pessoas_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                    <a class='btn btn-info btn-sm' href='/casaazul/pessoas/filhos_lista.php?id=$c_linha[id]'><span class='glyphicon glyphicon-user'></span> Filhos&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_filhos</span></a>
-                    <a class='btn btn-primary btn-sm' href='/casaazul/pessoas/pessoas_atividades.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Atividades&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_atividades</span></a>
-                    <a class='btn btn-success btn-sm' href='/casaazul/pessoas/pessoas_acoes.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Ações&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_acoes</span></a>
+                    <a class='btn btn-info btn-sm' href='/casaazul/pessoas/filhos_lista.php?id=$c_linha[id]'><span class='glyphicon glyphicon-user'></span> Filhos&nbsp</a>
+                    <a class='btn btn-primary btn-sm' href='/casaazul/pessoas/pessoas_atividades.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Atividades&nbsp</a>
+                    <a class='btn btn-success btn-sm' href='/casaazul/pessoas/pessoas_acoes.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Ações&nbsp</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -155,5 +153,39 @@ $c_sql = "SELECT * FROM cadastro ORDER BY nome";
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+<style>
+        .fixed-table {
+            table-layout: fixed;
+            width: 100%;
+            /* Required for fixed layout to activate */
+            border-collapse: collapse;
+        }
+
+        .fixed-table th,
+        .fixed-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            /* Optional: Truncate overflowing text with ellipses */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Define explicit column widths on the first row or headers */
+        .col-small {
+            width: 100px;
+        }
+
+        .col-large {
+            width: 300px;
+        }
+
+        .col-flexible {
+            width: auto;
+        }
+
+        /* Takes up remaining space */
+    </style>
 
 </html>

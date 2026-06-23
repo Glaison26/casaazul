@@ -20,7 +20,7 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
                 "order": [1, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
-                    'aTargets': [7]
+                    'aTargets': [6]
                 }, {
                     'aTargets': [0],
                     "visible": true
@@ -81,7 +81,7 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
         <a class="btn btn-secondary btn-sm" href="/casaazul/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped tabpessoas">
+            <table class="table table-bordered table-striped  tabpessoas">
                 <thead class="thead">
                     <tr>
                         <th>Nome</th>
@@ -90,7 +90,7 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
                         <th>CEP</th>
                         <th>Telefone 1</th>
                         <th>Telefone 2</th>
-                        <th>Sexo</th>
+                       
                         <th>Opções</th>
                     </tr>
                 </thead>
@@ -122,10 +122,10 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
                         <td>$c_linha[cep]</td>
                         <td>$c_linha[fone1]</td>
                         <td>$c_linha[fone2]</td>
-                        <td>$c_sexo</td>
+                        
                         <td>
                         <a class='btn btn-secondary btn-sm' href='/casaazul/instrutores/instrutores_editar.php?id=$c_linha[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
-                        <a class='btn btn-primary btn-sm' href='/casaazul/instrutores/instrutor_atividade.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Atividades <span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_atividades</span></a>
+                        <a class='btn btn-primary btn-sm' href='/casaazul/instrutores/instrutor_atividade.php?id=$c_linha[id]'><span class='glyphicon glyphicon-list-alt'></span> Atividades</span></a>
                         <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
 
@@ -138,6 +138,40 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+        .fixed-table {
+            table-layout: fixed;
+            width: 100%;
+            /* Required for fixed layout to activate */
+            border-collapse: collapse;
+        }
+
+        .fixed-table th,
+        .fixed-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            /* Optional: Truncate overflowing text with ellipses */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Define explicit column widths on the first row or headers */
+        .col-small {
+            width: 100px;
+        }
+
+        .col-large {
+            width: 300px;
+        }
+
+        .col-flexible {
+            width: auto;
+        }
+
+        /* Takes up remaining space */
+    </style>
+
 </body>
 
 </html>

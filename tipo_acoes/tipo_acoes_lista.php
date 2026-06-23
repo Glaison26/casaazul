@@ -238,7 +238,7 @@ include("../links.php");
                     <td>$c_linha[observacao]</td>
                     <td>
                     <button type='button' class='btn btn-secondary btn-sm editbtn' data-toggle='modal' title='Editar Tipo de Ação'><span class='glyphicon glyphicon-pencil'></span> Editar</button>
-                    <a class='btn btn-info btn-sm' href='/casaazul/tipo_acoes/tipo_acoes_realizadas.php?id=$c_linha[id]'><i class='fas fa-tasks mr-2'></i></span> Ações Realizadas&nbsp<span style='background-color: #c0af1a; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_acoes</span></a>
+                    <a class='btn btn-info btn-sm' href='/casaazul/tipo_acoes/tipo_acoes_realizadas.php?id=$c_linha[id]'><i class='fas fa-tasks mr-2'></i></span> Ações Realizadas&nbsp</a>
                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
                     </td>
                    

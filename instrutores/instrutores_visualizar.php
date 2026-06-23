@@ -266,7 +266,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     <div class="row mb-3">
                         <div class="offset-sm-0 col-sm-3">
 
-                            <a class='btn btn-danger' href='/casaazul/instrutores/instrutores_lista.php'><span class='glyphicon glyphicon-log-out'></span> Voltar</a>
+                            <a class='btn btn-primary' href='/casaazul/instrutores/instrutores_lista.php'><span class='glyphicon glyphicon-log-out'></span> Voltar</a>
 
                         </div>
                     </div>

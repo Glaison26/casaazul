@@ -1,11 +1,44 @@
 /* Estilo para o conteúdo de teste */
-    .content-box {
-        background-color: rgba(255, 255, 255, 0.9);
-        /* Fundo branco semi-transparente para destacar o conteúdo */
-        padding: 10px;
-        margin: 10px auto;
-        width: 90%;
-        max-width: 1400px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+.content-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Fundo branco semi-transparente para destacar o conteúdo */
+    padding: 10px;
+    margin: 10px auto;
+    width: 90%;
+    max-width: 1400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.fixed-table {
+    table-layout: fixed;
+    width: 100%;
+    /* Required for fixed layout to activate */
+    border-collapse: collapse;
+}
+
+.fixed-table th,
+.fixed-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    /* Optional: Truncate overflowing text with ellipses */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Define explicit column widths on the first row or headers */
+.col-small {
+    width: 100px;
+}
+
+.col-large {
+    width: 300px;
+}
+
+.col-flexible {
+    width: auto;
+}
+
+/* Takes up remaining space */

@@ -115,7 +115,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                     'aTargets': [5]
                 }, {
                     'aTargets': [0],
-                    "visible": true
+                    "visible": false
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -220,7 +220,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
 
         <hr>
         <!-- montagem da tabela de agenda -->
-        <table class="table display table-striped table-bordered tabacoes">
+        <table class="table display table-striped table-bordered fixed-table tabacoes">
             <thead class="thead">
                 <tr class="info">
 
@@ -255,7 +255,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                                     <td>$c_linha2[participantes]</td>
                                     
                                     <td>
-                                    <a class='btn btn-primary btn-sm' href='/casaazul/acoes/participantes_acoes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes <span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_participantes</span></a>&nbsp;
+                                    <a class='btn btn-primary btn-sm' href='/casaazul/acoes/participantes_acoes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes</a>&nbsp;
                                     <a class='btn btn-secondary btn-sm' href='/casaazul/acoes/acoes_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha2[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
 
@@ -283,3 +283,37 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
         visibility: collapse;
     }
 </style>
+
+<style>
+        .fixed-table {
+            table-layout: fixed;
+            width: 100%;
+            /* Required for fixed layout to activate */
+            border-collapse: collapse;
+        }
+
+        .fixed-table th,
+        .fixed-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            /* Optional: Truncate overflowing text with ellipses */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Define explicit column widths on the first row or headers */
+        .col-small {
+            width: 100px;
+        }
+
+        .col-large {
+            width: 300px;
+        }
+
+        .col-flexible {
+            width: auto;
+        }
+
+        /* Takes up remaining space */
+    </style>

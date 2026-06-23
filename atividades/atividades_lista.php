@@ -121,7 +121,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                     'aTargets': [5]
                 }, {
                     'aTargets': [0],
-                    "visible": true
+                    "visible": false
                 }],
                 "oLanguage": {
                     "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -181,7 +181,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
         <div class="panel panel-primary class">
             <div class="panel-heading text-center">
                 <h4>Casa Azul - Sistema de Gestão</h4>
-                <h5>Lista de Atividades agendadas <h5>
+                <h5>Lista de Atividades Agendadas <h5>
             </div>
         </div>
         <!-- Formulário com as datas -->
@@ -271,7 +271,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                                    
                                     
                                     <td>
-                                    <a class='btn btn-primary btn-sm' href='/casaazul/atividades/atividades_participantes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes&nbsp<span style='background-color: #257c4d; color: white; padding: 5px 10px; border-radius: 10px;'> $qtd_participantes</span></a>
+                                    <a class='btn btn-primary btn-sm' href='/casaazul/atividades/atividades_participantes.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-user'></span> Participantes&nbsp</a>
                                     <a class='btn btn-secondary btn-sm' href='/casaazul/atividades/atividades_editar.php?id=$c_linha2[id]'><span class='glyphicon glyphicon-pencil'></span> Editar</a>
                                     <a class='btn btn-danger btn-sm' href='javascript:func()'onclick='confirmacao($c_linha2[id])'><span class='glyphicon glyphicon-trash'></span> Excluir</a>
 
@@ -289,6 +289,40 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
     </div>
 
 </body>
+
+<style>
+        .fixed-table {
+            table-layout: fixed;
+            width: 100%;
+            /* Required for fixed layout to activate */
+            border-collapse: collapse;
+        }
+
+        .fixed-table th,
+        .fixed-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            /* Optional: Truncate overflowing text with ellipses */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Define explicit column widths on the first row or headers */
+        .col-small {
+            width: 100px;
+        }
+
+        .col-large {
+            width: 300px;
+        }
+
+        .col-flexible {
+            width: auto;
+        }
+
+        /* Takes up remaining space */
+    </style>
 
 
 

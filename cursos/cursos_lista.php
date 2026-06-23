@@ -186,7 +186,7 @@ include("../links.php");
         </button>
         <a class="btn btn-secondary btn-sm" href="/casaazul/menu.php"><span class="glyphicon glyphicon-off"></span> Voltar</a>
         <hr>
-        <table class="table table-bordered table-striped tabcursos">
+        <table class="table table-bordered table-striped fixed-table tabcursos">
             <thead class="thead">
                 <tr>
                    <!-- titulo com id invisivel para ordenação da tabela -->
