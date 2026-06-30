@@ -282,7 +282,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                                 <label class="col-sm-2 col-form-label">CNPJ:</label>
                                 <div class="col-sm-2">
-                                    <input type="text" name="cnpj" placeholder="Apenas números" class="form-control" value="<?php echo isset($_POST['cnpj']) ? $_POST['cnpj'] : ''; ?>">
+                                    <input type="text" name="cnpj" maxlength="18" placeholder="Apenas números" class="form-control" value="<?php echo isset($_POST['cnpj']) ? $_POST['cnpj'] : ''; ?>">
                                 </div>
                             </div>
 
@@ -304,7 +304,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                 <label class="col-sm-1 col-form-label">Bairro *:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="bairro" id="bairro" class="form-control" maxlength="120" value="<?php echo isset($_POST['bairro']) ? $_POST['bairro'] : ''; ?>">
+                                    <input type="text" name="bairro" id="bairro" class="form-control" maxlength="100" value="<?php echo isset($_POST['bairro']) ? $_POST['bairro'] : ''; ?>">
                                 </div>
                                 <label class="col-sm-1 col-form-label">Cidade :</label>
                                 <div class="col-sm-4">
@@ -366,18 +366,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="row mb-3">
                                 <label class="col-sm-1 col-form-label">Nome do Banco:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="nome_banco" class="form-control" maxlength="100" value=>
+                                    <input type="text" name="nome_banco" class="form-control" maxlength="50" value=>
                                 </div>
                                 <label class="col-sm-1">Número da Agência:</label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="numero_agencia" class="form-control" maxlength="20" value="<?php echo isset($_POST['numero_agencia']) ? $_POST['numero_agencia'] : ''; ?>">
+                                    <input type="text" name="numero_agencia" class="form-control" maxlength="6" value="<?php echo isset($_POST['numero_agencia']) ? $_POST['numero_agencia'] : ''; ?>">
                                 </div>
                             </div>
                             <!-- número da conta -->
                             <div class="row mb-3">
                                 <label class="col-sm-1 col-form-label">Número da Conta:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="numero_conta" class="form-control" maxlength="20" value="<?php echo isset($_POST['numero_conta']) ? $_POST['numero_conta'] : ''; ?>">
+                                    <input type="text" name="numero_conta" class="form-control" maxlength="15" value="<?php echo isset($_POST['numero_conta']) ? $_POST['numero_conta'] : ''; ?>">
                                 </div>
                                 <label class="col-sm-1">Tipo da Conta:</label>
                                 <div class="col-sm-4">
@@ -392,7 +392,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="row mb-3">
                                 <label class="col-sm-1 col-form-label">Titular da Conta:</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="titular_conta" class="form-control" maxlength="100" value="<?php echo isset($_POST['titular_conta']) ? $_POST['titular_conta'] : ''; ?>">
+                                    <input type="text" name="titular_conta" class="form-control" maxlength="90" value="<?php echo isset($_POST['titular_conta']) ? $_POST['titular_conta'] : ''; ?>">
                                 </div>
                                 <label class="col-sm-1 col-form-label">Chave PIX:</label>
                                 <div class="col-sm-3">
