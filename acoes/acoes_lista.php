@@ -197,7 +197,7 @@ if ((isset($_POST["btnagenda"])) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {  /
                 </div>
 
                 <a class="btn btn-success btn-sm" href="/casaazul/acoes/acao_incluir.php"><span class="glyphicon glyphicon-plus"></span> Nova Ação</a>&nbsp;&nbsp;
-                <button type="submit" return false name='btnagenda' id='btnagenda' class="btn btn-primary "><img src="\casaazul\images\buscar.png" alt="" width="20" height="20"></span> Consultar</button>&nbsp;&nbsp;
+                <button type="submit" return false name='btnagenda' id='btnagenda' class="btn btn-primary"><img src="\casaazul\images\buscar.png" alt="" width="20" height="20"></span> Consultar</button>&nbsp;&nbsp;
                 <a class='btn btn-info' title="Voltar ao menu" href='/casaazul/menu.php'> <img src="\casaazul\images\voltar.png" alt="" width="20" height="20"> Voltar</a>
             </div>
         </form>
