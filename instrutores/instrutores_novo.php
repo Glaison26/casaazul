@@ -38,66 +38,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($nome)) {
 
             $msg_erro = "Favor preencher Campo Nome!!";
+            // colocar foco no campo nome
+            echo "<script>document.getElementsByName('nome')[0].focus();</script>";
             break;
         }
         if (empty($identidade)) {
 
             $msg_erro = "Favor preencher Campo Identidade!!";
+            echo "<script>document.getElementsByName('identidade')[0].focus();</script>";
             break;
         }
         if (empty($cpf)) {
 
             $msg_erro = "Favor preencher Campo CPF!!";
+            echo "<script>document.getElementsByName('cpf')[0].focus();</script>";
             break;
         }
         if (empty($datanasc)) {
 
             $msg_erro = "Favor preencher Campo Data de Nascimento!!";
+            echo "<script>document.getElementsByName('datanasc')[0].focus();</script>";
             break;
         }
         if (empty($cep)) {
 
             $msg_erro = "Favor preencher Campo CEP!!";
+            echo "<script>document.getElementsByName('cep')[0].focus();</script>";
             break;
         }
         if (empty($endereco)) {
 
             $msg_erro = "Favor preencher Campo Endereço!!";
+            echo "<script>document.getElementsByName('endereco')[0].focus();</script>";
             break;
         }
         if (empty($bairro)) {
 
             $msg_erro = "Favor preencher Campo Bairro!!";
+            echo "<script>document.getElementsByName('bairro')[0].focus();</script>";
             break;
         }
         if (empty($cidade)) {
 
             $msg_erro = "Favor preencher Campo Cidade!!";
+            echo "<script>document.getElementsByName('cidade')[0].focus();</script>";
             break;
         }
         if (empty($fone1)) {
 
             $msg_erro = "Favor preencher Campo Telefone 1!!";
+            echo "<script>document.getElementsByName('fone1')[0].focus();</script>";
             break;
         }
         if (empty($escolaridade)) {
 
             $msg_erro = "Favor preencher Campo Escolaridade!!";
+            echo "<script>document.getElementsByName('escolaridade')[0].focus();</script>";
             break;
         }
         if (empty($sexo)) {
 
             $msg_erro = "Favor preencher Campo Sexo!!";
+            // colocar foco no campo sexo
+            echo "<script>document.getElementsByName('sexo')[0].focus();</script>";
             break;
         }
         if (empty($id_parceria)) {
 
             $msg_erro = "Favor preencher Campo Vincular a Parceria!!";
+            // mudar para a aba de vinculação
+            echo "<script>$('.nav-tabs a[href=\"#vinculacao\"]').tab('show');</script>";
+            // focar no campo parceria 
+            echo "<script>document.getElementsByName('parceria_id')[0].focus();</script>";
+
             break;
         }
         if (empty($tipovinculacao)) {
 
             $msg_erro = "Favor preencher Campo Tipo de Vinculação!!";
+            echo "<script>document.getElementsByName('vinculacao')[0].focus();</script>";
             break;
         }
 
@@ -227,7 +246,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
         <div class="container content-box">
-            
+
             <!-- mensagem alertando que os campos com * são obrigatórios -->
             <div class="alert alert-info" role="alert">
                 <h4>Campos com * são obrigatórios!!</h4>
@@ -330,20 +349,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-sm-3">
                                     <select name="escolaridade" class="form-control form-control-lg" value="<?php echo isset($_POST['escolaridade']) ? $_POST['escolaridade'] : ''; ?>">
                                         <option value=""></option>
-                                        <option value="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
-                                        <option value="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
-                                        <option value="Ensino Médio Incompleto">Ensino Médio Incompleto</option>
-                                        <option value="Ensino Médio Completo">Ensino Médio Completo</option>
-                                        <option value="Ensino Superior Incompleto">Ensino Superior Incompleto</option>
-                                        <option value="Ensino Superior Completo">Ensino Superior Completo</option>
+                                        <option <?php echo (isset($_POST['escolaridade']) && $_POST['escolaridade'] === 'Ensino Fundamental Incompleto') ? 'selected' : ''; ?> value="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
+                                        <option <?php echo (isset($_POST['escolaridade']) && $_POST['escolaridade'] === 'Ensino Fundamental Completo') ? 'selected' : ''; ?> value="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
+                                        <option <?php echo (isset($_POST['escolaridade']) && $_POST['escolaridade'] === 'Ensino Médio Incompleto') ? 'selected' : ''; ?> value="Ensino Médio Incompleto">Ensino Médio Incompleto</option>
+                                        <option <?php echo (isset($_POST['escolaridade']) && $_POST['escolaridade'] === 'Ensino Médio Completo') ? 'selected' : ''; ?> value="Ensino Médio Completo">Ensino Médio Completo</option>
+                                        <option <?php echo (isset($_POST['escolaridade']) && $_POST['escolaridade'] === 'Ensino Superior Incompleto') ? 'selected' : ''; ?> value="Ensino Superior Incompleto">Ensino Superior Incompleto</option>
+                                        <option <?php echo (isset($_POST['escolaridade']) && $_POST['escolaridade'] === 'Ensino Superior Completo') ? 'selected' : ''; ?> value="Ensino Superior Completo">Ensino Superior Completo</option>
                                     </select>
                                 </div>
                                 <label class="col-sm-1">Sexo *:</label>
                                 <div class="col-sm-4">
                                     <select name="sexo" class="form-control form-control-lg" class="form-control" value="<?php echo isset($_POST['sexo']) ? $_POST['sexo'] : ''; ?>">
                                         <option value=""></option>
-                                        <option value="M">Masculino</option>
-                                        <option value="F">Feminino</option>
+                                        <option <?php echo (isset($_POST['sexo']) && $_POST['sexo'] === 'M') ? 'selected' : ''; ?> value="M">Masculino</option>
+                                        <option <?php echo (isset($_POST['sexo']) && $_POST['sexo'] === 'F') ? 'selected' : ''; ?> value="F">Feminino</option>
                                     </select>
                                 </div>
                             </div>
@@ -383,8 +402,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-sm-4">
                                     <select name="tipo_conta" class="form-control form-control-lg" value="<?php echo isset($_POST['tipo_conta']) ? $_POST['tipo_conta'] : ''; ?>">
                                         <option value=""></option>
-                                        <option value="Corrente">Corrente</option>
-                                        <option value="Poupança">Poupança</option>
+                                        <option <?php echo (isset($_POST['tipo_conta']) && $_POST['tipo_conta'] === 'Corrente') ? 'selected' : ''; ?> value="Corrente">Corrente</option>
+                                        <option <?php echo (isset($_POST['tipo_conta']) && $_POST['tipo_conta'] === 'Poupança') ? 'selected' : ''; ?> value="Poupança">Poupança</option>
                                     </select>
                                 </div>
                             </div>

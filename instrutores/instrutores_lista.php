@@ -17,7 +17,7 @@ $c_sql = "SELECT * FROM instrutores ORDER BY nome";
             $('.tabpessoas').DataTable({
                 // 
                 "iDisplayLength": -1,
-                "order": [1, 'asc'],
+                "order": [0, 'asc'],
                 "aoColumnDefs": [{
                     'bSortable': false,
                     'aTargets': [6]

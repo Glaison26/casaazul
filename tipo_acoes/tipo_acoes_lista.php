@@ -201,10 +201,9 @@ include("../links.php");
             <table class="table table-bordered table-striped fixed-table  tabatividades">
                 <thead class="thead">
                     <tr>
-
                         <th scope="col" style='display:none;'>#</th>
                         <th scope="col">Ações</th>
-                        <th scope="col">Observação</th>
+                        <th scope="col">Descrição</th>
                         <th scope="col">Opções</th>
 
                     </tr>

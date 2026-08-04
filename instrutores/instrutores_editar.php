@@ -318,9 +318,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div role="tabpanel" class="tab-pane" id="vinculacao">
                         <div style="padding-top:15px;padding-left:20px;">
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Tipo de vinculação:</label>
+                                <label class="col-sm-2 col-form-label">Tipo de vinculação *:</label>
                                 <div class="col-sm-3">
-                                    <select name="vinculacao" class="form-control form-control-lg" value="<?php echo isset($_POST['vinculacao']) ? $_POST['vinculacao'] : ''; ?>">
+                                    <select name="vinculacao" class="form-control form-control-lg" required value="<?php echo isset($_POST['vinculacao']) ? $_POST['vinculacao'] : ''; ?>">
                                         <option value=""></option>
                                         <option value="MEI" <?php echo (isset($registro['tipo_vinculacao']) && $registro['tipo_vinculacao'] === 'MEI') ? 'selected' : ''; ?>>MEI</option>
                                         <option value="Autônomo" <?php echo (isset($registro['tipo_vinculacao']) && $registro['tipo_vinculacao'] === 'Autônomo') ? 'selected' : ''; ?>>Autônomo</option>
@@ -332,7 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <!-- combobox com a parceria da tabela paricerias para vincular o instrutor a uma parceria, o combobox com identificação e número da parceria    -->
                                 <label class="col-sm-2 col-form-label">Vincular a Parceria:</label>
                                 <div class="col-sm-3">
-                                    <select name="parceria_id" class="form-control form-control-lg" value="<?php echo isset($_POST['parceria_id']) ? $_POST['parceria_id'] : ''; ?>">
+                                    <select name="parceria_id" class="form-control form-control-lg" required value="<?php echo isset($_POST['parceria_id']) ? $_POST['parceria_id'] : ''; ?>">
                                         <option value=""></option>
                                         <?php
                                         $sql_parcerias = "SELECT id, identificacao, numero FROM parcerias";

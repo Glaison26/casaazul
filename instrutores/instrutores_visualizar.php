@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $observacao = $registro['observacao'];
     $id_parceria = $registro['id_parceria'];
     $tipovinculacao = $registro['tipo_vinculacao'];
+    $pix = $registro['chave_pix'];
 }
 
 ?>
@@ -216,6 +217,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                                 <label class="col-sm-1 col-form-label">Titular da Conta:</label>
                                 <div class="col-sm-3">
                                     <input readonly type="text" name="titular_conta" class="form-control" maxlength="100" value="<?php echo $titular_conta; ?>">
+                                </div>
+                                   <label class="col-sm-1 col-form-label">Chave PIX:</label>
+                                <div class="col-sm-3">
+                                    <input readonly type="text" name="pix" class="form-control" maxlength="100" value="<?php echo $pix; ?>">
                                 </div>
                             </div>
                         </div>
