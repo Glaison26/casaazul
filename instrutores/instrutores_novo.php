@@ -8,31 +8,31 @@ date_default_timezone_set('America/Sao_Paulo');
 // post das informações
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     do {
-        $nome = $_POST['nome'];
-        $identidade = $_POST['identidade'];
-        $cpf = $_POST['cpf'];
-        $datanasc = $_POST['datanasc'];
-        $cep = $_POST['cep'];
-        $endereco = $_POST['endereco'];
-        $bairro = $_POST['bairro'];
-        $cidade = $_POST['cidade'];
-        $fone1 = $_POST['fone1'];
-        $fone2 = $_POST['fone2'];
-        $escolaridade = $_POST['escolaridade'];
-        $sexo = $_POST['sexo'];
-        $email = $_POST['email'];
-        $nome_banco = $_POST['nome_banco'];
-        $numero_agencia = $_POST['numero_agencia'];
-        $numero_conta = $_POST['numero_conta'];
-        $tipo_conta = $_POST['tipo_conta'];
-        $titular_conta = $_POST['titular_conta'];
-        $observacao = $_POST['observacao'];
-        $pix = $_POST['pix'];
+        $nome = addcslashes($_POST['nome'], "'");
+        $identidade = addcslashes($_POST['identidade'], "'");
+        $cpf = addcslashes($_POST['cpf'], "'");
+        $datanasc = addcslashes($_POST['datanasc'], "'");
+        $cep = addcslashes($_POST['cep'], "'");
+        $endereco = addcslashes($_POST['endereco'], "'");
+        $bairro = addcslashes($_POST['bairro'], "'");
+        $cidade = addcslashes($_POST['cidade'], "'");
+        $fone1 = addcslashes($_POST['fone1'], "'");
+        $fone2 = addcslashes($_POST['fone2'], "'");
+        $escolaridade = addcslashes($_POST['escolaridade'], "'");
+        $sexo = addcslashes($_POST['sexo'], "'");
+        $email = addcslashes($_POST['email'], "'");
+        $nome_banco = addcslashes($_POST['nome_banco'], "'");
+        $numero_agencia = addcslashes($_POST['numero_agencia'], "'");
+        $numero_conta = addcslashes($_POST['numero_conta'], "'");
+        $tipo_conta = addcslashes($_POST['tipo_conta'], "'");
+        $titular_conta = addcslashes($_POST['titular_conta'], "'");
+        $observacao = addcslashes($_POST['observacao'], "'");
+        $pix = addcslashes($_POST['pix'], "'");
         $uf = 'MG';
         $cpf = preg_replace('/[^0-9]/', '', $cpf); // Remove caracteres não numéricos
         $cnpj = preg_replace('/[^0-9]/', '', $_POST['cnpj']); // Remove caracteres não numéricos
-        $id_parceria = $_POST['parceria_id'];
-        $tipovinculacao = $_POST['vinculacao'];
+        $id_parceria = addcslashes($_POST['parceria_id'], "'");
+        $tipovinculacao = addcslashes($_POST['vinculacao'], "'");
 
         // validando se os campos obrigatórios foram preenchidos
         if (empty($nome)) {
@@ -138,7 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // valido o cpf
-
 
         if (!validaCPF($cpf) && !empty($cpf)) {
             $msg_erro = "CPF informado inválido!!";
